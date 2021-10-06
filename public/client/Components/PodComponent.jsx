@@ -1,6 +1,8 @@
 import React from 'react';
 
-// TODO - what does rendering of a Pod look like? Does clicking on the pod have any impact?
+// TODOS:
+// what does rendering of a Pod look like? 
+// Does clicking on the pod have any impact / open a modal with more info / etc?
 
 function PodComponent (props) {
   return (

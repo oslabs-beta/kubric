@@ -2,7 +2,8 @@ import React from 'react';
 
 // TODOS: 
 // what info/properties will we actually receive in K8S logs?
-// should this info be rendered in divs and styled using grid-layout? or should they be rendered in some other way
+// should this info be rendered in divs and styled using grid-layout or in some other way
+
 function LogRowComponent(props){
   return (
     <div className="logRowComponent">
