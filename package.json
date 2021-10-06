@@ -1,0 +1,69 @@
+{
+  "name": "kubric",
+  "version": "1.0.0",
+  "description": "Kubernetes monitoring and logging tool",
+  "main": "./src/index.jsx",
+  "scripts": {
+    "start": "nodemon server/server.js",
+    "build": "NODE_ENV=production webpack & NODE_ENV=production npm run start",
+    "dev": "NODE_ENV=development webpack serve --open & NODE_ENV=development npm run start",
+    "test": " jest --runInBand --detectOpenHandles --verbose"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "build",
+      "client"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/kubric.git"
+  },
+  "author": "laurabotel <laura.e.botel@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/kubric/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/kubric#readme",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "babel-jest": "^27.2.4",
+    "bcryptjs": "^2.4.3",
+    "browserfy": "^1.0.0",
+    "d3": "^7.1.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jest": "^27.2.4",
+    "jsonwebtoken": "^8.5.1",
+    "memory-cache": "^0.2.0",
+    "pg": "^8.7.1",
+    "prop-types": "^15.7.2",
+    "randomstring": "^1.2.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.3.0",
+    "react-ticker": "^1.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.3.0",
+    "eslint": "^7.32.0",
+    "html-webpack-plugin": "^5.3.2",
+    "http-proxy-middleware": "^2.0.1",
+    "mini-css-extract-plugin": "^2.4.1",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.13",
+    "sass": "^1.42.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.57.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.1"
+  }
+}
