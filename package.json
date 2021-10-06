@@ -4,9 +4,9 @@
   "description": "Kubernetes monitoring and logging tool",
   "main": "./src/index.jsx",
   "scripts": {
-    "start": "nodemon server/server.js",
-    "build": "NODE_ENV=production webpack & NODE_ENV=production npm run start",
-    "dev": "NODE_ENV=development webpack serve --open & NODE_ENV=development npm run start",
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon server/server.js\"",
     "test": " jest --runInBand --detectOpenHandles --verbose"
   },
   "nodemonConfig": {
