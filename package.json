@@ -4,9 +4,9 @@
   "description": "Kubernetes monitoring and logging tool",
   "main": "./src/index.jsx",
   "scripts": {
-    "start": "nodemon server/server.js",
-    "build": "NODE_ENV=production webpack & NODE_ENV=production npm run start",
-    "dev": "NODE_ENV=development webpack serve --open & NODE_ENV=development npm run start",
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon server/server.js\"",
     "test": " jest --runInBand --detectOpenHandles --verbose"
   },
   "nodemonConfig": {
@@ -39,7 +39,6 @@
     "pg": "^8.7.1",
     "prop-types": "^15.7.2",
     "randomstring": "^1.2.1",
-    "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.3.0",
     "react-ticker": "^1.2.2"
@@ -59,6 +58,7 @@
     "mini-css-extract-plugin": "^2.4.1",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.13",
+    "react": "^16.14.0",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
