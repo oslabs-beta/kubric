@@ -9,12 +9,12 @@ function ConfigContainer(props){
           </div>
           <div id="db-connection">
             <input className="input config-input" placeholder="Databse URI for log persistence"></input>
-            <button className="secondary-btn">Connect DB</button>
+            <button className="primary-btn">Connect DB</button>
           </div>
           <div id="config-interval">
             {/* should this be a drop down menu instead? */}
             <input className="input config-input" placeholder="enter time in ms"></input>
-            <button className="secondary-btn">Set Interval</button>
+            <button className="primary-btn">Set Interval</button>
           </div>
       </div>
   );

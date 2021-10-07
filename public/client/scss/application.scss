@@ -1,0 +1,98 @@
+@import "_variables";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html {
+  font-family: 'Roboto', sans-serif;
+  color: whitesmoke;
+}
+
+body {
+  background: #1D3557;
+}
+
+div {
+  margin: .5em;
+  padding: .25em;
+}
+
+input {
+  margin: .25em;
+}
+
+button {
+  margin: .25em;
+}
+
+#login-container {
+  // background-color: #F1FAEE;
+  padding: .5em;
+}
+
+#config-container {
+  // background-color: #89B0AE;
+  padding: .5em;
+}
+
+#pods-container {
+  // background-color: #457B9D;
+  border-color: #457B9D;
+  border-width: .25em;
+  border-style: solid;
+  padding: .5em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pod-component {
+  background-color: rgb(133, 204, 133);
+  border-radius: 10%;
+  color: whitesmoke;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  height: 50px;
+  width: 50px;
+  margin: .5em;
+  padding: .1em;
+}
+
+#query-container {
+  // background-color: #A8DADC;
+  padding: .5em;
+}
+
+#log-container {
+  // background-color: #A8DADC;
+  padding: .05em;
+}
+
+.logDate { 
+  grid-area: date; 
+}
+.logType { 
+  grid-area: type; 
+}
+.podName { 
+  grid-area: pod; 
+}
+.logMessage { 
+  grid-area: message; 
+}
+
+.logRowComponent {
+  background-color: #FAF9F9;
+  color: black;
+  margin: .5em;
+  padding: .25em;
+  display: grid;
+  grid-template: 'date type type pod pod message message message'
+}
+
+.primary-btn {
+  background-color: #1D3557;
+  color: #F1FAEE
+}
+.secondary-btn {
+  background-color: #FAF9F9;
+  
+}
