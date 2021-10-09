@@ -1,4 +1,4 @@
-// Structures
+
 export const RECEIVE_PODS = 'RECEIVE_PODS';
 export const RECEIVE_SERVICES = 'RECEIVE_SERVICES';
 export const RECEIVE_DEPLOYMENTS = 'RECEIVE_DEPLOYMENTS';

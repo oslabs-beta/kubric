@@ -11,7 +11,8 @@ function podsReducer(state = initialState, action) {
   switch (type) {
     case actionTypes.RECEIVE_PODS:
       let pods = [];
-    
+      // add logic here
+      
       return {...state, pods};
     default: 
       return state;
