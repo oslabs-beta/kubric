@@ -6,7 +6,7 @@ console.log(`Launching in ${process.env.NODE_ENV} mode`);
 
 module.exports = {
 
-  entry: './src/index.jsx',
+  entry: path.resolve(__dirname, './src/index.jsx'),
   mode: process.env.NODE_ENV,
 
   output: {
@@ -28,6 +28,11 @@ module.exports = {
     },
   },
 
+  resolve: {
+    // Enable importing JS / JSX files without specifying their extension
+    extensions: ['.js', '.jsx'],
+  },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html'),
@@ -43,7 +48,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react'],
+            presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
       },
@@ -51,7 +56,7 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         exclude: /(node_modules)/,
-
+        // use: ['style-loader', 'css-loader', 'sass-loader'],
         use: [
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { url: false, sourceMap: true } },
