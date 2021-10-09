@@ -9,7 +9,7 @@ function deploymentsReducer (state = initialState, action) {
 
   switch (type) {
     case actionTypes.RECEIVE_DEPLOYMENTS:
-
+      // add logic here
 
       return { ...state, deployments };
     default: 
