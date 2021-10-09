@@ -19,3 +19,5 @@ function podsReducer(state = initialState, action) {
 
 
 }
+
+export default podsReducer;
