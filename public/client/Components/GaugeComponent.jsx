@@ -25,12 +25,18 @@ function GaugeComponent (props) {
       if (!Object.keys(labels).length) {
         labelsList = 'there are no labels for this value';
       } else {
-        
+        // iterate through labels list and add their key/value to labelsList
+        for (let key in labels) {
+          labelsList += ` ${key}: ${labels[key]},`
+        }
         labelsList
       }
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     console.log('valuesList', valuesList);
+    if (!valuesList.length) {
+      return 'none';
+    }
     return (
       <ul>
         {valuesList}
@@ -43,7 +49,7 @@ function GaugeComponent (props) {
       <ul className={type}>
         <li>Description: {help}</li>
         <li>({name})</li>
-        <li>Values: {values.value}</li> 
+        <li>Values: {getValues(values)}</li> 
       </ul>
     </div>
   );
