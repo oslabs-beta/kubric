@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3010; //can change
+const port = 3000; //can change
 const clusterRouter = require('./routes/clusterRouter');
 const loginRouter = require('./routes/loginRouter');
 const logsRouter = require('./routes/logsRouter');
@@ -18,6 +18,7 @@ app.use('/api/cluster', clusterRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/logs', logsRouter);
 app.use('/api/metrics', metricsRouter);
+
 
 //send all other end point to 404 not found
 app.use('*', (req, res) => res.sendStatus(404));
