@@ -38,6 +38,7 @@
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "^0.2.0",
     "pg": "^8.7.1",
+    "prom-client": "^14.0.0",
     "prop-types": "^15.7.2",
     "randomstring": "^1.2.1",
     "react-dom": "^16.14.0",

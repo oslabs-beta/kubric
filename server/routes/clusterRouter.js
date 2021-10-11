@@ -7,9 +7,9 @@ clusterRouter.get(
   clusterController.getPods, 
   clusterController.getServices, 
   clusterController.getDeployments, 
-//   clusterController.getIngresses,
+  //clusterController.getIngresses, (having an issue with this line idk why; getting HTTP error)
   clusterController.getNodes,
-  //send the res.locals.list; inside the object, there will be properties corresponding to each middleware named {componentname}List
+  //sending a compiled object with each middleware's data with an unique property name in a format of {component}List
   (req, res)=> res.status(200).json(res.locals.list)
 );
 
