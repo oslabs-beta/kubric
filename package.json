@@ -40,6 +40,7 @@
     "prop-types": "^15.7.2",
     "randomstring": "^1.2.1",
     "react-dom": "^16.14.0",
+    "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-ticker": "^1.2.2",
     "redux": "^4.1.1",
