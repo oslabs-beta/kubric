@@ -5,6 +5,7 @@ import LogContainer from './Containers/LogContainer.jsx';
 import ConfigContainer from './Containers/ConfigContainer.jsx';
 import PodsContainer from './Containers/PodsContainer.jsx';
 import MetricsComponent from './Components/MetricsComponent.jsx';
+import MetricsContainer from './Containers/MetricsContainer.jsx';
 
 // TODO: Routing or logic to determine which containers to render at what points
 // TODO: replace sampleData as property passed to MetricsComponent with a call to fetch default metrics via Prometheus
@@ -39,7 +40,7 @@ function App () {
       </div>
       <div>
         Cluster Default Metrics:
-        <MetricsComponent metrics={sampleData}/>
+        <MetricsContainer/>
       </div>
     </div>
   )
