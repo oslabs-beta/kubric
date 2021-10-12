@@ -9,7 +9,7 @@ const sampleData = JSON.parse('[{"help":"Total user CPU time spent in seconds.",
 
 export const fetchDefaultMetrics = () => { 
   return (dispatch, getState) => {
-    const defaultMetricsURL = 'http://localhost:3000/metrics';
+    const defaultMetricsURL = 'http://localhost:3000/api/metrics';
     axios.get(defaultMetricsURL)
       .then(response => {
         console.log(response.data);
@@ -22,6 +22,6 @@ export const getDefaultMetrics = metrics => {
   return {
     type: actionTypes.DEFAULT_METRICS_RECEIVED,
     // CHANGE payload to be 'metrics' once get request from /metrics endpoint is working
-    payload: {defaultMetrics: sampleData}
+    payload: {defaultMetrics: metrics}
   }
 }

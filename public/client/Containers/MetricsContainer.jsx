@@ -31,9 +31,8 @@ class MetricsContainer extends React.Component {
   
   componentDidMount() {
     console.log('metrics container did mount');
-    console.log(this.props);
-
     this.props.fetchDefaultMetrics();
+    console.log('props after fetched in Component did mount', this.props);
   }
 
   componentDidUpdate () {
@@ -42,6 +41,7 @@ class MetricsContainer extends React.Component {
 
   render(){
     // return dev containing the metrics array to the screen
+    console.log('from M Container: ', this.props.metrics)
     return (
       <div className="metricsContainer">    
         <MetricsComponent metrics={this.props.metrics}/>

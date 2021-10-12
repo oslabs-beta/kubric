@@ -1,16 +1,5 @@
 import React from 'react';
 
-const sampleGaugeObj = {
-  help:"Start time of the process since unix epoch in seconds.",
-  name:"process_start_time_seconds",
-  type:"gauge",
-  values:[{
-    value:1633816140,
-    labels:{}
-  }],
-  aggregator:"omit",
-}
-
 function GaugeComponent (props) {
   const { help, name, type, values, aggregator } = props.metric;
 

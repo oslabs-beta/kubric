@@ -1,16 +1,5 @@
 import React from 'react';
 
-const sampleCounterObj = {
-  help: "Total user CPU time spent in seconds.",
-  name: "process_cpu_user_seconds_total",
-  type: "counter",
-  values: [{
-    value:0.154021,
-    labels:{}
-  }],
-  aggregator: "sum"
-}
-
 function CounterComponent (props) {
   const { help, name, type, values, aggregator } = props.metric;
   
