@@ -6,6 +6,10 @@ const clusterRouter = require('./routes/clusterRouter');
 const loginRouter = require('./routes/loginRouter');
 const logsRouter = require('./routes/logsRouter');
 const metricsRouter = require('./routes/metricsRouter');
+const cors = require('cors');
+
+// to deal with cors erros
+app.use(cors());
 
 //to parse the incoming requests with JSON
 app.use(express.json());

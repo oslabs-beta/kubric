@@ -11,7 +11,7 @@ const sampleData = JSON.parse('[{"help":"Total user CPU time spent in seconds.",
 // TODO: what props are needed from state here?
 const mapStateToProps = (state) => {
   return {
-    metrics: state.metrics,
+    defaultMetrics: state.metricsReducer.defaultMetrics,
   }
 }
 
@@ -32,7 +32,7 @@ class MetricsContainer extends React.Component {
   componentDidMount() {
     console.log('metrics container did mount');
     this.props.fetchDefaultMetrics();
-    console.log('props after fetched in Component did mount', this.props);
+    // console.log('props after fetched in Component did mount', this.props);
   }
 
   componentDidUpdate () {
@@ -41,10 +41,11 @@ class MetricsContainer extends React.Component {
 
   render(){
     // return dev containing the metrics array to the screen
-    console.log('from M Container: ', this.props.metrics)
+    console.log('metrics container rendered')
     return (
       <div className="metricsContainer">    
-        <MetricsComponent metrics={this.props.metrics}/>
+        {/* <button onClick={this.forceUpdateHandler}> Render Default Metrics</button> */}
+        <MetricsComponent metrics={this.props.defaultMetrics}/>
       </div>
     )
   }
