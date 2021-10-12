@@ -21,6 +21,7 @@ export const fetchDefaultMetrics = () => {
 export const getDefaultMetrics = metrics => {
   return {
     type: actionTypes.DEFAULT_METRICS_RECEIVED,
+    // CHANGE payload to be 'metrics' once get request from /metrics endpoint is working
     payload: {defaultMetrics: sampleData}
   }
 }
