@@ -8,6 +8,7 @@ const logsRouter = require('./routes/logsRouter');
 const metricsRouter = require('./routes/metricsRouter');
 const cors = require('cors');
 
+// to deal with cors erros
 app.use(cors());
 
 //to parse the incoming requests with JSON

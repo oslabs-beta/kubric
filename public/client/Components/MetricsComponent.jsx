@@ -64,7 +64,7 @@ class MetricsComponent extends React.Component {
         }
       })
     }
-    console.log(this.metricsToRender);
+    console.log('what is metricsToRender',this.metricsToRender);
     
     // return dev containing the metrics array to the screen
     return (
