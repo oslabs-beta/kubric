@@ -42,8 +42,11 @@
     "prop-types": "^15.7.2",
     "randomstring": "^1.2.1",
     "react-dom": "^16.14.0",
+    "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
-    "react-ticker": "^1.2.2"
+    "react-ticker": "^1.2.2",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -61,6 +64,7 @@
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.13",
     "react": "^16.14.0",
+    "redux-mock-store": "^1.5.4",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
