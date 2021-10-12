@@ -1,4 +1,6 @@
 import React from 'react';
+import 'zingchart/es6';
+import ZingChart from 'zingchart-react';
 
 function GaugeComponent (props) {
   const { help, name, type, values, aggregator } = props.metric;
@@ -7,6 +9,7 @@ function GaugeComponent (props) {
   const getValues = (values) => {
     const valuesList = [];
     // console.log(values);
+    const chartValues = [];
     values.forEach(val => {
       // console.log(val.value);
       const { value, labels } = val;
@@ -18,18 +21,28 @@ function GaugeComponent (props) {
         for (let key in labels) {
           labelsList += ` ${key}: ${labels[key]},`
         }
-        labelsList
+        // labelsList
       }
+      chartValues.push(value);
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     // console.log('valuesList', valuesList);
+    const myData = {
+      type: 'line',
+      series: [
+        { values: chartValues }
+      ]
+    }
     if (!valuesList.length) {
       return 'none';
     }
     return (
-      <ul>
-        {valuesList}
-      </ul>
+      <div>
+        <ul>
+          {valuesList}
+        </ul>
+        <ZingChart data={ myData }> Zing Chart </ZingChart>
+      </div>
     )
   };
 
