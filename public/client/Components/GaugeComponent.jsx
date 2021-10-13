@@ -10,9 +10,11 @@ function GaugeComponent (props) {
     const valuesList = [];
     // console.log(values);
     const chartValues = [];
+    const chartLabel = [];
     values.forEach(val => {
       // console.log(val.value);
       const { value, labels } = val;
+      console.log('I am the val', val)
       let labelsList = '';
       if (!Object.keys(labels).length) {
         labelsList = 'there are no labels for this value';
@@ -24,11 +26,23 @@ function GaugeComponent (props) {
         // labelsList
       }
       chartValues.push(value);
+      chartLabel.push(labels);
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     // console.log('valuesList', valuesList);
     const myData = {
       type: 'line',
+      title: {
+        text: 'Metrics for a Default Metric',
+        fontSize: 30,
+      },
+      scaleX : {
+        label: {text: chartLabel},
+        labels: {}
+      },
+      scaleY : {
+        label: {text: 'Y axix Name'}
+      },
       series: [
         { values: chartValues }
       ]
