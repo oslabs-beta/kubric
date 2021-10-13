@@ -16,6 +16,8 @@ export const fetchDefaultMetrics = () => {
         // console.log(response.data);
         dispatch(getDefaultMetrics(response.data.defaultMetrics));
         dispatch(getPodCpuMetrics(response.data.CPUPods));
+        dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+        dispatch(getServerApiMetrics(response.data.serverAPI));
       })
       .catch (err => console.log(`error in dispatch default metrics fetch: ${err}`))    
   }
@@ -32,6 +34,20 @@ export const getPodCpuMetrics = metrics => {
   console.log('pod CPU metrics: ', metrics)
   return {
     type: actionTypes.PODS_CPU_METRICS_RECEIVED,
+    payload: metrics,
+  }
+}
+
+export const getPodMemoryMetrics = metrics => {
+  return {
+    type: actionTypes.PODS_MEMORY_METRICS_RECEIVED,
+    payload: metrics,
+  }
+}
+
+export const getServerApiMetrics = metrics => {
+  return {
+    type: actionTypes.SERVERAPI_METRICS_RECEIVED,
     payload: metrics,
   }
 }

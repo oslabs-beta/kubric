@@ -34,6 +34,7 @@ export default function metricsReducer (state = initialState, action) {
       }
     }
     case actionTypes.PODS_MEMORY_METRICS_RECEIVED: {
+      let podMemoryMetrics = payload;
 
       return {
         ...state,
@@ -41,6 +42,8 @@ export default function metricsReducer (state = initialState, action) {
       }
     }
     case actionTypes.SERVERAPI_METRICS_RECEIVED: {
+      let serverApiMetrics = payload;
+      console.log('serverApiMetrics', payload);
 
       return {
         ...state,
