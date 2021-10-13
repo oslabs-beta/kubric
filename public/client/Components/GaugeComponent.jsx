@@ -14,7 +14,7 @@ function GaugeComponent (props) {
     values.forEach(val => {
       // console.log(val.value);
       const { value, labels } = val;
-      console.log('I am the val', val)
+      // console.log('I am the val', val)
       let labelsList = '';
       if (!Object.keys(labels).length) {
         labelsList = 'there are no labels for this value';
@@ -30,23 +30,40 @@ function GaugeComponent (props) {
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     // console.log('valuesList', valuesList);
+
+    //get y axix value from name property from metric. Usually the last word of that string.
+    function getYAxisValue (name) {
+      let nameAsArray = name.split('_');
+      // console.log('y axis name', nameAsArray[nameAsArray.length-1]);
+      let result = nameAsArray[nameAsArray.length-1];
+      if (result === 'bytes') result = 'Megabytes';
+      return result;
+    }
+
     const myData = {
       type: 'line',
       title: {
-        text: 'Metrics for a Default Metric',
+        text: help,
         fontSize: 30,
       },
+      scale : {
+        'size-factor': 0.5,
+      },
       scaleX : {
-        label: {text: chartLabel},
-        labels: {}
+        label: chartLabel,
+        labels: {},
+        // values: '0:10:1',
       },
       scaleY : {
-        label: {text: 'Y axix Name'}
+        label: {text: getYAxisValue(name)},
+        // values: '0:100:25',
       },
       series: [
         { values: chartValues }
       ]
     }
+    //where to put you? If label value has only one value/ don't render graph, don't render that graph
+    if (myData.scaleX.label.length <= 1) {};
     if (!valuesList.length) {
       return 'none';
     }
@@ -59,6 +76,10 @@ function GaugeComponent (props) {
       </div>
     )
   };
+
+  // ZingChart.render({
+
+  // })
 
   return (
     <div className="gaugeComponent">
