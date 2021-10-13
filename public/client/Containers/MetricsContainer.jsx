@@ -12,6 +12,7 @@ const sampleData = JSON.parse('[{"help":"Total user CPU time spent in seconds.",
 const mapStateToProps = (state) => {
   return {
     defaultMetrics: state.metricsReducer.defaultMetrics,
+    podCpuMetrics: state.metricsReducer.CPUPods,
     
   }
 }
