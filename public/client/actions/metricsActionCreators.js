@@ -12,9 +12,12 @@ export const fetchDefaultMetrics = () => {
     const defaultMetricsURL = 'http://localhost:3000/api/metrics';
     axios.get(defaultMetricsURL)
       .then(response => {
-        console.log(response);
+        console.log('response from /api/metrics', response.data);
         // console.log(response.data);
         dispatch(getDefaultMetrics(response.data.defaultMetrics));
+        dispatch(getPodCpuMetrics(response.data.CPUPods));
+        dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+        dispatch(getServerApiMetrics(response.data.serverAPI));
       })
       .catch (err => console.log(`error in dispatch default metrics fetch: ${err}`))    
   }
@@ -23,7 +26,28 @@ export const getDefaultMetrics = metrics => {
   console.log(metrics)
   return {
     type: actionTypes.DEFAULT_METRICS_RECEIVED,
-    // CHANGE payload to be 'metrics' once get request from /metrics endpoint is working
+    payload: metrics,
+  }
+}
+
+export const getPodCpuMetrics = metrics => {
+  console.log('pod CPU metrics: ', metrics)
+  return {
+    type: actionTypes.PODS_CPU_METRICS_RECEIVED,
+    payload: metrics,
+  }
+}
+
+export const getPodMemoryMetrics = metrics => {
+  return {
+    type: actionTypes.PODS_MEMORY_METRICS_RECEIVED,
+    payload: metrics,
+  }
+}
+
+export const getServerApiMetrics = metrics => {
+  return {
+    type: actionTypes.SERVERAPI_METRICS_RECEIVED,
     payload: metrics,
   }
 }

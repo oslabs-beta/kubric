@@ -41,6 +41,11 @@ class MetricsComponent extends React.Component {
     console.log('Component props in render:', this.props);
     // // iterate through received metrics
     if (this.props.metrics) {
+      // iterate through all metrics, grouping them by first part of name?
+      // if name doesn't exist inside of groupedMetrics obj, create it
+      // add values and labels
+      // send each namegrouped set of metrics to be rendered in a component that matches their type (i.e. gauge)
+
       this.props.metrics.forEach(metric => {
       
         // if type: counter, build a counter component and push to array

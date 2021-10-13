@@ -17,7 +17,7 @@ let step = '5m';
 metricsController.getDefaultMetrics = (req, res, next) => {
   client.register.getMetricsAsJSON()
     .then(data => {
-      console.log('data:', data);
+      // console.log('data:', data);
       //going to be the first middleware in get method chains, so that it creates a blank object that will store each request with an unique property name
       res.locals.metrics = {};
       res.locals.metrics.defaultMetrics = data;
