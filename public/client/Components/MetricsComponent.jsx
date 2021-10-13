@@ -27,10 +27,6 @@ class MetricsComponent extends React.Component {
   }
 
   metricsToRender =  [];
-  // metricsToRender( metrics ) {
-
-  //   // return an array with all metrics as components
-  // }
   
   componentDidMount() {
     console.log('metrics component did mount');
@@ -64,7 +60,7 @@ class MetricsComponent extends React.Component {
         }
       })
     }
-    console.log('what is metricsToRender',this.metricsToRender);
+    // console.log('what is metricsToRender',this.metricsToRender);
     
     // return dev containing the metrics array to the screen
     return (

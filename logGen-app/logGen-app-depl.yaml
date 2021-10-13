@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loggen-app
+  labels:
+    app: loggen-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loggen-app
+  template:
+    metadata:
+      labels:
+        app: loggen-app
+    spec:
+      containers:
+        - name: loggen-app
+          image: jlhline/loggen-app:loggen-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+      
