@@ -19,9 +19,9 @@ class PodCpuComponent extends React.Component {
   }
 
   render() {
-    console.log('this is pod cpu component props', this.props)
+    // console.log('this is pod cpu component props', this.props)
     const {metric, pods} = this.props;
-    console.log('this is pod metric', metric);
+    // console.log('this is pod metric', metric);
 
     const valuesToGraph = [];
     let podName;
@@ -65,8 +65,7 @@ class PodCpuComponent extends React.Component {
 
     //when do i invoke get values???
     return (
-        <div>
-            The CPU Pods are below this. . . 
+        <div> 
             <ZingChart data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )

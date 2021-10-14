@@ -118,9 +118,9 @@ function HistogramComponent (props) {
     }
     return (
       <div>
-        <ul>
+        {/* <ul>
           {valuesList}
-        </ul>
+        </ul> */}
         <ZingChart data={ histogram }>Zing Chart</ZingChart>
       </div>
     )
@@ -128,10 +128,11 @@ function HistogramComponent (props) {
 
   return (
     <div className="histogramComponent">
+      {getValues(values)}
       <ul className={type}>
-        <li>Description: {help}</li>
-        <li>({name})</li>
-        <li>Values: {getValues(values)}</li> 
+        {/* <li>Description: {help}</li> */}
+        {/* <li>({name})</li> */}
+        {/* <li>{getValues(values)}</li>  */}
       </ul>
     </div>
   );
