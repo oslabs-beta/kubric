@@ -26,28 +26,11 @@ class PodCpuComponent extends React.Component {
     const valuesToGraph = [];
     let podName;
     const getValues = (pods) => {
-        // metric.forEach((eachPod) => {
-        //   const podValues = []; // store values for a specific pod
-        //   podName = eachPod.metric.pod;
-        //   if (pods[podName].displayMetrics) {
-        //     //array of all time stamps and their values of single pod
-        //     eachPod.values.forEach((dataPoint) => {
-        //         podsValues.push([parseFloat(dataPoint[0]), parseFloat(dataPoint[1])]);
-        //     });
-        //   };
-        //   // valuesToGraph.push[podName] = podValues;
-        //   valuesToGraph.push(
-        //     {
-        //       type: "line",
-        //       text: podName,
-        //       values: podValues,
-        //     }
-        //   );
-        // })
       for (let pod in pods) {
         const podValues = [];
-        if (!pods[pod].displayMetrics) {
-          console.log('do we get here?');
+        console.log('display metricsbool:', pods[pod].displayMetrics);
+        if (pods[pod].displayMetrics) {
+          // console.log('do we get here?');
           pods[pod].cpuValues.forEach(dataPoint => {
             podValues.push([parseFloat(dataPoint[0]), parseFloat(dataPoint[1])]);
           });
@@ -97,4 +80,4 @@ class PodCpuComponent extends React.Component {
 
   }
 
-export default connect(mapStateToProps)(PodCpuComponent);
+export default connect(mapStateToProps, null)(PodCpuComponent);

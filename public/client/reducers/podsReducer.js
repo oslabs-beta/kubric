@@ -57,12 +57,13 @@ function podsReducer(state = initialState, action) {
       const podName = payload;
       console.log('trying to update state on click', podName);
       console.log(state.pods[podName].displayMetrics);
-      const podsObj = state.pods;
-      const pod = state.pods[podName];
+      const podsObj = JSON.parse(JSON.stringify(state.pods));
+      const pod = podsObj[podName];
+      console.log("pod display metrics boolean before",pod.displayMetrics)
       pod.displayMetrics = pod.displayMetrics ? false : true;
-
+      console.log("pod display metrics boolean after",pod.displayMetrics)
       podsObj[podName] = pod;
-      return {...state, pods: podsObj};
+      return {...state,pods: podsObj};
     default: 
       return state;
   }

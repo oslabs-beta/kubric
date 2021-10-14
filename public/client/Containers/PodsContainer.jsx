@@ -30,7 +30,7 @@ class PodsContainer extends React.Component {
   }
   
   // array to hold pod components to render
-  podsElement = [];
+  // podsElement = [];
 
   
 
@@ -41,11 +41,12 @@ class PodsContainer extends React.Component {
     // // deconstruct necessary properties from each pod 
     //   const { name, cpuValues, memoryValues } = pod;
     // console.log('render of pods container, ', this.props.pods );
+    const podsElement = [];
     for (let pod in this.props.pods) {
       // console.log(pod);
       const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.pods[pod];
       // generate a pod component with properties specific to that pod
-      this.podsElement.push(
+      podsElement.push(
         <PodComponent 
           // onClick={displayPodMetrics}
           // key={name} 
@@ -65,7 +66,7 @@ class PodsContainer extends React.Component {
 
     return (
       <div id="pods-container">
-        {this.podsElement}
+        {podsElement}
       </div>
     );
   }
