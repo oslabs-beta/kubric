@@ -61,15 +61,28 @@ data:
     </filter>
 
 
-    <match kubernetes.var.log.containers.**.log>
+    <match kubernetes.var.log.containers.*loggen*.log>
       @type elasticsearch
       include_tag_key true
       host "elasticsearch-master.default.svc.cluster.local"
       port "9200"
-      index_name "total-logs"
+      index_name "loggen-app-logs"
       <buffer>
         @type file
-        path /opt/bitnami/fluentd/logs/buffers/total-logs.buffer
+        path /opt/bitnami/fluentd/logs/buffers/loggen-app-logs.buffer
+        flush_thread_count 2
+        flush_interval 5s
+      </buffer>
+    </match>
+    <match kubernetes.var.log.containers.*elasticsearch*.log>
+      @type elasticsearch
+      include_tag_key true
+      host "elasticsearch-master.default.svc.cluster.local"
+      port "9200"
+      index_name "elasticsearch-logs"
+      <buffer>
+        @type file
+        path /opt/bitnami/fluentd/logs/buffers/elasticsearch-logs.buffer
         flush_thread_count 2
         flush_interval 5s
       </buffer>
