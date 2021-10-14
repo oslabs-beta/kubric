@@ -1,17 +1,38 @@
 import React from 'react';
 import PodComponent from '../Components/PodComponent.jsx';
+import { connect } from 'react-redux';
+import * as actions from '../actions/metricsActionCreators.js'
+import PodCpuComponent from '../Components/PodCpuComponent.jsx';
 
 // TODOS: 
 // get pods from Kubernetes and update metric names based on user selections
 // if healthy property is set to true only if all metrics are below user-defined thresholds
 // if a pod has been evicted, the alive property changes to false
 
-function PodsContainer(props){
+const mapStateToProps = state => {
+  return {
+    podCpuMetrics: state.metricsReducer.podCpuMetrics,
+    pods: state.metricsReducer.podList,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    renderPodMetrics: () => dispatch(actions.renderPodMetrics()),
+  }
+}
+
+
+class PodsContainer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
   // array to hold pod components to render
-  const podsElement = [];
+  podsElement = [];
 
   // ASSUMPTION: pods will be an array of objects and be accessed through props???
-  const pods = [
+  pods = [
     {
       dateCreated: 123,
       metric1: 30,
@@ -195,27 +216,31 @@ function PodsContainer(props){
   ]
 
   // iterate through an array pods from the Kubernetes cluster and build an out an array of Pod Components to render:
-  pods.forEach((pod => {
+  render ()
+  {
+    this.pods.forEach((pod => {
     // deconstruct necessary properties from each pod 
-    const { dateCreated, metric1, metric2, metric3, metric4, healthy, alive } = pod;
+      const { dateCreated, metric1, metric2, metric3, metric4, healthy, alive } = pod;
 
-    // generate a pod component with properties specific to that pod
-    podsElement.push(<PodComponent 
-      key={dateCreated} 
-      metric1={metric1} 
-      metric2={metric2} 
-      metric3={metric3} 
-      metric4={metric4} 
-      healthy={healthy} 
-      alive={alive}
-    />);
-  }))
+      // generate a pod component with properties specific to that pod
+      this.podsElement.push(<PodComponent 
+        key={dateCreated} 
+        metric1={metric1} 
+        metric2={metric2} 
+        metric3={metric3} 
+        metric4={metric4} 
+        healthy={healthy} 
+        alive={alive}
+      />);
+    }))
     
-  return (
-    <div id="pods-container">
-      {podsElement}
-    </div>
-  );
+    return (
+      <div id="pods-container">
+        {podsElement}
+      </div>
+    );
+  }
 };
 
-export default PodsContainer;
+
+export default connect(mapStateToProps, mapDispatchToProps)(PodsContainer);

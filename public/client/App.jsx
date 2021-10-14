@@ -28,7 +28,7 @@ function App () {
       </div>
       <div>
         Pods Conatiner:
-        <PodsContainer/>
+        {/* <PodsContainer/> */}
       </div>
       <div>
         Query Container:
