@@ -30,7 +30,6 @@ function GaugeComponent (props) {
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     // console.log('valuesList', valuesList);
-    console.log('Gauge chart values', chartValues);
 
     //get y axix value from name property from metric. Usually the last word of that string.
     function getYAxisValue (name) {

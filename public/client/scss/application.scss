@@ -45,15 +45,16 @@ button {
 
 .pod-component {
   background-color: rgb(133, 204, 133);
-  border-radius: 10%;
+  border-radius: 5%;
   color: whitesmoke;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 200px;
   margin: .5em;
   padding: .1em;
+  // clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
 }
 
 #query-container {

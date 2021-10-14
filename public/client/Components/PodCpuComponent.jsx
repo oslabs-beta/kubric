@@ -8,26 +8,29 @@ function PodCpuComponent (props) {
   const {metric} = props;
   console.log('this is pod metric', metric);
 
-  let timeValues = [];
-  let cpuUseValues = [];
+  const valuesToGraph = [];
   let podName;
+  let number1 = [10000000000000,200000000000000]
   const getValues = (podArray) => {
-
       metric.forEach((eachPod) => {
-        const podName = eachPod.metric.pod;
+        podName = eachPod.metric.pod;
         //array of all time stamps and their values of single pod
-        const timeValue = eachPod.values[0];
-        const cpuUseValue = eachPod.values[1];
-        timeValues.push(timeValue);
-        cpuUseValues.push(cpuUseValue);
+        eachPod.values.forEach((dataPoint) => {
+            valuesToGraph.push([parseFloat(dataPoint[0]), parseFloat(dataPoint[1])]);
+        })
       }) 
-      console.log('cpuValues here', cpuUseValues);
+      console.log(valuesToGraph);
+      console.log(valuesToGraph[0])
+      return valuesToGraph;
   }
-//   getValues(metrics)
+//   [1634171448.491, 0.005295174118518516]
+  getValues(metric);
+  console.log('line 28', valuesToGraph);
+  const dummy = [1,2]
   const podCpuGraphData = {
     type: 'line',
     title: {
-        text: 'Pod Graph',
+        text: 'podName',
     },
     scaleX: {
         labels: 'Timestamp in some Unit',
@@ -37,10 +40,12 @@ function PodCpuComponent (props) {
         labels: 'Memory Use Unit'
     },
     series: [
-        {values : cpuUseValues},
+        {values : number1,
+    },
     ]
   }
 
+  //when do i invoke get values???
   return (
       <div>
           The CPU Pods are below this. . . 

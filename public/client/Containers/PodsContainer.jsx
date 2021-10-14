@@ -45,7 +45,7 @@ class PodsContainer extends React.Component {
       // generate a pod component with properties specific to that pod
       this.podsElement.push(
         <PodComponent 
-          key={name} 
+          // key={name} 
           name={name} 
           cpuValues={cpuValues} 
           memoryValues={memoryValues} 
