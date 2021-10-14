@@ -5,9 +5,9 @@ import ZingChart from 'zingchart-react';
 function HistogramComponent (props) {
   const { help, name, type, values, aggregator } = props.metric;
   const charts = [];
-  console.log('histogram vals', values);
+  // console.log('histogram vals', values);
   const chartName = help.split(',')[0];
-  console.log(chartName);
+  // console.log(chartName);
 
   const getValues = (values) => {
     const valuesList = [];
@@ -43,8 +43,8 @@ function HistogramComponent (props) {
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     // console.log('valuesList', valuesList);
-    console.log(chartInfo);
-    console.log('histogram datapoints: ', chartDataPoints);
+    // console.log(chartInfo);
+    // console.log('histogram datapoints: ', chartDataPoints);
     let histogram = {
       type: 'bar',
       "globals": {

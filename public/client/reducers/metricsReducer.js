@@ -26,7 +26,7 @@ export default function metricsReducer (state = initialState, action) {
     }
     case actionTypes.PODS_CPU_METRICS_RECEIVED: {
       let podCpuMetrics = payload;
-      console.log('pod CPU metrics', podCpuMetrics);
+      // console.log('pod CPU metrics', podCpuMetrics);
 
       return {
         ...state,
@@ -43,7 +43,7 @@ export default function metricsReducer (state = initialState, action) {
     }
     case actionTypes.SERVERAPI_METRICS_RECEIVED: {
       let serverApiMetrics = payload;
-      console.log('serverApiMetrics', payload);
+      // console.log('serverApiMetrics', payload);
 
       return {
         ...state,

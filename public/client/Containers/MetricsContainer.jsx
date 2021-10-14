@@ -10,9 +10,12 @@ const sampleData = JSON.parse('[{"help":"Total user CPU time spent in seconds.",
 
 // TODO: what props are needed from state here?
 const mapStateToProps = (state) => {
+  // console.log('this is state', state);
   return {
     defaultMetrics: state.metricsReducer.defaultMetrics,
-    podCpuMetrics: state.metricsReducer.CPUPods,
+    podCpuMetrics: state.metricsReducer.podCpuMetrics,
+
+    
     
   }
 }
@@ -47,7 +50,7 @@ class MetricsContainer extends React.Component {
     return (
       <div className="metricsContainer">    
         {/* <button onClick={this.forceUpdateHandler}> Render Default Metrics</button> */}
-        <MetricsComponent metrics={this.props.defaultMetrics}/>
+        <MetricsComponent metrics={this.props.defaultMetrics} podCpuMetrics={this.props.podCpuMetrics}/>
       </div>
     )
   }
