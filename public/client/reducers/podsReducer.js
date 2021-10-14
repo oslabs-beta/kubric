@@ -20,6 +20,7 @@ function podsReducer(state = initialState, action) {
         // if this podName doesn't already exist in pods, create it and assign its value to values
         if (!pods[metric.metric.pod]) {
           pods[metric.metric.pod] = {
+            name: metric.metric.pod,
             cpuValues: metric.values,
           }
         }
@@ -39,7 +40,7 @@ function podsReducer(state = initialState, action) {
           }
         }
         else {
-          pods[metric.metric.pod].values = metric.values;
+          pods[metric.metric.pod].memoryValues = metric.values;
         }  
       })
       console.log('pods from pods reducer', pods);

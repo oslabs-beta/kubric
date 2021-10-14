@@ -7,31 +7,44 @@ function PodCpuComponent (props) {
   console.log('this is pod cpu component props', props)
   const {metric} = props;
   console.log('this is pod metric', metric);
-//   const getValues = (podArray) => {
-//     //   const podName = metric.pod;
-//     const podValues = [];
-//       podArray.forEach((pod) => {
-//         const podName = pod.metric.pod;
-//         //array of all time stamps and their values of single pod
-//         const values = pod.values
-//         podValues.push(values)
-//       }) 
-//       return podValues;
-//   }
 
-//   const podCpuGraphData = {
-//     type: 'line',
-//     title: {
-//         text: 'Pod Graph',
-//     },
-//     series: [
-//         {label : getValues(podValues)},
-//     ]
-//   }
+  let timeValues = [];
+  let cpuUseValues = [];
+  let podName;
+  const getValues = (podArray) => {
+
+      metric.forEach((eachPod) => {
+        const podName = eachPod.metric.pod;
+        //array of all time stamps and their values of single pod
+        const timeValue = eachPod.values[0];
+        const cpuUseValue = eachPod.values[1];
+        timeValues.push(timeValue);
+        cpuUseValues.push(cpuUseValue);
+      }) 
+      console.log('cpuValues here', cpuUseValues);
+  }
+//   getValues(metrics)
+  const podCpuGraphData = {
+    type: 'line',
+    title: {
+        text: 'Pod Graph',
+    },
+    scaleX: {
+        labels: 'Timestamp in some Unit',
+
+    },
+    scaleY: {
+        labels: 'Memory Use Unit'
+    },
+    series: [
+        {values : cpuUseValues},
+    ]
+  }
 
   return (
       <div>
-          {/* <ZingChart podData= {podCpuGraphData}>Pod Zing Chart</ZingChart> */}
+          The CPU Pods are below this. . . 
+          <ZingChart data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
       </div>
   )
 
