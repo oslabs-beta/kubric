@@ -17,6 +17,9 @@ function podsReducer(state = initialState, action) {
       // iterate through cpu metrics, memory metrics
       cpuMetrics.forEach( metric => {
         // console.log()
+
+        // TODO: for CPU values, only store the values associated with this pod
+        // TODO: for memory values, only store the values associated with this pod
         // if this podName doesn't already exist in pods, create it and assign its value to values
         if (!pods[metric.metric.pod]) {
           pods[metric.metric.pod] = {
@@ -25,7 +28,7 @@ function podsReducer(state = initialState, action) {
             displayMetrics: false,
             healthy: true,
             alive: true,
-            displayMetrics: false,
+            // displayMetrics: false,
           }
         }
         else {

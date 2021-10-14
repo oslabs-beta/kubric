@@ -33,7 +33,7 @@ class PodComponent extends React.Component {
   // }
   // console.log('props of each podcomponent: ', props)
   render() {
-    console.log('props from pod component', this.props);
+    
     return (
       <div className= "pod-component" onClick={() => this.props.displayPodMetrics(this.props.name)}>
           {this.props.name}

@@ -27,23 +27,23 @@ class MetricsComponent extends React.Component {
     super(props);
   }
 
-  metricsToRender =  [];
+  // metricsToRender =  [];
   
-  componentDidMount() {
-    console.log('metrics component did mount');
-  }
+  // componentDidMount() {
+  //   console.log('metrics component did mount');
+  // }
 
-  componentDidUpdate () {
-    console.log('metrics component did update');
-  }
+  // componentDidUpdate () {
+  //   console.log('metrics component did update');
+  // }
 
   render(){
     console.log('the pod cpu metrics', this.props)
-    
+    const metricsToRender =  [];
     // // iterate through received metrics
     if (this.props.podCpuMetrics) {
-      const cpuGauge = <PodCpuComponent metric = {this.props.podCpuMetrics}/>
-      this.metricsToRender.push(cpuGauge);
+      const cpuGauge = <PodCpuComponent metric = {this.props.podCpuMetrics} pods={this.props.pods}/>
+      metricsToRender.push(cpuGauge);
     }
     if (this.props.metrics) {
       // iterate through all metrics, grouping them by first part of name?
@@ -56,26 +56,26 @@ class MetricsComponent extends React.Component {
         // if type: counter, build a counter component and push to array
         if (metric.type === 'counter') {
           const counter = <CounterComponent metric={metric}/>
-          this.metricsToRender.push(counter);
+          metricsToRender.push(counter);
         }
         // if type: gauge, build a gauge component and push to array
         else if (metric.type === 'gauge') {
           const gauge = <GaugeComponent metric={metric}/>
-          this.metricsToRender.push(gauge);
+          metricsToRender.push(gauge);
         }
         // if type: histogram, build a histogram component and push to array
         else if (metric.type === 'histogram') {
           const histogram = <HistogramComponent metric={metric}/>
-          this.metricsToRender.push(histogram);
+          metricsToRender.push(histogram);
         }
       })
     }
-    // console.log('what is metricsToRender',this.metricsToRender);
+    // console.log('what is metricsToRender',metricsToRender);
     
     // return dev containing the metrics array to the screen
     return (
       <div className="metricsComponent">    
-        {this.metricsToRender}
+        {metricsToRender}
       </div>
     )
   }
