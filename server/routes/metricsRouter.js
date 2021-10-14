@@ -6,8 +6,10 @@ const metricsRouter = Router();
 metricsRouter.get(
   '/',
   metricsController.getDefaultMetrics,
-  metricsController.getCPUByPod,
-  metricsController.getMemoryByPod,
+  metricsController.getCPUByPods,
+  metricsController.getCPUByNodes,
+  metricsController.getMemoryByPods,
+  metricsController.getMemoryByNodes,
   metricsController.getServerAPIMetrics,
   //sending a compiled object with each middleware's data with an unique property name (middleware's name without 'get')
   (req,res)=> res.status(200).json(res.locals.metrics)
