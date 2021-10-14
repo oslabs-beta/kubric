@@ -10,7 +10,6 @@ function PodCpuComponent (props) {
 
   const valuesToGraph = [];
   let podName;
-  let number1 = [10000000000000,200000000000000]
   const getValues = (podArray) => {
       metric.forEach((eachPod) => {
         podName = eachPod.metric.pod;
@@ -19,8 +18,8 @@ function PodCpuComponent (props) {
             valuesToGraph.push([parseFloat(dataPoint[0]), parseFloat(dataPoint[1])]);
         })
       }) 
-      console.log(valuesToGraph);
-      console.log(valuesToGraph[0])
+      // console.log(valuesToGraph);
+      // console.log(valuesToGraph[0])
       return valuesToGraph;
   }
 //   [1634171448.491, 0.005295174118518516]
@@ -40,8 +39,9 @@ function PodCpuComponent (props) {
         labels: 'Memory Use Unit'
     },
     series: [
-        {values : number1,
-    },
+        {
+          values: valuesToGraph[0],
+        }
     ]
   }
 

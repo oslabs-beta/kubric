@@ -11,7 +11,7 @@ function podsReducer(state = initialState, action) {
   switch (type) {
     case actionTypes.RECEIVE_PODS:
       const { cpuMetrics, memoryMetrics } = payload
-      console.log('inside podsReducer', payload);
+      
       let pods = {};
       // add logic here
       // iterate through cpu metrics, memory metrics
@@ -22,6 +22,10 @@ function podsReducer(state = initialState, action) {
           pods[metric.metric.pod] = {
             name: metric.metric.pod,
             cpuValues: metric.values,
+            displayMetrics: false,
+            healthy: true,
+            alive: true,
+            displayMetrics: false,
           }
         }
         else {
@@ -43,9 +47,14 @@ function podsReducer(state = initialState, action) {
           pods[metric.metric.pod].memoryValues = metric.values;
         }  
       })
-      console.log('pods from pods reducer', pods);
+      // console.log('pods from pods reducer', pods);
       
       return {...state, pods};
+    case actionTypes.DISPLAY_POD_METRICS:
+      const { pod } = payload;
+      console.log('trying to update state on click', pod);
+
+      return {...state};
     default: 
       return state;
   }

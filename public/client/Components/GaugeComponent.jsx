@@ -76,10 +76,6 @@ function GaugeComponent (props) {
     )
   };
 
-  // ZingChart.render({
-
-  // })
-
   return (
     <div className="gaugeComponent">
       <ul className={type}>

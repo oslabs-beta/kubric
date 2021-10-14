@@ -10,7 +10,7 @@ import PodCpuComponent from '../Components/PodCpuComponent.jsx';
 // if a pod has been evicted, the alive property changes to false
 
 const mapStateToProps = state => {
-  console.log('state from podscontainer: ',state);
+  // console.log('state from podscontainer: ',state);
   return {
     podCpuMetrics: state.metricsReducer.podCpuMetrics,
     pods: state.podsReducer.pods,
@@ -38,23 +38,25 @@ class PodsContainer extends React.Component {
     // this.props.pods.forEach((pod => {
     // // deconstruct necessary properties from each pod 
     //   const { name, cpuValues, memoryValues } = pod;
-    console.log('render of pods container, ', this.props.pods );
+    // console.log('render of pods container, ', this.props.pods );
     for (let pod in this.props.pods) {
       // console.log(pod);
-      const { name, cpuValues, memoryValues } = this.props.pods[pod];
+      const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.pods[pod];
       // generate a pod component with properties specific to that pod
       this.podsElement.push(
         <PodComponent 
+          // onClick={displayPodMetrics}
           // key={name} 
           name={name} 
           cpuValues={cpuValues} 
           memoryValues={memoryValues} 
-          // healthy={healthy} 
-          // alive={alive}
+          healthy={healthy} 
+          alive={alive}
+          displayMetrics={displayMetrics}
         />
       );
     }
-    console.log('podsElement after iteration', this.podsElement);
+    // console.log('podsElement after iteration', this.podsElement);
       
     // }))
     

@@ -26,7 +26,10 @@ function App () {
         Configuration Container:
         <ConfigContainer/>
       </div>
-      
+      <div>
+        Pods Conatiner:
+        <PodsContainer/>
+      </div>
       <div>
         Query Container:
         <QueryContainer/>
@@ -39,10 +42,7 @@ function App () {
         Cluster Default Metrics:
         <MetricsContainer/>
       </div>
-      <div>
-        Pods Conatiner:
-        <PodsContainer/>
-      </div>
+      
     </div>
   )
 };
