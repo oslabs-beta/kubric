@@ -32,6 +32,8 @@ class PodsContainer extends React.Component {
   // array to hold pod components to render
   podsElement = [];
 
+  
+
   // iterate through an array pods from the Kubernetes cluster and build an out an array of Pod Components to render:
   render () {
     // console.log('render of pods container', this.props);

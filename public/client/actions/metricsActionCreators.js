@@ -68,10 +68,10 @@ export const getPods = (cpuMetrics, memoryMetrics) => {
   }
 }
 
-export const displayPodMetrics = (pod) => {
-  console.log('from actioncreater', pod);
+export const displayPodMetrics = (podName) => {
+  console.log('from actioncreater');
   return {
     type: actionTypes.DISPLAY_POD_METRICS,
-    payload: pod
+    payload: podName,
   }
 }

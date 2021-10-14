@@ -10,13 +10,13 @@ const mapStateToProps = state => {
   // console.log(this);
   // console.log('from pods comp: ', state.podsReducer.pods[this.props.name] ? state.podsReducer.pods[this.props.name] : {})
   return {
-    // pod: state.podsReducer.pods
+    pod: state.podsReducer.pods
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    displayPodMetrics: () => dispatch(actions.displayPodMetrics(this.props)),
+    displayPodMetrics: (podName) => dispatch(actions.displayPodMetrics(podName)),
   }
 }
 
@@ -35,7 +35,7 @@ class PodComponent extends React.Component {
   render() {
     console.log('props from pod component', this.props);
     return (
-      <div className= "pod-component" onClick={this.props.displayPodMetrics}>
+      <div className= "pod-component" onClick={() => this.props.displayPodMetrics(this.props.name)}>
           {this.props.name}
       </div>
     );

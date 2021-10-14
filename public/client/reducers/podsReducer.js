@@ -51,10 +51,15 @@ function podsReducer(state = initialState, action) {
       
       return {...state, pods};
     case actionTypes.DISPLAY_POD_METRICS:
-      const { pod } = payload;
-      console.log('trying to update state on click', pod);
+      const podName = payload;
+      console.log('trying to update state on click', podName);
+      console.log(state.pods[podName].displayMetrics);
+      const podsObj = state.pods;
+      const pod = state.pods[podName];
+      pod.displayMetrics = pod.displayMetrics ? false : true;
 
-      return {...state};
+      podsObj[podName] = pod;
+      return {...state, pods: podsObj};
     default: 
       return state;
   }
