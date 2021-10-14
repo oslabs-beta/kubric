@@ -1,10 +1,12 @@
 const { Router } = require('express');
-const {getElasticLogs} = require('../controllers/logsController');
+const {getAppLogs,getAppFields, getIndices} = require('../controllers/logsController');
 const logsRouter = Router();
 
-logsRouter.get('/',getElasticLogs,(req,res)=>{
-    console.log(res.locals.elastic)
-    res.status(200).json({elastic:res.locals.elastic})
+logsRouter.get('/app',getAppLogs,(req,res)=>{
+    res.status(200).json({appLogs:res.locals.appLogs})
+})
+logsRouter.get('/appFields',getIndices,getAppFields,(req,res)=>{
+    res.status(200).json({appFields:res.locals.appFields})
 })
 
 module.exports = logsRouter;
