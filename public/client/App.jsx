@@ -28,19 +28,18 @@ function App () {
         <ConfigContainer/>
       </div> */}
       <div>
-        Pods Conatiner:
+        Pods
         <PodsContainer/>
       </div>
       <div>
-        Cluster Default Metrics:
+        Pod Metrics
         <MetricsContainer/>
       </div>
       <div>
-        Query Container:
+        Query Logs
         <QueryContainer/>
       </div>
       <div>
-        Log Container:
         <LogContainer/>
       </div>
       

@@ -50,23 +50,52 @@ class PodCpuComponent extends React.Component {
     const dummy = [1,2]
     const podCpuGraphData = {
       type: 'mixed',
+      "globals": {
+        "font-family": "Georgia",
+        "background-color": "#79B4B7",
+        "border-radius" : 5,
+      },
       title: {
           text: 'cpu by pods',
+          "font-color": "dark-grey",
+          "font-size": "20em",
+          "alpha": 1,
+          "adjust-layout": true,
       },
+      // "plot": {
+      //   'width':'100%',
+      //   'height': '100%',
+      // },
+      // "plotarea": {
+      //     "margin": "dynamic",
+      //     'width':'100%',
+      //     'height': '100%',
+      // },
       scaleX: {
           labels: 'Timestamp in some Unit',
-
+          "item": {
+            'font-color': "dark-grey",
+            'font-weight': 'normal',
+          },
       },
       scaleY: {
-          labels: 'Memory Use Unit'
+          labels: 'Memory Use Unit',
+          "item": {
+            'font-color': "dark-grey",
+            'font-weight': 'normal',
+          },
+      },
+      "crosshair-x": {
+        "line-width": "100%",
+        "alpha": 0.18,
       },
       series: valuesToGraph
     }
 
     //when do i invoke get values???
     return (
-        <div> 
-            <ZingChart data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
+        <div className="chart"> 
+            <ZingChart  data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }
