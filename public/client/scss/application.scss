@@ -36,24 +36,34 @@ button {
 #pods-container {
   // background-color: #457B9D;
   border-color: #457B9D;
+  background-color:  #457B9D;
   border-width: .25em;
   border-style: solid;
-  padding: .5em;
+  padding: 5.5em 3.5em 3.5em;
   display: flex;
   flex-wrap: wrap;
+  // align-items: center;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 300px;
+  clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
 }
 
 .pod-component {
-  background-color: rgb(133, 204, 133);
-  border-radius: 10%;
+  background-color: rgb(49, 113, 49);
+  border-radius: 2.5%;
   color: whitesmoke;
   font-weight: bold;
   text-align: center;
+  
+  font-size: .75vh;
   vertical-align: middle;
-  height: 50px;
-  width: 50px;
+  height: 5em;
+  width: 7.5em;
   margin: .5em;
   padding: .1em;
+  // clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
 }
 
 #query-container {
@@ -107,4 +117,8 @@ button {
 
 .histogram {
   background-color: rgb(180, 98, 114);
+}
+
+.chart {
+  width: 80%;
 }

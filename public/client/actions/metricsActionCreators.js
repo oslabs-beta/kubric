@@ -15,9 +15,11 @@ export const fetchDefaultMetrics = () => {
         console.log('response from /api/metrics', response.data);
         // console.log(response.data);
         dispatch(getDefaultMetrics(response.data.defaultMetrics));
+        dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
         dispatch(getPodCpuMetrics(response.data.CPUPods));
         dispatch(getPodMemoryMetrics(response.data.MemoryPods));
         dispatch(getServerApiMetrics(response.data.serverAPI));
+        
       })
       .catch (err => console.log(`error in dispatch default metrics fetch: ${err}`))    
   }
@@ -49,5 +51,27 @@ export const getServerApiMetrics = metrics => {
   return {
     type: actionTypes.SERVERAPI_METRICS_RECEIVED,
     payload: metrics,
+  }
+}
+
+export const renderPodMetrics = (podName, metrics) => {
+  return {
+    type: actionTypes.RENDER_POD_METRICS,
+    payload: {podName, metrics}
+  }
+}
+
+export const getPods = (cpuMetrics, memoryMetrics) => {
+  return {
+    type: actionTypes.RECEIVE_PODS,
+    payload: {cpuMetrics, memoryMetrics},
+  }
+}
+
+export const displayPodMetrics = (podName) => {
+  console.log('from actioncreater');
+  return {
+    type: actionTypes.DISPLAY_POD_METRICS,
+    payload: podName,
   }
 }
