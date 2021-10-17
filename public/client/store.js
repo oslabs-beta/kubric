@@ -1,15 +1,14 @@
 import { combineReducers, applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import podsReducer from './reducers/podsReducer.js';
-import servicesReducer from './reducers/servicesReducer.js';
-import metricsReducer from './reducers/metricsReducer.js';
-
-
+import podsReducer from './reducers/podsReducer';
+import servicesReducer from './reducers/servicesReducer';
+import metricsReducer from './reducers/metricsReducer';
+import logsReducer from './reducers/logsReducer';
 const rootReducer = combineReducers({
   // deploymentsReducer,
   // ingressesReducer,
   metricsReducer,
-  // nodesReducer,
+  logsReducer,
   podsReducer,
   servicesReducer,
   // ADD ANY NEW REDUCERS HERE

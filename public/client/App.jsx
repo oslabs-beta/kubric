@@ -6,6 +6,7 @@ import ConfigContainer from './Containers/ConfigContainer.jsx';
 import PodsContainer from './Containers/PodsContainer.jsx';
 import MetricsComponent from './Components/MetricsComponent.jsx';
 import MetricsContainer from './Containers/MetricsContainer.jsx';
+import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
 
 // TODO: Routing or logic to determine which containers to render at what points
 // TODO: replace sampleData as property passed to MetricsComponent with a call to fetch default metrics via Prometheus

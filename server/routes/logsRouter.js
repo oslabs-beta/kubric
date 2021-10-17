@@ -6,7 +6,7 @@ logsRouter.get('/app',getAppLogs,(req,res)=>{
     res.status(200).json({appLogs:res.locals.appLogs})
 })
 logsRouter.get('/appFields',getIndices,getAppFields,(req,res)=>{
-    res.status(200).json({appFields:res.locals.appFields})
+    res.status(200).json(res.locals.appFields)
 })
 
 module.exports = logsRouter;
