@@ -1,14 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import LogRowComponent from '../Components/LogRowComponent.jsx'
-
+import * as actions from '../actions/logsActionCreator.js';
 // TODO: edit the buildLogRows helper function to pass in appropriate properties
+const mapStateToProps = (state) => {
+  return {
+    appLogs: state.logsReducer.appLogs,
+  }
+}
 
-function LogContainer(props){
-  // array to hold log rows components to render
-  const logsElement = [];
+class LogContainer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render(){
+    const logsElement = [];
 
   // ASSUMPTION: logs will be an array of objects and be accessed through props???
-  const logs = [
+    const logs = [
     {
       logDate: 1234,
       logType: 'ERROR',
@@ -37,12 +46,12 @@ function LogContainer(props){
     // generate a logRow component with properties specific to that log
     logsElement.push(<LogRowComponent key={logDate} logDate={logDate} logType={logType} podName={podName} logMessage={logMessage}/>)
   }))
-    
-  return (
+  return(
     <div id="log-container">
       {logsElement}
     </div>
-  );
+  )
+};
 };
 
-export default LogContainer;
+export default connect(mapStateToProps, null)(LogContainer);

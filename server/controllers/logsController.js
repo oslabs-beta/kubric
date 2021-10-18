@@ -53,19 +53,31 @@ client.indices.getMapping({
         next({'error':err})
     }
     else {
-        const fieldsArr = []
+        const fieldsObj = {}
         for(entry in result.body){
-            console.log("hello",entry,result.body[entry])
-        fieldsArr.push(flattenLogFields(result.body[entry]))
+        fieldsObj[entry] = flattenLogFields(result.body[entry].mappings.properties)
         }
-        res.locals.appFields = fieldsArr;
+        res.locals.appFields = fieldsObj;
         next();
     }
 })
 }
-const flattenLogFields = (mapping) => {
-    console.log("flattenLogFields",mapping.mappings);
-return mapping;
+const flattenLogFields = (fields) => {
+    const fieldKeys = [];
+    const nested = (input) => {
+        for(key in input){
+            if(input[key].properties){
+                const keys = Object.keys(input[key].properties)
+                const nestedKeyStrings = keys.map((elem)=>{
+                    return `${key}.${elem}`
+                })
+                fieldKeys.push(nestedKeyStrings);
+            } 
+            else(fieldKeys.push(key));
+        }
+    }
+    nested(fields);
+return fieldKeys.flat();
 }
 
 module.exports = logsController;
