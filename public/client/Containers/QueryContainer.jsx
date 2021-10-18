@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/logsActionCreator.js';
-import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
+
 const mapStateToProps = (state) => {
   return {
     appLogFields: state.logsReducer.appLogFields,
@@ -49,7 +49,7 @@ class QueryContainer extends React.Component {
     }
   }
   componentDidMount() {
-    setInterval(this.getFields,1000)
+    //setInterval(this.getFields,1000)
     
     // console.log('props after fetched in Component did mount', this.props);
   }
