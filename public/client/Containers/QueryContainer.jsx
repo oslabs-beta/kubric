@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/logsActionCreator.js';
-import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 const mapStateToProps = (state) => {
   return {
     appLogFields: state.logsReducer.appLogFields,
@@ -49,7 +52,7 @@ class QueryContainer extends React.Component {
     }
   }
   componentDidMount() {
-    setInterval(this.getFields,1000)
+    // setInterval(this.getFields,1000)
     
     // console.log('props after fetched in Component did mount', this.props);
   }
@@ -75,26 +78,59 @@ class QueryContainer extends React.Component {
   render(){
     
     return (
-      <div >
-        <label htmlFor="Index">Choose Index Name:</label>
-            <select name="Index" id="Index">
-            {this.indices}
-            </select>
-            <label htmlFor="Field">Choose Field Name:</label>
-            <select name="Field" id="Field">
-            {this.fields}
-            </select>
-            <input placeholder="Value"/>
-           <button onClick={this.sendQuery}>Query</button>
-          
-      {/* //     <input className="query-string-input query-parameter" placeholder="query logs"></input>
-      //     <button className="primary-btn" id="submitQuery">Submit Query</button>
-      //     <button className="secondary-btn" id="resetQuery">Reset Query</button>
-      //     filter menu component */}
-        </div>
+      <div style={{display: "flex"}}>
+        <Autocomplete
+          disablePortal
+          id="index"
+          options={testQueryIndex}
+          // {this.indices}
+          sx={{width: 300}}
+          renderInput={(params) => <TextField {...params} label="Indices"/>}
+        />
+        <Autocomplete
+          disablePortal
+          id="field"
+          options={testQueryField}
+          // {this.fields}
+          sx={{width: 300}}
+          renderInput={(params) => <TextField {...params} label="Fields"/>}
+        />
+        <TextField  id="query" label="Query" variant="outlined" />
+        <Button variant="contained" onClick={this.sendQuery}>Search</Button>
+      </div>
   );
   }
   
 };
+
+/*
+<label htmlFor="Index">Choose Index Name:</label>
+ { <select name="Index" id="Index">
+    {this.indices}
+   </select> }
+
+  <label htmlFor="Field">Choose Field Name:</label> 
+   <select name="Field" id="Field">
+    {this.fields}
+  </select> 
+   <input placeholder="Value"/> 
+
+   //     <input className="query-string-input query-parameter" placeholder="query logs"></input>
+      //     <button className="primary-btn" id="submitQuery">Submit Query</button>
+      //     <button className="secondary-btn" id="resetQuery">Reset Query</button>
+      //     filter menu component           
+*/
+
+//store it with property named label;
+const testQueryIndex = [
+  {label: "loggen-app"},
+  {label: "fluent-d1231"}
+]
+
+const testQueryField = [
+  {label: "type"},
+  {label: "podName"}
+]
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryContainer);
