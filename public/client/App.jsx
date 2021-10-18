@@ -9,7 +9,7 @@ import MetricsContainer from './Containers/MetricsContainer.jsx';
 // import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
 
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-import ChartContainer from './Containers/ChartContainer.jsx';
+import PodChartContainer from './Containers/PodChartContainer.jsx';
 
 // const rows = [
 //   { id: 1, col1: 'Hello', col2: 'World' },
@@ -85,7 +85,7 @@ function App () {
         <ConfigContainer/>
       </div> */}
       <div>
-        <ChartContainer/>
+        <PodChartContainer/>
       </div>
       {/* <div style={{ height: 400, width: "100%" }}>
         <DataGrid

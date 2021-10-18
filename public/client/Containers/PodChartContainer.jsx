@@ -5,9 +5,9 @@ import Divider from '@mui/material/Stack';
 import Item from '@mui/material/Stack';
 import ZingChart from 'zingchart-react';
 import PodCpuComponent from '../Components/PodCpuComponent.jsx'
-import MemoryComponent from '../Components/MemoryComponent.jsx';
+import PodMemoryComponent from '../Components/PodMemoryComponent.jsx';
 
-export default function ChartContainer() {
+export default function PodChartContainer() {
 
   const charts = {
 
@@ -19,7 +19,7 @@ export default function ChartContainer() {
       spacing={2}
     >
       <PodCpuComponent style="width: 50%"/>
-      <MemoryComponent style="width: 50%"/>
+      <PodMemoryComponent style="width: 50%"/>
       
     </Stack>
   );

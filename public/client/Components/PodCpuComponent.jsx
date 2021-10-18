@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    pods: state.podsReducer.pods
+    pods: state.podsReducer.pods,
+    nodes: state.nodesReducer.nodes,
   }
 }
 
@@ -19,9 +20,7 @@ class PodCpuComponent extends React.Component {
   }
 
   render() {
-    // console.log('this is pod cpu component props', this.props)
     const {metric, pods} = this.props;
-    // console.log('this is pod metric', metric);
 
     const valuesToGraph = [];
     let podName;
@@ -30,7 +29,6 @@ class PodCpuComponent extends React.Component {
         const podValues = [];
         
         if (pods[pod].displayMetrics) {
-          // console.log('do we get here?');
           pods[pod].cpuValues.forEach(dataPoint => {
             const date = new Date(dataPoint[0]);
             const hours = date.getHours();

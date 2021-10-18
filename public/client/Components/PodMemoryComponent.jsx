@@ -9,7 +9,7 @@ const mapStateToProps = state => {
   }
 }
 
-class MemoryComponent extends React.Component {
+class PodMemoryComponent extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -113,4 +113,4 @@ class MemoryComponent extends React.Component {
 
   }
 
-export default connect(mapStateToProps, null)(MemoryComponent);
+export default connect(mapStateToProps, null)(PodMemoryComponent);
