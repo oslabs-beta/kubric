@@ -34,14 +34,13 @@ function GaugeComponent (props) {
     //get y axix value from name property from metric. Usually the last word of that string.
     function getYAxisValue (name) {
       let nameAsArray = name.split('_');
-      // console.log('y axis name', nameAsArray[nameAsArray.length-1]);
       let result = nameAsArray[nameAsArray.length-1];
       if (result === 'bytes') result = 'Megabytes';
       return result;
     }
 
     const myData = {
-      type: 'line',
+      type: 'pie',
       title: {
         text: help,
         fontSize: 30,
@@ -76,10 +75,6 @@ function GaugeComponent (props) {
       </div>
     )
   };
-
-  // ZingChart.render({
-
-  // })
 
   return (
     <div className="gaugeComponent">

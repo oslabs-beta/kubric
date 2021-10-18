@@ -8,6 +8,7 @@ import MetricsComponent from './Components/MetricsComponent.jsx';
 import MetricsContainer from './Containers/MetricsContainer.jsx';
 import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
 
+
 // TODO: Routing or logic to determine which containers to render at what points
 // TODO: replace sampleData as property passed to MetricsComponent with a call to fetch default metrics via Prometheus
 
@@ -19,30 +20,31 @@ function App () {
   return (
     <div>
       Kubric
-      <div>
+      {/* <div>
         Login Container:
         <LoginContainer/>
       </div>
       <div>
         Configuration Container:
         <ConfigContainer/>
-      </div>
+      </div> */}
       <div>
-        Pods Conatiner:
+        Pods
         <PodsContainer/>
       </div>
       <div>
-        Query Container:
+        Pod Metrics
+        <MetricsContainer/>
+      </div>
+      <div>
+        Query Logs
         <QueryContainer/>
       </div>
       <div>
-        Log Container:
         <LogContainer/>
       </div>
-      <div>
-        Cluster Default Metrics:
-        <MetricsContainer/>
-      </div>
+      
+      
     </div>
   )
 };

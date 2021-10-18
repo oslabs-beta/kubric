@@ -5,9 +5,9 @@ import ZingChart from 'zingchart-react';
 function HistogramComponent (props) {
   const { help, name, type, values, aggregator } = props.metric;
   const charts = [];
-  console.log('histogram vals', values);
+  // console.log('histogram vals', values);
   const chartName = help.split(',')[0];
-  console.log(chartName);
+  // console.log(chartName);
 
   const getValues = (values) => {
     const valuesList = [];
@@ -43,17 +43,19 @@ function HistogramComponent (props) {
       valuesList.push(<li><span>{value} </span><span>  | <i>{labelsList}</i></span></li>);
     })
     // console.log('valuesList', valuesList);
-    console.log(chartInfo);
-    console.log('histogram datapoints: ', chartDataPoints);
+    // console.log(chartInfo);
+    // console.log('histogram datapoints: ', chartDataPoints);
     let histogram = {
       type: 'bar',
       "globals": {
-        "font-family": "Roboto",
-        "background-color": 'black',
+        "font-family": "Georgia",
+        "background-color": "#79B4B7",
+        "border-radius" : 5,
+
       },
       title: {
         'text': chartName,
-        "font-color": "whitesmoke",
+        "font-color": "dark-grey",
         "backgroundColor": "none",
         "font-size": "20em",
         "alpha": 1,
@@ -61,34 +63,34 @@ function HistogramComponent (props) {
       },
       "plot": {
         'width':'100%',
-        'height': '100%'
+        'height': '100%',
       },
       "plotarea": {
           "margin": "dynamic",
           'width':'100%',
-          'height': '100%'
+          'height': '100%',
       },
       "scale-x":{  
         "item": {
-          'font-color': "whitesmoke",
+          'font-color': "dark-grey",
           'font-weight': 'normal',
         },
         label: {
           text: "Kind",
           "font-size": "15em",
-          'font-color': "whitesmoke",
+          'font-color': "dark-grey",
         },
-        "values": chartInfo.chartLabel,  
+        "values": [],  
       },
       "scale-y":{  
         "item": {
-          'font-color': "whitesmoke",
+          'font-color': "dark-grey",
           'font-weight': 'normal',
         },
         label: {
           text: "Time",
           "font-size": "15em",
-          "font-color": "whitesmoke",
+          "font-color": "dark-grey",
         },
         format: '%v ms',
         text: "Measure of Garbage"
@@ -109,7 +111,8 @@ function HistogramComponent (props) {
       },
       series: [{
         values: chartInfo.chartValues,
-        'background-color': "white", 
+        'background-color': "#9C79B7", 
+        'offset-r': "15%",
         alpha: .75, 
       }]
     }
@@ -118,20 +121,21 @@ function HistogramComponent (props) {
     }
     return (
       <div>
-        <ul>
+        {/* <ul>
           {valuesList}
-        </ul>
+        </ul> */}
         <ZingChart data={ histogram }>Zing Chart</ZingChart>
       </div>
     )
   };
 
   return (
-    <div className="histogramComponent">
+    <div className="histogramComponent chart">
+      {getValues(values)}
       <ul className={type}>
-        <li>Description: {help}</li>
-        <li>({name})</li>
-        <li>Values: {getValues(values)}</li> 
+        {/* <li>Description: {help}</li> */}
+        {/* <li>({name})</li> */}
+        {/* <li>{getValues(values)}</li>  */}
       </ul>
     </div>
   );
