@@ -38,9 +38,8 @@ class MetricsComponent extends React.Component {
   // }
 
   render(){
-    // console.log('the pod cpu metrics', this.props)
     const metricsToRender =  [];
-    console.log('props from metrics component:', this.props);
+    // console.log('props from metrics component:', this.props);
     // // iterate through received metrics
     if (this.props.podCpuMetrics) {
       const cpuGauge = <PodCpuComponent metric = {this.props.podCpuMetrics} pods={this.props.pods}/>

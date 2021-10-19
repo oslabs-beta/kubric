@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    nodes: state.podsReducer.nodes
+    nodes: state.nodesReducer.nodes
   }
 }
 
@@ -19,18 +19,18 @@ class NodeMemoryComponent extends React.Component {
 
   render() {
     // console.log('this is pod cpu component props', this.props)
-    const {metric, pods} = this.props;
+    const {metric, nodes} = this.props;
     // console.log('this is pod metric', metric);
 
     const valuesToGraph = [];
-    let podName;
-    const getValues = (pods) => {
-      for (let pod in pods) {
-        const podValues = [];
+    let nodeName;
+    const getValues = (nodes) => {
+      for (let node in nodes) {
+        const nodeValues = [];
         
-        if (pods[pod].displayMetrics) {
+        if (nodes[node].displayMetrics) {
           // console.log('do we get here?');
-          pods[pod].memoryValues.forEach(dataPoint => {
+          nodes[node].values.forEach(dataPoint => {
             const date = new Date(dataPoint[0]);
             const hours = date.getHours();
             const minutes = date.getMinutes();
@@ -38,23 +38,23 @@ class NodeMemoryComponent extends React.Component {
             const milliseconds = date.getMilliseconds();
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             
-            podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
+            nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
           });
           valuesToGraph.push(
             {
               type: "line",
-              text: pods[pod].name,
-              values: podValues,
+              text: nodes[node].name,
+              values: nodeValues,
             }
           );
         }
       }    
     }
   //   [1634171448.491, 0.005295174118518516]
-    getValues(pods);
+    getValues(nodes);
     // console.log('line 28', valuesToGraph);
     const dummy = [1,2]
-    const podMemoryGraphData = {
+    const nodeMemoryGraphData = {
       type: 'mixed',
       "globals": {
         "font-family": "Roboto",
@@ -100,7 +100,7 @@ class NodeMemoryComponent extends React.Component {
 
     return (
         <div className="chart"> 
-            <ZingChart  data = {podMemoryGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart  data = {nodeMemoryGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }
