@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    nodes: state.nodesReducer.nodes,
+    nodes: state.podsReducer.nodes
   }
 }
 
-class NodeCpuComponent extends React.Component {
+class NodeMemoryComponent extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -18,16 +18,19 @@ class NodeCpuComponent extends React.Component {
   }
 
   render() {
-    const {metric, nodes} = this.props;
+    // console.log('this is pod cpu component props', this.props)
+    const {metric, pods} = this.props;
+    // console.log('this is pod metric', metric);
 
     const valuesToGraph = [];
-    let nodeName;
-    const getValues = (nodes) => {
-      for (let node in nodes) {
-        const nodeValues = [];
+    let podName;
+    const getValues = (pods) => {
+      for (let pod in pods) {
+        const podValues = [];
         
-        if (nodes[node].displayMetrics) {
-          nodes[node].cpuValues.forEach(dataPoint => {
+        if (pods[pod].displayMetrics) {
+          // console.log('do we get here?');
+          pods[pod].memoryValues.forEach(dataPoint => {
             const date = new Date(dataPoint[0]);
             const hours = date.getHours();
             const minutes = date.getMinutes();
@@ -35,23 +38,23 @@ class NodeCpuComponent extends React.Component {
             const milliseconds = date.getMilliseconds();
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             
-            nodeValues.push([time, parseFloat(dataPoint[1])]);
+            podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
           });
           valuesToGraph.push(
             {
               type: "line",
-              text: nodes[node].name,
-              values: nodeValues,
+              text: pods[pod].name,
+              values: podValues,
             }
           );
         }
       }    
     }
   //   [1634171448.491, 0.005295174118518516]
-    getValues(nodes);
+    getValues(pods);
     // console.log('line 28', valuesToGraph);
     const dummy = [1,2]
-    const nodeCpuGraphData = {
+    const podMemoryGraphData = {
       type: 'mixed',
       "globals": {
         "font-family": "Roboto",
@@ -59,7 +62,7 @@ class NodeCpuComponent extends React.Component {
         "border-radius" : 5,
       },
       title: {
-          text: 'CPU Usage Over Time',
+          text: 'Memory in MB Over Time',
           "font-color": "dark-grey",
           "font-size": "20em",
           "alpha": 1,
@@ -95,10 +98,9 @@ class NodeCpuComponent extends React.Component {
       series: valuesToGraph
     }
 
-    //when do i invoke get values???
     return (
         <div className="chart"> 
-            <ZingChart  data = {nodeCpuGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart  data = {podMemoryGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }
@@ -111,4 +113,4 @@ class NodeCpuComponent extends React.Component {
 
   }
 
-export default connect(mapStateToProps, null)(NodeCpuComponent);
+export default connect(mapStateToProps, null)(NodeMemoryComponent);

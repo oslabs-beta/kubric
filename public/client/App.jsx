@@ -6,6 +6,9 @@ import ConfigContainer from './Containers/ConfigContainer.jsx';
 import PodsContainer from './Containers/PodsContainer.jsx';
 import MetricsComponent from './Components/MetricsComponent.jsx';
 import MetricsContainer from './Containers/MetricsContainer.jsx';
+import NodeXContainer from './Containers/NodeXContainer.jsx';
+import NodeChartContainer from './Containers/NodeChartContainer.jsx';
+import PodChartContainer from './Containers/PodChartContainer.jsx';
 import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@mui/styles';
 
@@ -122,6 +125,13 @@ function App () {
       <div>
         Pods
         <PodsContainer/>
+      </div>
+      <div>
+        <NodeChartContainer/>
+      </div>
+      <div>
+        Nodes
+        <NodeXContainer/>
       </div>
       <div>
         Pod Metrics

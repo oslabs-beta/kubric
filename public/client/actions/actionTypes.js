@@ -20,3 +20,4 @@ export const SELECT_INDEX = 'SELECT_INDEX';
 // node stuff
 export const RECEIVE_NODES = 'RECEIVE_NODES'; 
 export const DISPLAY_NODE_METRICS = 'DISPLAY_NODE_METRICS';
+export const RENDER_NODE_METRICS = 'RENDER_NODE_METRICS';

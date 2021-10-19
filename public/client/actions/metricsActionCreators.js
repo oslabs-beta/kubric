@@ -90,3 +90,10 @@ export const displayNodeMetrics = (nodeName) => {
     payload: nodeName,
   }
 }
+
+export const renderNodeMetrics = (nodeName, metrics) => {
+  return {
+    type: actionTypes.RENDER_NODE_METRICS,
+    payload: {podName, metrics}
+  }
+}
