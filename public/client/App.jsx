@@ -6,8 +6,80 @@ import ConfigContainer from './Containers/ConfigContainer.jsx';
 import PodsContainer from './Containers/PodsContainer.jsx';
 import MetricsComponent from './Components/MetricsComponent.jsx';
 import MetricsContainer from './Containers/MetricsContainer.jsx';
+import { DataGrid } from '@mui/x-data-grid';
+import { makeStyles } from '@mui/styles';
 
+const rows = [
+  { id: 1, align:"left", col1: 'Hello', col2: 'World' },
+  { id: 2, align:"left", col1: 'DataGridPro', col2: 'is Awesome' },
+  { id: 3, align:"left", col1: 'MUI', col2: 'is Amazing' },
+  { id: 4, align:"left", col1: 'MrI', col2: 'is mazing' },
+]
+// const rows =  rowsArr.map((el)=>{
+//   console.log("id", el.id)
+//   return <GridRowData id={el.id} col1={el.col1} col2={el.col2}/>
+// })
 
+const columns = [
+  { field: 'col1', align:"left", headerName: 'Column 1', width: 200 },
+  { field: 'col2', align:"left", headerName: 'Column 2', width: 200 },
+];
+
+// const useStyles = makeStyles((theme) =>
+//   createStyles({
+//     root: {
+//       '& div[data-rowIndex][role="row"]:nth-of-type(5n-4)': {
+//         color: "blue",
+//         fontSize: 18,
+//         //risky
+//         minHeight: "60px !important",
+//         height: 60,
+//         "& div": {
+//           minHeight: "60px !important",
+//           height: 60,
+//           lineHeight: "59px !important"
+//         }
+//       },
+//       "& .MuiDataGrid-renderingZone": {
+//         "& .MuiDataGrid-row": {
+//           "&:nth-child(2n)": { backgroundColor: "rgba(235, 235, 235, .7)" }
+//         }
+//       }
+//     }
+//   })
+// );
+const useStyles = makeStyles({
+  root: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 480, 
+    width: '100%', 
+    borderRadius: 10,
+    padding: '0 30px',
+  },
+    footerContainer: {
+    height: "10px !important",
+    background: "red",
+    // fontSize: 18,
+    // //risky
+    // minHeight: "60px !important",
+    // height: 60,
+    // "& div": {
+    //   minHeight: "15px !important",
+    //   // height: 60,
+    //   // lineHeight: "59px !important"
+    // },
+   
+    //min-height: '20px'
+  //}
+  }
+});
+// const columns =  columnsArr.map((el)=>{
+//   return <getGridColDef field={el.field} headerName={el.headerName} width={el.width}/>
+// })
 
 // TODO: Routing or logic to determine which containers to render at what points
 // TODO: replace sampleData as property passed to MetricsComponent with a call to fetch default metrics via Prometheus
@@ -16,7 +88,8 @@ const sampleData = JSON.parse('[{"help":"Total user CPU time spent in seconds.",
 
 function App () {
   //const [user, setUser] = useState('')
-  
+  const classes = useStyles();
+
   return (
     <div>
       Kubric
@@ -28,6 +101,12 @@ function App () {
         Configuration Container:
         <ConfigContainer/>
       </div> */}
+        <div style={{height: 480, width: '100%', borderRadius:10}}> 
+      <DataGrid classes={{
+        footerContainer : classes.footerContainer,
+        root: classes.root
+      }}rowHeight={60}  rows={rows} columns={columns} />
+     </div> 
       <div>
         Pods
         <PodsContainer/>
@@ -54,3 +133,5 @@ function App () {
 // "dev": "NODE_ENV=development webpack serve --open & NODE_ENV=development npm run start",
 
 export default App;
+//DEFAULT_GRID_COL_TYPE_KEY, DataGrid, GRID_ACTIONS_COL_DEF, GRID_BOOLEAN_COL_DEF, GRID_CHECKBOX_SELECTION_COL_DEF, GRID_DATETIME_COL_DEF, GRID_DATE_COL_DEF, GRID_DEFAULT_LOCALE_TEXT, GRID_EXPERIMENTAL_ENABLED, GRID_NUMERIC_COL_DEF, GRID_SINGLE_SELECT_COL_DEF, GRID_STRING_COL_DEF, GridActionsCell, GridActionsCellItem, GridAddIcon, GridApiContext, GridArrowDownwardIcon, GridArrowUpwardIcon, GridAutoSizer, GridBody, GridCell, GridCellCheckboxForwardRef, GridCellCheckboxRenderer, GridCellModes, GridCheckCircleIcon, GridCheckIcon, GridCloseIcon, GridColumnHeaderItem, GridColumnHeaderMenu, GridColumnHeaderSeparator, GridColumnHeaderSortIcon, GridColumnHeaderTitle, GridColumnHeadersItemCollection, GridColumnIcon, GridColumnMenu, GridColumnMenuContainer, GridColumnsContainer, GridColumnsHeader, GridColumnsMenuItem, GridColumnsPanel, GridDataContainer, GridDensityTypes, GridDragIcon, GridEditInputCell, GridEditModes, GridEditSingleSelectCell, GridEmptyCell, GridErrorHandler, GridEvents, GridFeatureModeConstant, GridFilterAltIcon, GridFilterForm, GridFilterInputValue, GridFilterListIcon, GridFilterMenuItem, GridFilterPanel, GridFooter, GridFooterContainer, GridFooterPlaceholder, GridHeader, GridHeaderCheckbox, GridHeaderPlaceholder, GridLinkOperator, GridLoadIcon, GridLoadingOverlay, GridMenu, GridMenuIcon, GridMoreVertIcon, GridNoRowsOverlay, GridOverlay, GridOverlays, GridPagination, GridPanel, GridPanelContent, GridPanelFooter, GridPanelHeader, GridPanelWrapper, GridPreferencePanelsValue, GridPreferencesPanel, GridRenderingZone, GridRoot, GridRow, GridRowCount, GridRowModes, GridSaveAltIcon, GridScrollArea, GridSearchIcon, GridSelectedRowCount, GridSeparatorIcon, GridSignature, GridStickyContainer, GridTableRowsIcon, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton, GridTripleDotsVerticalIcon, GridViewHeadlineIcon, GridViewStreamIcon, GridViewport, GridWindow, HideGridColMenuItem, MAX_PAGE_SIZE, SUBMIT_FILTER_STROKE_TIME, SortGridMenuItems, activeGridFilterItemsSelector, allGridColumnsFieldsSelector, allGridColumnsSelector, arSD, bgBG, checkGridRowIdIsValid, csCZ, deDE, elGR, enUS, esES, faIR, filterGridColumnLookupSelector, filterGridItemsCounterSelector, filterableGridColumnsIdsSelector, filterableGridColumnsSelector, frFR, getDataGridUtilityClass, getDefaultGridFilterModel, getGridBooleanOperators, getGridColDef, getGridDateOperators, getGridDefaultColumnTypes, getGridNumericColumnOperators, getGridSingleSelectOperators, getGridStringOperators, gridClasses, gridColumnLookupSelector, gridColumnMenuSelector, gridColumnReorderDragColSelector, gridColumnReorderSelector, gridColumnResizeSelector, gridColumnsMetaSelector, gridColumnsSelector, gridColumnsTotalWidthSelector, gridDateFormatter, gridDateTimeFormatter, gridDensityHeaderHeightSelector, gridDensityRowHeightSelector, gridDensitySelector, gridDensityValueSelector, gridEditRowsStateSelector, gridFilterModelSelector, gridFilterStateSelector, gridFocusCellSelector, gridFocusColumnHeaderSelector, gridFocusStateSelector, gridPageSelector, gridPageSizeSelector, gridPaginatedVisibleSortedGridRowIdsSelector, gridPaginationSelector, gridPanelClasses, gridPreferencePanelStateSelector, gridRenderingSelector, gridResizingColumnFieldSelector, gridRowCountSelector, gridRowsLookupSelector, gridRowsStateSelector, gridScrollSelector, gridScrollbarStateSelector, gridSelectionStateSelector, gridSortColumnLookupSelector, gridSortModelSelector, gridTabIndexCellSelector, gridTabIndexColumnHeaderSelector, gridTabIndexStateSelector, gridViewportSizeStateSelector, gridVisibleRowsLookupSelector, itIT, jaJP, koKR, nlNL, plPL, ptBR, renderActionsCell, renderEditInputCell, renderEditSingleSelectCell, ruRU, selectedGridRowsCountSelector, selectedGridRowsSelector, selectedIdsLookupSelector, skSK, sortedGridRowIdsSelector, sortedGridRowsSelector, trTR, ukUA, unorderedGridRowIdsSelector, unorderedGridRowModelsSelector, useDataGridComponent, useGridApi, useGridApiContext, useGridApiEventHandler, useGridApiMethod, useGridApiOptionHandler, useGridApiRef, useGridLogger, useGridNativeEventListener, useGridProcessedProps, useGridRootProps, useGridScrollFn, useGridSelector, useGridSlotComponentProps, useGridState, viVN, visibleGridColumnsLengthSelector, visibleGridColumnsSelector, visibleGridRowCountSelector, visibleSortedGridRowIdsSelector, visibleSortedGridRowsAsArraySelector, visibleSortedGridRowsSelector, zhCN)
+//[0]  @ ./src/index.jsx 4:0-43 10:36-39

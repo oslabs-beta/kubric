@@ -52,7 +52,7 @@ class QueryContainer extends React.Component {
     }
   }
   componentDidMount() {
-    // setInterval(this.getFields,1000)
+    //setInterval(this.getFields,1000)
     
     // console.log('props after fetched in Component did mount', this.props);
   }
