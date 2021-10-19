@@ -49,12 +49,12 @@ class MetricsContainer extends React.Component {
     return (
       <div className="metricsContainer">    
         {/* <button onClick={this.forceUpdateHandler}> Render Default Metrics</button> */}
-        <MetricsComponent 
+        {/* <MetricsComponent 
           metrics={this.props.defaultMetrics} 
           podCpuMetrics={this.props.podCpuMetrics} 
           pods={this.props.pods}
           nodes={this.props.nodes}
-        />
+        /> */}
       </div>
     )
   }
