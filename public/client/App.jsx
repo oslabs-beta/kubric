@@ -57,7 +57,6 @@ function App () {
 
   return (
     
-    //<ThemeProvider>
     <div>
       <CssBaseline />
       <Router>
@@ -70,42 +69,28 @@ function App () {
       </Switch>
        
       </Router>
+        <div style={{height: 480, width: '100%', borderRadius:10}}> 
+      <DataGrid classes={{
+        footerContainer : classes.footerContainer,
+        root: classes.root
+      }}rowHeight={60}  rows={rows} columns={columns} />
+     </div> 
+      <div>
+        Pods
+        <PodsContainer/>
       </div>
-    //</ThemeProvider>
-    // <div>
-    //   Kubric
-    //   {/* <div>
-    //     Login Container:
-    //     <LoginContainer/>
-    //   </div>
-    //   <div>
-    //     Configuration Container:
-    //     <ConfigContainer/>
-    //   </div> */}
-    //     <div style={{height: 480, width: '100%', borderRadius:10}}> 
-    //   <DataGrid classes={{
-    //     footerContainer : classes.footerContainer,
-    //     root: classes.root
-    //   }}rowHeight={60}  rows={rows} columns={columns} />
-    //  </div> 
-    //   <div>
-    //     Pods
-    //     <PodsContainer/>
-    //   </div>
-    //   <div>
-    //     Pod Metrics
-    //     <MetricsContainer/>
-    //   </div>
-    //   <div>
-    //     Query Logs
-    //     <QueryContainer/>
-    //   </div>
-    //   <div>
-    //     <LogContainer/>
-    //   </div>
-      
-      
-    // </div>
+      <div>
+        Pod Metrics
+        <MetricsContainer/>
+      </div>
+      {/* <div>
+        Query Logs
+        <QueryContainer/>
+      </div> */}
+      <div>
+        <LogContainer/>
+      </div>
+      </div>
   )
 };
 
