@@ -137,10 +137,10 @@ function App () {
         Pod Metrics
         <MetricsContainer/>
       </div>
-      <div>
+      {/* <div>
         Query Logs
         <QueryContainer/>
-      </div>
+      </div> */}
       <div>
         <LogContainer/>
       </div>
