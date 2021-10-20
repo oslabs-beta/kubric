@@ -17,9 +17,12 @@ export default function PodChartContainer() {
     <Stack
       direction="row"
       spacing={2}
+     sx={{display:"flex", 
+     flexDirection:"row",
+     justifyContent:'space-evenly'}}
     >
-      <NodeCpuComponent style="width: 50%"/>
-      <NodeMemoryComponent style="width: 50%"/>
+      <NodeCpuComponent />
+      <NodeMemoryComponent />
       
     </Stack>
   );

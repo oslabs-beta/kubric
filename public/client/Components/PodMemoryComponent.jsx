@@ -100,7 +100,7 @@ class PodMemoryComponent extends React.Component {
 
     return (
         <div className="chart"> 
-            <ZingChart  data = {podMemoryGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart height="303" data = {podMemoryGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }

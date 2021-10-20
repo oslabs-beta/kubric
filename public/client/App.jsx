@@ -30,42 +30,6 @@ function App () {
       </div>
   )
 };
-//import { DataGrid } from '@mui/x-data-grid';
-//import { makeStyles } from '@mui/styles';
-// const rows = [
-//   { id: 1, align:"left", col1: 'Hello', col2: 'World' },
-//   { id: 2, align:"left", col1: 'DataGridPro', col2: 'is Awesome' },
-//   { id: 3, align:"left", col1: 'MUI', col2: 'is Amazing' },
-//   { id: 4, align:"left", col1: 'MrI', col2: 'is mazing' },
-// ]
 
-// const columns = [
-//   { field: 'col1', align:"left", headerName: 'Column 1', width: 200 },
-//   { field: 'col2', align:"left", headerName: 'Column 2', width: 200 },
-// ];
-// const useStyles = makeStyles({
-//   root: {
-//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//     border: 0,
-//     borderRadius: 3,
-//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-//     color: 'white',
-//     height: 480, 
-//     width: '100%', 
-//     borderRadius: 10,
-//     padding: '0 30px',
-//   },
-//     footerContainer: {
-//     height: "10px !important",
-//     background: "red",
-//   }
-// });
-//const classes = useStyles();
-{/* <div style={{height: 480, width: '100%', borderRadius:10}}> 
-      <DataGrid classes={{
-        footerContainer : classes.footerContainer,
-        root: classes.root
-      }}rowHeight={60}  rows={rows} columns={columns} />
-     </div>  */}
 export default App;
 
