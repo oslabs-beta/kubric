@@ -9,17 +9,31 @@ import NodeXContainer from './NodeXContainer.jsx';
 import NodeChartContainer from './NodeChartContainer.jsx';
 import PodChartContainer from './PodChartContainer.jsx';
 import PodsContainer from './PodsContainer.jsx';
-
+import { Container } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchDefaultMetrics: () => dispatch(actions.fetchDefaultMetrics()),
   }
 }
-
+const useStyles = makeStyles({
+  root:{
+    background: 'rgba(69,172,120,0.52)',
+    border: 0,
+    borderRadius: 4,
+    boxShadow: '6px 2px 3px -1px rgba(0,0,0,0.75)',
+    color: 'white',
+    height: '66%', 
+    width: '100%', 
+    borderRadius: 10,
+    padding: '0 30px'
+  },
+})
 // TODO: what props are needed from state here?
 
 function MetricsContainer(props) {
+  const classes = useStyles();
   useEffect(() => {
     props.fetchDefaultMetrics();
   });
@@ -27,8 +41,11 @@ function MetricsContainer(props) {
     // return dev containing the metrics array to the screen
     console.log('metrics container rendered')
     return (
-      <div className="metricsContainer"> 
-       
+      <div id="metricsContainer"> 
+       <Container
+       classes={{
+        root: classes.root
+      }} >
         <PodChartContainer/>
       
         Pods
@@ -38,7 +55,7 @@ function MetricsContainer(props) {
       
         Nodes
         <NodeXContainer/>
-    
+        </Container>
         {/* <button onClick={this.forceUpdateHandler}> Render Default Metrics</button> */}
         {/* <MetricsComponent 
           metrics={this.props.defaultMetrics} 
