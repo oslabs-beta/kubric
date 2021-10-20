@@ -38,18 +38,14 @@ class MetricsComponent extends React.Component {
   // }
 
   render(){
-    console.log('the pod cpu metrics', this.props)
     const metricsToRender =  [];
+    // console.log('props from metrics component:', this.props);
     // // iterate through received metrics
     if (this.props.podCpuMetrics) {
       const cpuGauge = <PodCpuComponent metric = {this.props.podCpuMetrics} pods={this.props.pods}/>
       metricsToRender.push(cpuGauge);
     }
     if (this.props.metrics) {
-      // iterate through all metrics, grouping them by first part of name?
-      // if name doesn't exist inside of groupedMetrics obj, create it
-      // add values and labels
-      // send each namegrouped set of metrics to be rendered in a component that matches their type (i.e. gauge)
 
       this.props.metrics.forEach(metric => {
       
