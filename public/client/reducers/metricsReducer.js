@@ -49,6 +49,7 @@ export default function metricsReducer (state = initialState, action) {
         ...state,
         serverApiMetrics,
       }
+    
     }
     default: 
       return state;

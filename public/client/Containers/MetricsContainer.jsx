@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     defaultMetrics: state.metricsReducer.defaultMetrics,
     podCpuMetrics: state.metricsReducer.podCpuMetrics,
     pods: state.podsReducer.pods,
+    nodes: state.nodesReducer.nodes,
   }
 }
 
@@ -48,7 +49,12 @@ class MetricsContainer extends React.Component {
     return (
       <div className="metricsContainer">    
         {/* <button onClick={this.forceUpdateHandler}> Render Default Metrics</button> */}
-        <MetricsComponent metrics={this.props.defaultMetrics} podCpuMetrics={this.props.podCpuMetrics} pods={this.props.pods}/>
+        {/* <MetricsComponent 
+          metrics={this.props.defaultMetrics} 
+          podCpuMetrics={this.props.podCpuMetrics} 
+          pods={this.props.pods}
+          nodes={this.props.nodes}
+        /> */}
       </div>
     )
   }
