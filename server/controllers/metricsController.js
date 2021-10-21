@@ -1,8 +1,8 @@
 const axios = require('axios');
-const client = require('prom-client');
+// const client = require('prom-client');
 const metricsController = {};
 
-client.collectDefaultMetrics();
+// client.collectDefaultMetrics();
 
 //to predefine and provide current, previous and step to get arrays of values to display data maybe make it customizable?
 //current date
@@ -14,43 +14,49 @@ const startDate = new Date(endDate.getTime()-startSet*3600000);
 //step initial
 let step = '5m';
 
-metricsController.getDefaultMetrics = (req, res, next) => {
-  client.register.getMetricsAsJSON()
-    .then(data => {
-      // console.log('data:', data);
-      //going to be the first middleware in get method chains, so that it creates a blank object that will store each request with an unique property name
-      res.locals.metrics = {};
-      res.locals.metrics.defaultMetrics = data;
-      next();
-    })
-    .catch(err=>next(err));
-};
+// metricsController.getDefaultMetrics = (req, res, next) => {
+//   client.register.getMetricsAsJSON()
+//     .then(data => {
+//       // console.log('data:', data);
+//       //going to be the first middleware in get method chains, so that it creates a blank object that will store each request with an unique property name
+//       res.locals.metrics = {};
+//       res.locals.metrics.defaultMetrics = data;
+//       next();
+//     })
+//     .catch(err=>next(err));
+// };
 
 metricsController.getCPUByPods = (req, res, next) =>{
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  res.locals.podMetrics = {};
+  //req.body? param? which way to send node name
+  const node = "lke40033-65098-6165c4a514fa"
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node=${node},pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
-      res.locals.metrics.CPUPods = data.data.data.result;
+      res.locals.podMetrics.CPUPods = data.data.data.result;
       next();
     })
     .catch(err=>next(err));
 };
 
 metricsController.getCPUByNodes = (req, res, next) =>{
+  res.locals.nodeMetrics = {};
   axios.get(`http://localhost:9090/api/v1/query_range?query=100%20-%20(avg%20by%20(instance)%20(irate(node_cpu_seconds_total{mode=%22idle%22}[5m]))%20*%20100)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
-      res.locals.metrics.CPUNodes = data.data.data.result;
+      res.locals.nodeMetrics.CPUNodes = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
 };
 
-metricsController.getMemoryByPods = (req, res, next) =>{ 
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes{pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+metricsController.getMemoryByPods = (req, res, next) =>{
+  //req.body? param? which way to send node name
+  const node = "lke40033-65098-6165c4a514fa" 
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes{node=${node},pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
-      res.locals.metrics.MemoryPods = data.data.data.result;
+      res.locals.podMetrics.MemoryPods = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
@@ -60,7 +66,7 @@ metricsController.getMemoryByNodes = (req, res, next) =>{
   axios.get(`http://localhost:9090/api/v1/query_range?query=sum((1-(node_memory_MemFree_bytes/node_memory_MemTotal_bytes))*100)%20by%20(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
-      res.locals.metrics.MemoryNodes = data.data.data.result;
+      res.locals.nodeMetrics.MemoryNodes = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
