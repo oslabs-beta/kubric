@@ -58,7 +58,7 @@ function TabPanel(props) {
       id={`cluster-tabpanel-${index}`}
       aria-labelledby={`cluster-tab-${index}`}
       {...other}
-      style={{width:'80%',height:'100%',margin:'0',padding:'0'}}
+      style={{width:'100%',height:'100%',margin:'0',padding:'0'}}
     >
       {value === index && (
         <Box >
@@ -109,8 +109,8 @@ function MetricsContainer(props) {
         </Tabs>
         </Box>
         <Box sx={{ display:"flex", 
-    flexDirection:"row",
-    justifyContent:'space-evenly'} }>
+        flexDirection:"row",
+        justifyContent:'space-evenly'} }>
         <TabPanel value={value} index={0}> 
         <NodeChartContainer/>
         <NodeXContainer/>

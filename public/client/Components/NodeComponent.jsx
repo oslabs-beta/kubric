@@ -44,6 +44,7 @@ function NodeComponent (props) {
       key={props.name}
       count={props.keyCount}
       disablePadding
+      sx={{height: 50}}
     >
       <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense>
         <ListItemIcon>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/metricsActionCreators.js'
 import NodeCpuComponent from '../Components/NodeCpuComponent.jsx';
 import List from '@mui/material/List';
+import Paper from '@mui/material/Paper';
 // TODOS: 
 // get pods from Kubernetes and update metric names based on user selections
 // if healthy property is set to true only if all metrics are below user-defined thresholds
@@ -68,9 +69,11 @@ class NodesContainer extends React.Component {
 
     return (
       <div>
+        <Paper style={{maxHeight: 200, overflow: 'auto'}}>
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {nodesElement}
         </List>
+        </Paper>
       </div>
     );
   }
