@@ -3,7 +3,7 @@ import NodeComponent from '../Components/NodeComponent.jsx';
 import { connect } from 'react-redux';
 import * as actions from '../actions/metricsActionCreators.js'
 import NodeCpuComponent from '../Components/NodeCpuComponent.jsx';
-
+import List from '@mui/material/List';
 // TODOS: 
 // get pods from Kubernetes and update metric names based on user selections
 // if healthy property is set to true only if all metrics are below user-defined thresholds
@@ -64,8 +64,10 @@ class NodesContainer extends React.Component {
     
 
     return (
-      <div id="nodes-container">
+      <div>
+        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {nodesElement}
+        </List>
       </div>
     );
   }

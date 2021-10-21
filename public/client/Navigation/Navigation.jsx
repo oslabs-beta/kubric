@@ -7,9 +7,28 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { makeStyles } from '@mui/styles';
+
+
+// const useStyles = makeStyles({
+//   root:{
+//     background: 'rgba(69,172,120,0.52)',
+//     border: 0,
+//     borderRadius: 4,
+//     boxShadow: '6px 2px 3px -1px rgba(0,0,0,0.75)',
+//     color: '!important white',
+//     height: '75%', 
+//     width: '75%', 
+//     borderRadius: 10,
+//     padding: '0 30px',
+//     margin:'auto'
+//   },
+  
+// })
 
 const Navigation = ({history}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  //const classes = useStyles();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,11 +42,12 @@ const Navigation = ({history}) => {
     console.log(event.currentTarget.innerText)
     history.push(`/${event.currentTarget.innerText.toLowerCase()}`);
   };
+  
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+    <Box id="appBarBox" sx={{ flexGrow: 1, backgroundColor: 'rgba(69,172,120,0.52)',borderRadius:4}}>
+      <AppBar style={{backgroundColor: 'rgba(69,172,120,0.52)',borderRadius:4}} position="static">
+        <Toolbar >
             <div>
               <IconButton
                 size="large"

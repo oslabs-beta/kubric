@@ -94,13 +94,13 @@ class PodCpuComponent extends React.Component {
         "line-width": "100%",
         "alpha": 0.18,
       },
-      series: valuesToGraph
+      series: valuesToGraph,
     }
 
     //when do i invoke get values???
     return (
         <div className="chart"> 
-            <ZingChart  data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart height="303" data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }

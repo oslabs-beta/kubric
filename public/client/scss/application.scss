@@ -27,6 +27,24 @@ button {
   // background-color: #F1FAEE;
   padding: .5em;
 }
+#metricsContainer {
+  // background-color: #F1FAEE;
+  padding: .5em;
+  width: 85%;
+  height: 100%;
+}
+
+
+#appBarBox{
+  // background-color: #F1FAEE;
+  margin:auto;
+  align-items:center;
+  justify-content: center;
+  padding: .5em;
+  width: 85%;
+  height: 100%;
+  border-radius: 10,
+}
 
 #config-container {
   // background-color: #89B0AE;
@@ -75,6 +93,10 @@ button {
   // background-color: #A8DADC;
   padding: .05em;
 }
+#log-container {
+  // background-color: #A8DADC;
+  padding: .05em;
+}
 
 .logDate { 
   grid-area: date; 
@@ -118,7 +140,16 @@ button {
 .histogram {
   background-color: rgb(180, 98, 114);
 }
-
+// #zingchart-react-0{
+//   height: 500px;
+// }
 .chart {
-  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
 }
