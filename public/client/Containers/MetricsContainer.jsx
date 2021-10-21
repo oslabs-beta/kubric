@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 
 const mapStateToProps = state => {
   return {
-    // nodes: state.nodesReducer.nodes,
+    nodes: state.nodesReducer.nodes,
   }
 }
 
@@ -87,7 +87,7 @@ function MetricsContainer(props) {
   useEffect(() => {
     props.fetchDefaultMetrics();
     props.fetchNodeMetrics();
-  });
+  }, []);
 
   // console.log(this.props);
   
