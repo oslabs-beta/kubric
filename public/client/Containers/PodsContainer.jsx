@@ -3,6 +3,7 @@ import PodComponent from '../Components/PodComponent.jsx';
 import { connect } from 'react-redux';
 import * as actions from '../actions/metricsActionCreators.js'
 import PodCpuComponent from '../Components/PodCpuComponent.jsx';
+import List from '@mui/material/List';
 
 // TODOS: 
 // get pods from Kubernetes and update metric names based on user selections
@@ -42,6 +43,7 @@ class PodsContainer extends React.Component {
     //   const { name, cpuValues, memoryValues } = pod;
     // console.log('render of pods container, ', this.props.pods );
     const podsElement = [];
+    let keyCount = 1;
     for (let pod in this.props.pods) {
       // console.log(pod);
       const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.pods[pod];
@@ -50,6 +52,7 @@ class PodsContainer extends React.Component {
         <PodComponent 
           // onClick={displayPodMetrics}
           // key={name} 
+          keyCount={keyCount}
           name={name} 
           cpuValues={cpuValues} 
           memoryValues={memoryValues} 
@@ -58,6 +61,7 @@ class PodsContainer extends React.Component {
           displayMetrics={displayMetrics}
         />
       );
+      keyCount ++;
     }
     // console.log('podsElement after iteration', this.podsElement);
       
@@ -66,7 +70,9 @@ class PodsContainer extends React.Component {
 
     return (
       <div id="pods-container">
-        {podsElement}
+        <List>
+          {podsElement}
+        </List>
       </div>
     );
   }

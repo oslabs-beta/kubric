@@ -12,6 +12,12 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+const mapStateToProps = state => {
+  return {
+    // nodes: state.nodesReducer.nodes,
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     fetchDefaultMetrics: () => dispatch(actions.fetchDefaultMetrics()),
@@ -79,9 +85,11 @@ function MetricsContainer(props) {
     setValue(newValue);
   };
   useEffect(() => {
-    // props.fetchDefaultMetrics();
+    props.fetchDefaultMetrics();
     props.fetchNodeMetrics();
   });
+
+  // console.log(this.props);
   
     // return dev containing the metrics array to the screen
     console.log('metrics container rendered')
@@ -113,8 +121,8 @@ function MetricsContainer(props) {
          </TabPanel>
 
         <TabPanel value={value} index={2}>
-        <PodChartContainer/>
-        <PodsContainer/>
+        <PodChartContainer />
+        <PodsContainer nodeName goes here/>
         </TabPanel>
 
         <TabPanel value={value} index={3}>
@@ -134,4 +142,4 @@ function MetricsContainer(props) {
 }
 
 
-export default connect(null, mapDispatchToProps)(MetricsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MetricsContainer);

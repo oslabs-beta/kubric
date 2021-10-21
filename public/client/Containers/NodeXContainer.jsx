@@ -41,6 +41,7 @@ class NodesContainer extends React.Component {
     //   const { name, cpuValues, memoryValues } = pod;
     // console.log('render of pods container, ', this.props.pods );
     const nodesElement = [];
+    let keyCount = 1;
     for (let node in this.props.nodes) {
       // console.log(pod);
       const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.nodes[node];
@@ -49,7 +50,7 @@ class NodesContainer extends React.Component {
       nodesElement.push(
         <NodeComponent 
           // onClick={displayPodMetrics}
-          // key={name} 
+          keyCount={keyCount} 
           name={name} 
           cpuValues={cpuValues} 
           memoryValues={memoryValues} 
@@ -58,6 +59,7 @@ class NodesContainer extends React.Component {
           displayMetrics={displayMetrics}
         />
       );
+      keyCount ++;
     }
     // console.log('podsElement after iteration', this.podsElement);
       
