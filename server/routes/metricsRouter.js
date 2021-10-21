@@ -4,7 +4,7 @@ const metricsRouter = Router();
 
 //get all initial default metrics; add more controllers that will target one query at a time
 metricsRouter.get(
-  '/',
+  '/getNodeMetrics',
   // metricsController.getDefaultMetrics,
   metricsController.getCPUByNodes,
   metricsController.getMemoryByNodes,

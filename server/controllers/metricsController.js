@@ -30,7 +30,7 @@ metricsController.getCPUByPods = (req, res, next) =>{
   res.locals.podMetrics = {};
   //req.body? param? which way to send node name
   const node = "lke40033-65098-6165c4a514fa"
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node=${node},pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
       res.locals.podMetrics.CPUPods = data.data.data.result;
@@ -53,7 +53,7 @@ metricsController.getCPUByNodes = (req, res, next) =>{
 metricsController.getMemoryByPods = (req, res, next) =>{
   //req.body? param? which way to send node name
   const node = "lke40033-65098-6165c4a514fa" 
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes{node=${node},pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
       res.locals.podMetrics.MemoryPods = data.data.data.result;
