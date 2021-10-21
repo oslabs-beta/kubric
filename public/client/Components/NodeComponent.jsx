@@ -55,6 +55,7 @@ function NodeComponent (props) {
       <ListItem
       key={props.name}
       disablePadding
+      sx={{height: 50}}
     >
       <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense>
         <ListItemIcon>
@@ -66,7 +67,7 @@ function NodeComponent (props) {
             inputProps={{ 'aria-labelledby': props.name }}
           />
         </ListItemIcon>
-        <ListItemText style={{color:'black'}} id={props.name} primary={`Node ${props.name}`} />
+        <ListItemText style={{color:'black'}} id={props.name} primary={`${props.name}`} />
       </ListItemButton>
     </ListItem>
       </div>

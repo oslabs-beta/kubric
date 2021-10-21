@@ -25,7 +25,9 @@ class NodeCpuComponent extends React.Component {
     const getValues = (nodes) => {
       for (let node in nodes) {
         const nodeValues = [];
-        
+        let nameShortened = nodes[node].name;
+        nameShortened = nameShortened.slice(0,3) + "..." + nameShortened.slice(nameShortened.length-5,nameShortened.length) 
+        console.log("nameShortened",nameShortened)
         if (nodes[node].displayMetrics) {
           nodes[node].cpuValues.forEach(dataPoint => {
             const date = new Date(dataPoint[0]);
@@ -34,14 +36,17 @@ class NodeCpuComponent extends React.Component {
             const seconds = date.getSeconds();
             const milliseconds = date.getMilliseconds();
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
-            
+            // const yDataVal = parseFloat(dataPoint[1]).toFixed(4)
+            // console.log(yDataVal)
             nodeValues.push([time, parseFloat(dataPoint[1])]);
+            
           });
           valuesToGraph.push(
             {
               type: "line",
-              text: nodes[node].name,
+              text:  nameShortened,
               values: nodeValues,
+              min: 0,
             }
           );
         }
@@ -52,42 +57,52 @@ class NodeCpuComponent extends React.Component {
     // console.log('line 28', valuesToGraph);
     const dummy = [1,2]
     const nodeCpuGraphData = {
-      type: 'mixed',
+      theme: 'dark',
+      type: 'line',
       "globals": {
         "font-family": "Roboto",
-        "background-color": "#79B4B7",
-        "border-radius" : 5,
+        //"background-color": "#79B4B7",
+        "border-radius" : 15,
       },
       title: {
           text: 'CPU Usage Over Time',
-          "font-color": "dark-grey",
-          "font-size": "20em",
+         // "font-color": "dark-grey",
+          "font-size": "15em",
           "alpha": 1,
           "adjust-layout": true,
+        
       },
-      // "plot": {
+       plot: {
+        animation: {
+          effect: "ANIMATION_FADE_IN"
+      }
       //   'width':'100%',
       //   'height': '100%',
-      // },
-      // "plotarea": {
-      //     "margin": "dynamic",
-      //     'width':'100%',
-      //     'height': '100%',
-      // },
+       },
+      plotarea: {
+          "margin": "dynamic",
+          "margin-right": "30",
+          'width':'100%',
+          'height': '100%',
+      },
       scaleX: {
-          labels: 'Timestamp in some Unit',
+          // labels: 'Timestamp in some Unit',
           "item": {
-            'font-color': "dark-grey",
+            //'font-color': "dark-grey",
             'font-weight': 'normal',
           },
+          
       },
       scaleY: {
-          labels: 'Memory Use Unit',
-          "item": {
-            'font-color': "dark-grey",
-            'font-weight': 'normal',
-          },
+          //labels: 'Memory Use Unit',
+         minValue:0,
+         minorTicks: 9,
+         item:{
+          'font-weight': 'normal',
+        }
+         
       },
+      
       "crosshair-x": {
         "line-width": "100%",
         "alpha": 0.18,
@@ -98,7 +113,7 @@ class NodeCpuComponent extends React.Component {
     //when do i invoke get values???
     return (
         <div className="chart"> 
-            <ZingChart height="303" data = {nodeCpuGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart width="85%" height="303" data = {nodeCpuGraphData}/>
         </div>
     )
   }
