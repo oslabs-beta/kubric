@@ -7,9 +7,11 @@ import * as actionTypes from './actionTypes.js';
 //get metrics from prom endpoint
 //rerender metrics component with new fetched data
 
+// NOT USING THIS...?
 export const fetchDefaultMetrics = () => { 
   return (dispatch, getState) => {
     const defaultMetricsURL = 'http://localhost:3000/api/metrics';
+    console.log('inside fetch default metrics');
     axios.get(defaultMetricsURL)
       .then(response => {
         // console.log('response from /api/metrics', response.data);
@@ -23,6 +25,17 @@ export const fetchDefaultMetrics = () => {
         
       })
       .catch (err => console.log(`error in dispatch default metrics fetch: ${err}`))    
+  }
+}
+
+export const fetchNodeMetrics = () => {
+  return (dispatch, getState) => {
+    const nodesMetrcisUrl = 'http://localhost:3000/api/metrics'
+    axios.get(nodesMetrcisUrl)
+      .then( response => {
+        dispatch(getNodes(response.data.CPUNodes, response.data.MemoryNodes));
+      })
+      .catch (err => console.log('error from inside fetchNodeMetrics'))
   }
 }
 export const getDefaultMetrics = metrics => {
