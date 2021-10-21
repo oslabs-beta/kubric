@@ -16,12 +16,12 @@ metricsRouter.get(
   metricsController.getCPUByPods,
   metricsController.getMemoryByPods,
   (req,res)=> res.status(200).json(res.locals.podMetrics)
-)
+);
 
 metricsRouter.get(
   '/getMasterNode',
   metricsController.getServerAPIMetrics,
   (req,res)=> res.status(200).json(res.locals.masterNode)
-)
+);
 
 module.exports = metricsRouter;

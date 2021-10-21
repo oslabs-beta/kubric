@@ -50,6 +50,7 @@ metricsController.getCPUByNodes = (req, res, next) =>{
     .catch(err=>next(err));
 };
 
+//add more queries to fetch data of 
 metricsController.getMemoryByPods = (req, res, next) =>{
   //req.body? param? which way to send node name
   const node = "lke40033-65098-6165c4a514fa" 
@@ -83,7 +84,7 @@ metricsController.getServerAPIMetrics = (req, res, next) => {
 
   for(let url in urls){
     promises.push(axios.get(urls[url]));
-  }
+  };
   
   Promise.all(promises)
     .then(results => {
@@ -120,6 +121,11 @@ clicking the metrics tab will grab node metrics initially
       include some metrics per each pod
 
 */
+
+//new notes 10/21:
+  //node's cpu and memory capacity: kube_node_status_allocatable or _capacity
+  //requested limit resource by a container: kube_pod_container_resource_limits
+  //
 
 //By namespace?
 //By Node?
