@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 const mapDispatchToProps = dispatch => {
   return {
     fetchDefaultMetrics: () => dispatch(actions.fetchDefaultMetrics()),
+    fetchNodeMetrics: () => dispatch(actions.fetchNodeMetrics()),
   }
 }
 const useStyles = makeStyles({
@@ -78,7 +79,8 @@ function MetricsContainer(props) {
     setValue(newValue);
   };
   useEffect(() => {
-    props.fetchDefaultMetrics();
+    // props.fetchDefaultMetrics();
+    props.fetchNodeMetrics();
   });
   
     // return dev containing the metrics array to the screen

@@ -45,6 +45,7 @@ class NodesContainer extends React.Component {
       // console.log(pod);
       const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.nodes[node];
       // generate a pod component with properties specific to that pod
+      console.log('node name', name);
       nodesElement.push(
         <NodeComponent 
           // onClick={displayPodMetrics}
@@ -65,7 +66,7 @@ class NodesContainer extends React.Component {
 
     return (
       <div>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {nodesElement}
         </List>
       </div>
