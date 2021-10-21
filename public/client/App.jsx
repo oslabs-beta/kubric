@@ -6,7 +6,6 @@ import ConfigContainer from './Containers/ConfigContainer.jsx';
 import PodsContainer from './Containers/PodsContainer.jsx';
 import MetricsComponent from './Components/MetricsComponent.jsx';
 import MetricsContainer from './Containers/MetricsContainer.jsx';
-import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
 
 
 // TODO: Routing or logic to determine which containers to render at what points
@@ -41,13 +40,18 @@ function App () {
         <QueryContainer/>
       </div>
       <div>
+        Log Container
         <LogContainer/>
+      </div>
+      <div>
+        Login Container
+        <LoginContainer/>
       </div>
       
       
     </div>
   )
-};
+}
 
 // "start": "nodemon server/server.js",
 // "build": "NODE_ENV=production webpack & NODE_ENV=production npm run start",

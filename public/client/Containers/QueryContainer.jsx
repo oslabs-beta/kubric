@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/logsActionCreator.js';
-import { Button, Dropdown, ButtonGroup, DropdownButton, InputGroup, FormControl } from 'react-bootstrap';
 const mapStateToProps = (state) => {
   return {
     appLogFields: state.logsReducer.appLogFields,
@@ -95,6 +94,6 @@ class QueryContainer extends React.Component {
   );
   }
   
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryContainer);

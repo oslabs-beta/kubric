@@ -18,6 +18,6 @@ function ConfigContainer(props){
           </div>
       </div>
   );
-};
+}
 
 export default ConfigContainer;
