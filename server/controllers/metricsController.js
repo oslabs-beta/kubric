@@ -31,11 +31,11 @@ let step = '5m';
 //CPU saturation by the node
 metricsController.getCPUSatByNodes = (req, res, next) => {
   res.locals.nodeMetrics = {};
-  axios.get(`http://localhost:9090/api/v1/query_range?query=100%20-%20(avg%20by%20(instance)%20(irate(node_cpu_seconds_total{mode=%22idle%22}[60m]))%20*%20100)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
       res.locals.nodeMetrics.CPUSatValsNodes = data.data.data.result;
-      next();  
+      next();
     })
     .catch(err=>next(err));
 };
