@@ -41,7 +41,7 @@ export const fetchNodeMetrics = () => {
 
 export const fetchPodMetrics = (nodeName) => {
   return (dispatch, getState) => {
-    const nodesMetrcisUrl = `http://localhost:3000/api/metrics/getPodMetrics/:${nodeName}`
+    const nodesMetrcisUrl = `http://localhost:3000/api/metrics/getPodMetrics/${nodeName}`
     axios.get(nodesMetrcisUrl)
       .then( response => {
         dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
