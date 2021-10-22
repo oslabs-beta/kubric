@@ -19,9 +19,9 @@ function LoginContainer(props){
    <LoginComponent />
   </Grid>   
    
-</Grid>
+</Grid> 
 
-    // <div id="login-container">
+    // <div id="loginContainer">
     //   {/* <input placeholder="username"></input>
     //   <input placeholder="password"></input>
     //   <button className="primary-btn">Login</button>

@@ -50,7 +50,7 @@ function App () {
     <div>
       <CssBaseline />
       <Router>
-       <Navigation/>
+       {/* <Navigation/> */}
        <Switch>
             <Route exact path="/" component={LoginContainer} />
             <Route exact path="/home" component={Home} />

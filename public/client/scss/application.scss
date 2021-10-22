@@ -89,19 +89,35 @@ button {
 //   padding: .5em;
 // }
 
-#log-container {
-  // background-color: #A8DADC;
-  padding: .05em;
-}
-#log-container {
+#logContainer {
   // background-color: #A8DADC;
   padding: .05em;
 }
 
-#loginpage {
-  display: flex;
+#loginLogo h1 {
+  text-align: center;
+}
+
+#loginPage #loginButtons {
+  justify-content: center;
+}
+
+#loginPage #loginButtonIn {
+  cursor: pointer;
+  font-weight: 600;
+}
+#loginPage #loginButtonUp {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#loginPage {
+  // display: flex;
+  // direction: row;
+  border: 2px solid grey;
+  border-radius: 10px;
   width: auto;
-  background-color: red;
+  background-color:#fffafa;
   align-items: center;
 }
 
@@ -116,6 +132,12 @@ button {
 }
 .logMessage { 
   grid-area: message; 
+}
+
+#loginLogo {
+  // background-color: red;
+  align-items: center;
+  // width: 100%;
 }
 
 .logRowComponent {
