@@ -17,9 +17,9 @@ export const fetchDefaultMetrics = () => {
         // console.log('response from /api/metrics', response.data);
         // console.log('res.locals', response);
         dispatch(getDefaultMetrics(response.data.defaultMetrics));
-        dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
-        dispatch(getPodCpuMetrics(response.data.CPUPods));
-        dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+        // dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
+        // dispatch(getPodCpuMetrics(response.data.CPUPods));
+        // dispatch(getPodMemoryMetrics(response.data.MemoryPods));
         dispatch(getServerApiMetrics(response.data.serverAPI));
         dispatch(getNodes(response.data.CPUNodes, response.data.MemoryNodes));
         
@@ -38,6 +38,20 @@ export const fetchNodeMetrics = () => {
       .catch (err => console.log('error from inside fetchNodeMetrics'))
   }
 }
+
+export const fetchPodMetrics = (nodeName) => {
+  return (dispatch, getState) => {
+    const nodesMetrcisUrl = `http://localhost:3000/api/metrics/getPodMetrics/:${nodeName}`
+    axios.get(nodesMetrcisUrl)
+      .then( response => {
+        dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
+        dispatch(getPodCpuMetrics(response.data.CPUPods));
+        dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+      })
+      .catch (err => console.log('error from inside fetchPodMetrics'))
+  }
+}
+
 export const getDefaultMetrics = metrics => {
   // console.log(metrics)
   return {

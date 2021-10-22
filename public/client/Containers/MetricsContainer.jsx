@@ -89,7 +89,23 @@ function MetricsContainer(props) {
     props.fetchNodeMetrics();
   }, []);
 
-  // console.log(this.props);
+  // console.log('nodes from props', props.nodes);
+  const tabPanels = [];
+  const tabs = [];
+  let tabNum = 2;
+  for (let node in props.nodes) {
+    console.log('inside loop', props.nodes[node]);
+    // add a Tab to tabs array
+    tabs.push(<Tab label={`Worker Node ${tabNum-1}`} {...addProps(tabNum)}/>);
+    // add a TabPanel to tabPanels
+    tabPanels.push(
+      <TabPanel value={value} index={tabNum}>
+        <PodChartContainer />
+        <PodsContainer nodeName={node}/>
+      </TabPanel>);
+    tabNum += 1;
+  }
+
   
     // return dev containing the metrics array to the screen
     console.log('metrics container rendered')
@@ -100,40 +116,26 @@ function MetricsContainer(props) {
         root: containerClasses.root
       }} >
          <Box sx={{ borderBottom: 1, borderColor: 'divider'} }>
-        <Tabs classes={{scroller:tabClasses.scroller,flexContainer:tabClasses.flexContainer}} value={value} onChange={handleChange} aria-label="cluster node tabs">
-          <Tab label="Overview" {...addProps(0)} />
-          <Tab label="Master" {...addProps(1)} />
-          <Tab label="Worker Node 1" {...addProps(2)} />
-          <Tab label="Worker Node 2" {...addProps(3)} />
-          <Tab label="Worker Node 3" {...addProps(4)} />
-        </Tabs>
+          <Tabs classes={{scroller:tabClasses.scroller,flexContainer:tabClasses.flexContainer}} value={value} onChange={handleChange} aria-label="cluster node tabs">
+            <Tab label="Overview" {...addProps(0)} />
+            <Tab label="Master" {...addProps(1)} />
+            {tabs}
+          </Tabs>
         </Box>
         <Box sx={{ display:"flex", 
-        flexDirection:"row",
-        justifyContent:'space-evenly'} }>
-        <TabPanel value={value} index={0}> 
-        <NodeChartContainer/>
-        <NodeXContainer/>
-        </TabPanel>
+          flexDirection:"row",
+          justifyContent:'space-evenly'} }>
+          <TabPanel value={value} index={0}> 
+            <NodeChartContainer/>
+            <NodeXContainer/>
+          </TabPanel>
 
-        <TabPanel value={value} index={1}> 
-         Master Node
-         </TabPanel>
+          <TabPanel value={value} index={1}> 
+            Master Node
+          </TabPanel>
 
-        <TabPanel value={value} index={2}>
-        <PodChartContainer />
-        <PodsContainer nodeName goes here/>
-        </TabPanel>
-
-        <TabPanel value={value} index={3}>
-        <PodChartContainer/>
-        <PodsContainer/>
-        </TabPanel>
-
-        <TabPanel value={value} index={4}>
-        <PodChartContainer/>
-        <PodsContainer/>
-        </TabPanel>
+          {/* Tab Panel for each node */}
+          {tabPanels}
         </Box>
         </Container>
       </div>
