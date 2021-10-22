@@ -13,6 +13,8 @@ import Home from './Components/Home.jsx';
 // TODO: Routing or logic to determine which containers to render at what points
 // TODO: replace sampleData as property passed to MetricsComponent with a call to fetch default metrics via Prometheus
 
+//map boolean login state to props here
+
 function App () {
   return (
     

@@ -127,6 +127,11 @@ button {
 .logType { 
   grid-area: type; 
 }
+
+#password {
+  -webkit-text-security: disc;
+  // text-security: disc;
+}
 .podName { 
   grid-area: pod; 
 }
