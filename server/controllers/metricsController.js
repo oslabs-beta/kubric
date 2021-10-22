@@ -28,14 +28,14 @@ let step = '5m';
 
 //top 4 relevant metrics by each node in the cluster
 
-//CPU saturation by the node
+//CPU saturation % by the node
 metricsController.getCPUSatByNodes = (req, res, next) => {
   res.locals.nodeMetrics = {};
-  axios.get(`http://localhost:9090/api/v1/query_range?query=100%20-%20(avg%20by%20(instance)%20(irate(node_cpu_seconds_total{mode=%22idle%22}[60m]))%20*%20100)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=(sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance))*100&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
       res.locals.nodeMetrics.CPUSatValsNodes = data.data.data.result;
-      next();  
+      next();
     })
     .catch(err=>next(err));
 };
@@ -75,9 +75,9 @@ metricsController.getWriteToDiskRateByNodes = (req, res, next) => {
 
 //pod metrics: node's name will be added as reqeust parameter, it will pull relevent pod metrics inside the node
 
+//cpu usage rate by pod inside one node
 metricsController.getCPUByPods = (req, res, next) => {
   res.locals.podMetrics = {};
-  //req.body? param? which way to send node name
   const node = req.params.nodeName;
   axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
@@ -88,10 +88,10 @@ metricsController.getCPUByPods = (req, res, next) => {
     .catch(err=>next(err));
 };
 
+//memory usuage by pod inside one node
 metricsController.getMemoryByPods = (req, res, next) => {
-  //req.body? param? which way to send node name
   const node = req.params.nodeName; 
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_working_set_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
       res.locals.podMetrics.MemoryPods = data.data.data.result;
@@ -99,6 +99,30 @@ metricsController.getMemoryByPods = (req, res, next) => {
     })
     .catch(err=>next(err));
 };
+
+//disk write rate by pod inside one node
+metricsController.getWriteToDiskRateByPods = (req, res, next) => {
+  const node = req.params.nodeName;
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_fs_writes_bytes_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+    .then(data => {
+      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      res.locals.podMetrics.WriteToDiskPods = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+}
+
+//kubelet logs by pod inside one node
+metricsController.getLogsByPods = (req, res, next) => {
+  const node = req.params.nodeName; 
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(kubelet_container_log_filesystem_used_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+    .then(data => {
+      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      res.locals.podMetrics.LogsByPods = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+}
 
 
 metricsController.getServerAPIMetrics = (req, res, next) => {
