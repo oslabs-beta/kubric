@@ -2,16 +2,14 @@ import React from 'react';
 import 'zingchart/es6';
 import ZingChart from 'zingchart-react';
 import { connect } from 'react-redux';
-//james
 
 const mapStateToProps = state => {
   return {
-    pods: state.podsReducer.pods,
-    nodes: state.nodesReducer.nodes,
+    pods: state.podsReducer.pods
   }
 }
 
-class PodCpuComponent extends React.Component {
+class PodMemoryComponent extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -20,7 +18,9 @@ class PodCpuComponent extends React.Component {
   }
 
   render() {
+    // console.log('this is pod cpu component props', this.props)
     const {metric, pods} = this.props;
+    // console.log('this is pod metric', metric);
 
     const valuesToGraph = [];
     let podName;
@@ -29,7 +29,8 @@ class PodCpuComponent extends React.Component {
         const podValues = [];
         
         if (pods[pod].displayMetrics) {
-          pods[pod].cpuValues.forEach(dataPoint => {
+          // console.log('do we get here?');
+          pods[pod].memoryValues.forEach(dataPoint => {
             const date = new Date(dataPoint[0]);
             const hours = date.getHours();
             const minutes = date.getMinutes();
@@ -37,7 +38,7 @@ class PodCpuComponent extends React.Component {
             const milliseconds = date.getMilliseconds();
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             
-            podValues.push([time, parseFloat(dataPoint[1])]);
+            podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
           });
           valuesToGraph.push(
             {
@@ -53,7 +54,7 @@ class PodCpuComponent extends React.Component {
     getValues(pods);
     // console.log('line 28', valuesToGraph);
     const dummy = [1,2]
-    const podCpuGraphData = {
+    const podMemoryGraphData = {
       type: 'mixed',
       "globals": {
         "font-family": "Roboto",
@@ -61,7 +62,7 @@ class PodCpuComponent extends React.Component {
         "border-radius" : 5,
       },
       title: {
-          text: 'CPU Usage Over Time',
+          text: 'Memory in MB Over Time',
           "font-color": "dark-grey",
           "font-size": "20em",
           "alpha": 1,
@@ -94,13 +95,12 @@ class PodCpuComponent extends React.Component {
         "line-width": "100%",
         "alpha": 0.18,
       },
-      series: valuesToGraph,
+      series: valuesToGraph
     }
 
-    //when do i invoke get values???
     return (
         <div className="chart"> 
-            <ZingChart height="303" data = {podCpuGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart height="303" data = {podMemoryGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }
@@ -113,4 +113,4 @@ class PodCpuComponent extends React.Component {
 
   }
 
-export default connect(mapStateToProps, null)(PodCpuComponent);
+export default connect(mapStateToProps, null)(PodMemoryComponent);

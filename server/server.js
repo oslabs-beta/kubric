@@ -13,9 +13,19 @@ app.use(cors());
 
 //to parse the incoming requests with JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //render html for home and react routes
-app.get(['/'/*add more end points*/], (req, res)=> res.status(200).sendFile(path.join(__dirname, '../public/client/index.html')));
+app.get(['/home','/metrics','/logs'], 
+(req, res)=> {
+  console.log("did we reach back end")
+  res.status(200).sendFile(path.join(__dirname, '../public/index.html'))
+});
+app.get('/', 
+(req, res)=> {
+  console.log("did we reach back end")
+  res.status(200).sendFile(path.join(__dirname, '../public/index.html'))
+});
 
 //api routers
 app.use('/api/cluster', clusterRouter);
