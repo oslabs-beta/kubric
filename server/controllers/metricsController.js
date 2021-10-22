@@ -28,10 +28,10 @@ let step = '5m';
 
 //top 4 relevant metrics by each node in the cluster
 
-//CPU saturation by the node
+//CPU saturation % by the node
 metricsController.getCPUSatByNodes = (req, res, next) => {
   res.locals.nodeMetrics = {};
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=(sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance))*100&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
       res.locals.nodeMetrics.CPUSatValsNodes = data.data.data.result;
@@ -110,7 +110,20 @@ metricsController.getWriteToDiskRateByPods = (req, res, next) => {
       next();  
     })
     .catch(err=>next(err));
-};
+}
+
+//kubelet logs by pod inside one node
+metricsController.getLogsByPods = (req, res, next) => {
+  const node = req.params.nodeName; 
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(kubelet_container_log_filesystem_used_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+    .then(data => {
+      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      res.locals.podMetrics.LogsByPods = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+}
+
 
 metricsController.getServerAPIMetrics = (req, res, next) => {
   const urls = {
@@ -215,16 +228,3 @@ clicking the metrics tab will grab node metrics initially
       
 
 module.exports = metricsController;
-
-
-
-
-
-
-
-
-
-
-
-
-

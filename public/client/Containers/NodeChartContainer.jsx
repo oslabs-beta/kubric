@@ -6,6 +6,8 @@ import Item from '@mui/material/Stack';
 import ZingChart from 'zingchart-react';
 import NodeCpuComponent from '../Components/NodeCpuComponent.jsx'
 import NodeMemoryComponent from '../Components/NodeMemoryComponent.jsx';
+import NodeCpuSaturationComponent from '../Components/NodeCpuSaturationComponent.jsx';
+import NodeWriteToDiskComponent from '../Components/NodeWriteToDiskComponent.jsx';
 
 export default function PodChartContainer() {
 
@@ -14,16 +16,30 @@ export default function PodChartContainer() {
   }
 
   return (
-    <Stack
-      direction="row"
-      spacing={2}
-     sx={{display:"flex", 
-     flexDirection:"row",
-     justifyContent:'space-evenly'}}
-    >
-      <NodeCpuComponent />
-      <NodeMemoryComponent />
+    <div>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{display:"flex", 
+        flexDirection:"row",
+        justifyContent:'space-evenly'}}
+      >
+        <NodeCpuComponent />
+        <NodeMemoryComponent />
+        
+      </Stack>
+
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{display:"flex", 
+        flexDirection:"row",
+        justifyContent:'space-evenly'}}
+      >
+        <NodeCpuSaturationComponent />
+        <NodeWriteToDiskComponent />
       
-    </Stack>
+      </Stack>
+    </div>
   );
 }

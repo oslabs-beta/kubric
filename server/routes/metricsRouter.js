@@ -18,6 +18,7 @@ metricsRouter.get(
   metricsController.getCPUByPods,
   metricsController.getMemoryByPods,
   metricsController.getWriteToDiskRateByPods,
+  metricsController.getLogsByPods,
   (req,res)=> res.status(200).json(res.locals.podMetrics)
 );
 

@@ -33,7 +33,7 @@ export const fetchNodeMetrics = () => {
     const nodesMetrcisUrl = 'http://localhost:3000/api/metrics'
     axios.get(nodesMetrcisUrl)
       .then( response => {
-        dispatch(getNodes(response.data.CPUNodes, response.data.MemoryNodes));
+        dispatch(getNodes(response.data.CPUNodes, response.data.MemoryNodes, response.data.CPUSatValsNodes, response.data.WriteToDiskNodes));
       })
       .catch (err => console.log('error from inside fetchNodeMetrics'))
   }
@@ -104,10 +104,10 @@ export const displayPodMetrics = (podName) => {
   }
 }
 
-export const getNodes = (nodesCpu, nodesMemory) => {
+export const getNodes = (nodesCpu, nodesMemory, CPUSatValsNodes, writeToDiskNodes) => {
   return {
     type: actionTypes.RECEIVE_NODES,
-    payload: {nodesCpu, nodesMemory}
+    payload: {nodesCpu, nodesMemory, CPUSatValsNodes, writeToDiskNodes}
   }
 }
 
@@ -121,6 +121,6 @@ export const displayNodeMetrics = (nodeName) => {
 export const renderNodeMetrics = (nodeName, metrics) => {
   return {
     type: actionTypes.RENDER_NODE_METRICS,
-    payload: {podName, metrics}
+    payload: {nodeName, metrics}
   }
 }
