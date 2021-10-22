@@ -6,8 +6,10 @@ const metricsRouter = Router();
 metricsRouter.get(
   '/',
   // metricsController.getDefaultMetrics,
+  metricsController.getCPUSatByNodes,
   metricsController.getCPUByNodes,
   metricsController.getMemoryByNodes,
+  metricsController.getWriteToDiskRateByNodes,
   (req,res)=> res.status(200).json(res.locals.nodeMetrics)
 );
 
