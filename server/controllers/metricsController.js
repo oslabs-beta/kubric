@@ -33,7 +33,7 @@ metricsController.getCPUSatByNodes = (req, res, next) => {
   res.locals.nodeMetrics = {};
   axios.get(`http://localhost:9090/api/v1/query_range?query=(sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance))*100&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
-      //array of object; each corresponding to each pod; each is the rate of cpu usage
+      //array of object; each corresponding to each node; each is the saturation of cpu
       res.locals.nodeMetrics.CPUSatValsNodes = data.data.data.result;
       next();
     })
@@ -44,7 +44,7 @@ metricsController.getCPUSatByNodes = (req, res, next) => {
 metricsController.getCPUByNodes = (req, res, next) => {
   axios.get(`http://localhost:9090/api/v1/query_range?query=100%20-%20(avg%20by%20(instance)%20(irate(node_cpu_seconds_total{mode=%22idle%22}[60m]))%20*%20100)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
-      //array of object; each corresponding to each pod; each is the rate of cpu usage
+      //array of object; each corresponding to each node; each is the rate of cpu usage
       res.locals.nodeMetrics.CPUNodes = data.data.data.result;
       next();  
     })
@@ -55,7 +55,7 @@ metricsController.getCPUByNodes = (req, res, next) => {
 metricsController.getMemoryByNodes = (req, res, next) => { 
   axios.get(`http://localhost:9090/api/v1/query_range?query=sum((1-(node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes))*100)%20by%20(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
-      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      //array of object; each corresponding to each node; sending memeory in bytes
       res.locals.nodeMetrics.MemoryNodes = data.data.data.result;
       next();  
     })
@@ -66,8 +66,19 @@ metricsController.getMemoryByNodes = (req, res, next) => {
 metricsController.getWriteToDiskRateByNodes = (req, res, next) => {
   axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_disk_written_bytes_total[60m]))by(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
-      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      //array of object; each corresponding to each node; sending disk usage rate in bytes
       res.locals.nodeMetrics.WriteToDiskNodes = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+}
+
+//For Horizontal memory bar graph (to be developed) to present the memory allocation/availablity in the cluster
+metricsController.getMemoryBarData = (req, res, next) => {
+  axios.get(`http://localhost:9090/api/v1/query?query=sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits) by (node) / sum(machine_memory_bytes) by (node)`)
+    .then(data => {
+      //array of object; each corresponding to each node; sending memory rate in bytes
+      res.locals.nodeMetrics.MemoryBarGraph = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
@@ -124,12 +135,14 @@ metricsController.getLogsByPods = (req, res, next) => {
     .catch(err=>next(err));
 }
 
-
-metricsController.getServerAPIMetrics = (req, res, next) => {
+//use promise all to resolve multiple axios requests to pull relevant control plane/master node components
+metricsController.getMasterNodeMetrics = (req, res, next) => {
   const urls = {
-    latency: `http://localhost:9090/api/v1/query_range?query=histogram_quantile(0.50,%20sum(rate(apiserver_request_duration_seconds_bucket{job=%22apiserver%22}[5m]))%20by%20(le))&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
-    traffic: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job=%22apiserver%22,code=~%222..%22}[5m]))&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
-    error: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job=%22apiserver%22,code=~%22[45]..%22}[5m]))&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    serverAPILatency: `http://localhost:9090/api/v1/query_range?query=sum(cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{quantile="0.9"}) by (resource)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    serverAPIsuccessReq: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job="apiserver",code=~"2..",group!=""}[5m])) by (group)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    // error: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job="apiserver",code=~"[45]..",group!=""}[5m])) by (group)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    controllerAddCounter: `http://localhost:9090/api/v1/query_range?query=rate(workqueue_adds_total[60m])&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    etcdRequestRate: `http://localhost:9090/api/v1/query_range?query=rate(etcd_request_duration_seconds_sum[5m])&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
   }
 
   const promises = [];
@@ -140,11 +153,12 @@ metricsController.getServerAPIMetrics = (req, res, next) => {
   
   Promise.all(promises)
     .then(results => {
-      const temp = urls;
-      temp.latency = results[0].data.data.result;
-      temp.traffic = results[1].data.data.result;
-      temp.error = results[2].data.data.result;
-      res.locals.metrics.serverAPI = temp;
+      let index = 0;
+      for(let url in urls){
+        urls[url] = results[index].data.data.result;
+        index++;
+      }
+      res.locals.masterNode = urls;
       next();
     })
     .catch(err=>next(err));

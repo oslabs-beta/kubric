@@ -8,25 +8,25 @@ import * as actionTypes from './actionTypes.js';
 //rerender metrics component with new fetched data
 
 // NOT USING THIS...?
-export const fetchDefaultMetrics = () => { 
-  return (dispatch, getState) => {
-    const defaultMetricsURL = 'http://localhost:3000/api/metrics';
-    console.log('inside fetch default metrics');
-    axios.get(defaultMetricsURL)
-      .then(response => {
-        // console.log('response from /api/metrics', response.data);
-        // console.log('res.locals', response);
-        dispatch(getDefaultMetrics(response.data.defaultMetrics));
-        // dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
-        // dispatch(getPodCpuMetrics(response.data.CPUPods));
-        // dispatch(getPodMemoryMetrics(response.data.MemoryPods));
-        dispatch(getServerApiMetrics(response.data.serverAPI));
-        dispatch(getNodes(response.data.CPUNodes, response.data.MemoryNodes));
+// export const fetchDefaultMetrics = () => { 
+//   return (dispatch, getState) => {
+//     const defaultMetricsURL = 'http://localhost:3000/api/metrics';
+//     console.log('inside fetch default metrics');
+//     axios.get(defaultMetricsURL)
+//       .then(response => {
+//         // console.log('response from /api/metrics', response.data);
+//         // console.log('res.locals', response);
+//         dispatch(getDefaultMetrics(response.data.defaultMetrics));
+//         // dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
+//         // dispatch(getPodCpuMetrics(response.data.CPUPods));
+//         // dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+//         dispatch(getServerApiMetrics(response.data.serverAPI));
+//         dispatch(getNodes(response.data.CPUNodes, response.data.MemoryNodes));
         
-      })
-      .catch (err => console.log(`error in dispatch default metrics fetch: ${err}`))    
-  }
-}
+//       })
+//       .catch (err => console.log(`error in dispatch default metrics fetch: ${err}`))    
+//   }
+// }
 
 export const fetchNodeMetrics = () => {
   return (dispatch, getState) => {
@@ -44,9 +44,10 @@ export const fetchPodMetrics = (nodeName) => {
     const nodesMetrcisUrl = `http://localhost:3000/api/metrics/getPodMetrics/${nodeName}`
     axios.get(nodesMetrcisUrl)
       .then( response => {
-        dispatch(getPods(response.data.CPUPods, response.data.MemoryPods));
-        dispatch(getPodCpuMetrics(response.data.CPUPods));
-        dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+        dispatch(getPods(response.data.CPUPods, response.data.MemoryPods, response.data.WriteToDiskPods));
+        // dispatch(getPodCpuMetrics(response.data.CPUPods));
+        // dispatch(getPodMemoryMetrics(response.data.MemoryPods));
+        
       })
       .catch (err => console.log('error from inside fetchPodMetrics'))
   }
@@ -89,10 +90,10 @@ export const renderPodMetrics = (podName, metrics) => {
   }
 }
 
-export const getPods = (cpuMetrics, memoryMetrics) => {
+export const getPods = (cpuMetrics, memoryMetrics, writeToDiskPods) => {
   return {
     type: actionTypes.RECEIVE_PODS,
-    payload: {cpuMetrics, memoryMetrics},
+    payload: {cpuMetrics, memoryMetrics, writeToDiskPods},
   }
 }
 

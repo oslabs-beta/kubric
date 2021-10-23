@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchDefaultMetrics: () => dispatch(actions.fetchDefaultMetrics()),
+    // fetchDefaultMetrics: () => dispatch(actions.fetchDefaultMetrics()),
     fetchNodeMetrics: () => dispatch(actions.fetchNodeMetrics()),
   }
 }
@@ -85,7 +85,7 @@ function MetricsContainer(props) {
     setValue(newValue);
   };
   useEffect(() => {
-    props.fetchDefaultMetrics();
+    // props.fetchDefaultMetrics();
     props.fetchNodeMetrics();
   }, []);
 
@@ -129,7 +129,7 @@ function MetricsContainer(props) {
             <NodeChartContainer/>
             <NodeXContainer/>
           </TabPanel>
-
+          
           <TabPanel value={value} index={1}> 
             Master Node
           </TabPanel>

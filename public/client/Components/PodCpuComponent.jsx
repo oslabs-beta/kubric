@@ -30,12 +30,13 @@ class PodCpuComponent extends React.Component {
         
         if (pods[pod].displayMetrics) {
           pods[pod].cpuValues.forEach(dataPoint => {
-            const date = new Date(dataPoint[0]);
+            const date = new Date(dataPoint[0]*1000);
             const hours = date.getHours();
             const minutes = date.getMinutes();
             const seconds = date.getSeconds();
-            const milliseconds = date.getMilliseconds();
-            const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+            //   const milliseconds = date.getMilliseconds();
+            //   const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+            const time = `${hours}:${minutes}:${seconds}`;  
             
             podValues.push([time, parseFloat(dataPoint[1])]);
           });
@@ -54,18 +55,31 @@ class PodCpuComponent extends React.Component {
     // console.log('line 28', valuesToGraph);
     const dummy = [1,2]
     const podCpuGraphData = {
-      type: 'mixed',
+      theme: 'dark',
+      type: 'line',
       "globals": {
         "font-family": "Roboto",
-        "background-color": "#79B4B7",
-        "border-radius" : 5,
+        //"background-color": "#79B4B7",
+        "border-radius" : 15,
       },
       title: {
-          text: 'CPU Usage Over Time',
-          "font-color": "dark-grey",
-          "font-size": "20em",
+          text: 'CPU Usage Rate [5m]',
+         // "font-color": "dark-grey",
+          "font-size": "15em",
           "alpha": 1,
           "adjust-layout": true,
+        
+      },
+       plot: {
+        animation: {
+          effect: "ANIMATION_FADE_IN"
+        }
+      },
+      plotarea: {
+        "margin": "dynamic",
+        "margin-right": "30",
+        'width':'100%',
+        'height': '100%',
       },
       // "plot": {
       //   'width':'100%',
@@ -77,18 +91,20 @@ class PodCpuComponent extends React.Component {
       //     'height': '100%',
       // },
       scaleX: {
-          labels: 'Timestamp in some Unit',
-          "item": {
-            'font-color': "dark-grey",
-            'font-weight': 'normal',
-          },
-      },
+        // labels: 'Timestamp in some Unit',
+        "item": {
+          //'font-color': "dark-grey",
+          'font-weight': 'normal',
+        },
+        
+        },
       scaleY: {
-          labels: 'Memory Use Unit',
-          "item": {
-            'font-color': "dark-grey",
+            //labels: 'CPU Use Unit',
+        minValue:0,
+        minorTicks: 9,
+        item:{
             'font-weight': 'normal',
-          },
+        }
       },
       "crosshair-x": {
         "line-width": "100%",

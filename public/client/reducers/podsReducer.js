@@ -10,7 +10,7 @@ function podsReducer(state = initialState, action) {
 
   switch (type) {
     case actionTypes.RECEIVE_PODS:
-      const { cpuMetrics, memoryMetrics } = payload      
+      const { cpuMetrics, memoryMetrics, writeToDiskPods } = payload      
       let pods = {};
 
       // iterate through cpu metrics, memory metrics
@@ -27,7 +27,7 @@ function podsReducer(state = initialState, action) {
           }
         }
         else {
-          pods[metric.metric.pod].values = metric.values;
+          pods[metric.metric.pod].cpuValues = metric.values;
         }
         // podName
         
@@ -35,16 +35,29 @@ function podsReducer(state = initialState, action) {
         // pod memory metrics
        // push the object to the pods array 
       })
+      
       memoryMetrics.forEach( metric => {
-        if (!pods[metric.metric.pod]) {
-          pods[metric.metric.pod] = {
-            memoryValues: metric.values,
-          }
-        }
-        else {
-          pods[metric.metric.pod].memoryValues = metric.values;
-        }  
+        // if (!pods[metric.metric.pod]) {
+        //   pods[metric.metric.pod] = {
+        //     memoryValues: metric.values,
+        //   }
+        // }
+        // else {
+        pods[metric.metric.pod].memoryValues = metric.values;
+        // }  
       })
+
+      //since one of the pod is missing disk metrics, wrote a seperate logic
+      for(let pod in pods){
+        writeToDiskPods.forEach(metric => {
+          if(pod === metric.metric.pod){
+            pods[pod].writeToDiskValues = metric.values;
+            return;
+          } 
+        })
+        if(!pods[pod].writeToDiskValues) pods[pod].writeToDiskValues = [];
+      }
+
       // console.log('pods from pods reducer', pods);
       
       return {...state, pods};

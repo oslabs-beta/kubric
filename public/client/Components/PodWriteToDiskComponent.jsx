@@ -9,53 +9,37 @@ const mapStateToProps = state => {
   }
 }
 
-class PodMemoryComponent extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  componentDidMount() {
-    
-  }
+const PodWriteToDiskComponent = (props) => {
+  // console.log('this is pod cpu component props', this.props)
+  // console.log('this is pod metric', metric);
 
-  render() {
-    // console.log('this is pod cpu component props', this.props)
-    const {metric, pods} = this.props;
-    // console.log('this is pod metric', metric);
-
-    const valuesToGraph = [];
-    let podName;
-    const getValues = (pods) => {
-      for (let pod in pods) {
-        const podValues = [];
-        
-        if (pods[pod].displayMetrics) {
-          // console.log('do we get here?');
-          pods[pod].memoryValues.forEach(dataPoint => {
-            const date = new Date(dataPoint[0]*1000);
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-            const seconds = date.getSeconds();
-            //  const milliseconds = date.getMilliseconds();
-            //  const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
-            const time = `${hours}:${minutes}:${seconds}`;  
-            
-            podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
-          });
-          valuesToGraph.push(
-            {
-              type: "line",
-              text: pods[pod].name,
-              values: podValues,
-            }
-          );
+  const valuesToGraph = [];
+  const getValues = (pods) => {
+    for (let pod in pods) {
+      const podValues = [];
+      if (pods[pod].displayMetrics) {
+        // console.log('do we get here?');
+        pods[pod].writeToDiskValues.forEach(dataPoint => {
+          const date = new Date(dataPoint[0]*1000);
+          const hours = date.getHours();
+          const minutes = date.getMinutes();
+          const seconds = date.getSeconds();
+        //   const milliseconds = date.getMilliseconds();
+        //   const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+          const time = `${hours}:${minutes}:${seconds}`;  
+          podValues.push([time, parseFloat(dataPoint[1])/1000]);
+        });
+        valuesToGraph.push({
+          type: "line",
+          text: pods[pod].name,
+          values: podValues,
+        });
         }
       }    
     }
-  //   [1634171448.491, 0.005295174118518516]
-    getValues(pods);
-    // console.log('line 28', valuesToGraph);
-    const dummy = [1,2]
-    const podMemoryGraphData = {
+    getValues(props.pods);
+    
+    const podWriteToDiskGraphData = {
       theme: 'dark',
       type: 'line',
       "globals": {
@@ -64,7 +48,7 @@ class PodMemoryComponent extends React.Component {
         "border-radius" : 15,
       },
       title: {
-          text: 'Memory Usage in MB',
+          text: 'Write to Disk Rate [5m] in KB',
          // "font-color": "dark-grey",
           "font-size": "15em",
           "alpha": 1,
@@ -108,6 +92,7 @@ class PodMemoryComponent extends React.Component {
         item:{
             'font-weight': 'normal',
         }
+        
       },
       "crosshair-x": {
         "line-width": "100%",
@@ -118,7 +103,7 @@ class PodMemoryComponent extends React.Component {
 
     return (
         <div className="chart"> 
-            <ZingChart height="303" data = {podMemoryGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart height="303" data = {podWriteToDiskGraphData}>Write to Disk rate</ZingChart>
         </div>
     )
   }
@@ -129,6 +114,5 @@ class PodMemoryComponent extends React.Component {
 //       </div>
 //   )
 
-  }
 
-export default connect(mapStateToProps, null)(PodMemoryComponent);
+export default connect(mapStateToProps, null)(PodWriteToDiskComponent);

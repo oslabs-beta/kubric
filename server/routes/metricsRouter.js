@@ -10,6 +10,7 @@ metricsRouter.get(
   metricsController.getCPUByNodes,
   metricsController.getMemoryByNodes,
   metricsController.getWriteToDiskRateByNodes,
+  // metricsController.getMemoryBarData, <-- this could be developed or not
   (req,res)=> res.status(200).json(res.locals.nodeMetrics)
 );
 
@@ -24,7 +25,7 @@ metricsRouter.get(
 
 metricsRouter.get(
   '/getMasterNode',
-  metricsController.getServerAPIMetrics,
+  metricsController.getMasterNodeMetrics,
   (req,res)=> res.status(200).json(res.locals.masterNode)
 );
 

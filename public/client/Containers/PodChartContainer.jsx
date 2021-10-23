@@ -7,6 +7,7 @@ import ZingChart from 'zingchart-react';
 import PodCpuComponent from '../Components/PodCpuComponent.jsx'
 import PodMemoryComponent from '../Components/PodMemoryComponent.jsx';
 import { makeStyles } from '@mui/styles';
+import PodWriteToDiskComponent from '../Components/PodWriteToDiskComponent.jsx';
 export default function PodChartContainer() {
   const charts = {
 
@@ -21,6 +22,7 @@ export default function PodChartContainer() {
     >
       <PodCpuComponent />
       <PodMemoryComponent />
+      <PodWriteToDiskComponent/>
       
     </Stack>
   );
