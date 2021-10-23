@@ -5,6 +5,7 @@ import servicesReducer from './reducers/servicesReducer';
 import metricsReducer from './reducers/metricsReducer';
 import logsReducer from './reducers/logsReducer';
 import nodesReducer from './reducers/nodesReducer';
+import loginReducer from './reducers/loginReducer';
 
 const rootReducer = combineReducers({
   // deploymentsReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   podsReducer,
   nodesReducer,
   servicesReducer,
+  loginReducer,
   // ADD ANY NEW REDUCERS HERE
 });
 

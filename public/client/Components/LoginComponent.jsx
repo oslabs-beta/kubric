@@ -9,7 +9,15 @@ import Grid from '@mui/material/Grid';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+//import action file
 
+
+const mapDispatchToProps = (dispatch) => {
+  //what action to dispatch
+  return {
+    renderCluster: (boolean) => {dispatch(actions.renderCluster(boolean))}
+  }
+}
 
 export default function LoginComponent(props) {
   const [username, setUsername] = useState('');
@@ -25,22 +33,15 @@ export default function LoginComponent(props) {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log('this is the res', res)
-        if (res === true) {
-          console.log('this is true res')
-          //map dispatch action in here
+        props.renderCluster()
+
           //dispatch action payload 
           //login reducer with logged in state
             //one dispatch function specified in action creators file
               //dispatched based on boolean to change state
             //in app.jsx map state to props to check boolean value of state to then render either cluster page 
             //or make cluster page
-
-        }
-
-        if (res === false) {
-          () => {alert('please enter valid username and password')}
-        }
+        
       })
   }
 
@@ -71,9 +72,9 @@ export default function LoginComponent(props) {
 
           <Button id="loginButtonUp" color="neutral" variant="outlined" type="submit" onClick={submitForm}>Sign up</Button>
         </Stack>
-
- 
       </Box>
     </div>
   );
 }
+
+export default connect(null, mapDispatchToProps)(LoginContainer);

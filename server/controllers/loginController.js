@@ -1,6 +1,5 @@
 const model = require('../model');
 
-//will require database model for logins
 const loginController = {};
 
 loginController.getLogin = async (req, res, next) => {
