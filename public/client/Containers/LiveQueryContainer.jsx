@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/logsActionCreator.js';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -22,40 +22,23 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-//sample data;; store it with property named label;
-const testQueryIndex = [
-  {label: "loggen-app"},
-  {label: "fluent-d1231"}
-]
 
-const testQueryField = [
-  {label: "type"},
-  {label: "podName"}
-]
-
-
-const QueryContainer = ({isPersist}) => {
-  const display = [];
-  //depending on the current tab, rendered components will be different
-  if(isPersist){
-    
-  }
-
+const LiveQueryContainer = (props) => {
+  
 
   return (
     <div style={{backgroundColor:"white", width:"100%", display: "flex", alignItems:"center"}}>
-      {display}
       <Autocomplete
         disablePortal
-        id="index"
-        options={testQueryIndex}
+        id="pod"
+        options={[]}
         sx={{width: 300, flexGrow: 1}}
-        renderInput={(params) => <TextField {...params} label="Indices"/>}
+        renderInput={(params) => <TextField {...params} label="Pods"/>}
       />
       <Autocomplete
         disablePortal
         id="field"
-        options={testQueryField}
+        options={[]}
         sx={{width: 300, flexGrow: 1}}
         renderInput={(params) => <TextField {...params} label="Fields"/>}
       />
@@ -186,4 +169,4 @@ const QueryContainer = ({isPersist}) => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(QueryContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LiveQueryContainer);

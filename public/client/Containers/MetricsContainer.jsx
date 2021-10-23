@@ -85,7 +85,7 @@ function MetricsContainer(props) {
     setValue(newValue);
   };
   useEffect(() => {
-    props.fetchDefaultMetrics();
+    //props.fetchDefaultMetrics();
     props.fetchNodeMetrics();
   }, []);
 

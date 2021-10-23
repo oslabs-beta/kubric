@@ -5,6 +5,7 @@ import * as actionTypes from './actionTypes.js';
 export const getAppLogs = (queryObj) => { 
     return (dispatch, getState) => {
        const {name,field,value,all} = queryObj;
+       console.log("getAppLogsReached",JSON.stringify(queryObj))
       const getAppLogsURL = 
       `http://localhost:3000/api/logs/app?
       name=${name}&field=${field}&value=${value}&all=${all}`
@@ -27,13 +28,14 @@ export const getAppLogs = (queryObj) => {
       axios.get(getAppLogFieldsURL)
         .then(response => {
          console.log('response from /api/logs/appFields', response.data);
-         const objToArray = []
+         let fieldArray = [];
+         let indexArray = [];
          for(let index in response.data){
-             objToArray.push({'index':index,
-             'fields':response.data[index]})
+             indexArray.push(index);
+             fieldArray.push(response.data[index]);
          }
          //console.log(response.data);
-         dispatch(dispatchAppLogFields(objToArray));
+         dispatch(dispatchAppLogFields(fieldArray,indexArray));
         })
         .catch (err => console.log(`error in get app fields fetch: ${err}`))    
     }
@@ -51,11 +53,12 @@ export const getAppLogs = (queryObj) => {
           payload: index
       }
   }
-  export const dispatchAppLogFields = fields => {
+  export const dispatchAppLogFields = (fields,indices) => {
     console.log(fields)
+    console.log(indices)
     return {
       type: actionTypes.APP_LOG_FIELDS_RECEIVED,
-      payload: fields,
+      payload: {'fields':fields,'indices':indices}
     }
   }
   

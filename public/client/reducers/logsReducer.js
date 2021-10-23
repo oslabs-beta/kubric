@@ -3,18 +3,21 @@ import * as actionTypes from '../actions/actionTypes.js'
 
 const initialState = {
   appLogFields: [],
+  appLogIndices: [],
   appLogs: [],
+  selectedFields: [],
   selectedIndex:0
 }
 export default function metricsReducer (state = initialState, action) {
     const { type, payload } = action;
     switch (type) {
       case actionTypes.APP_LOG_FIELDS_RECEIVED: {
-        let appLogFields = payload;
-        console.log('appLog Fields', appLogFields);
+        let appLogFields = payload.fields;
+        let appLogIndices = payload.indices;
         return {
           ...state,
           appLogFields,
+          appLogIndices
         }
       }
       case actionTypes.APP_LOGS_RECEIVED: {
@@ -26,11 +29,13 @@ export default function metricsReducer (state = initialState, action) {
         }
       }
       case actionTypes.SELECT_INDEX: {
-        let index = payload;
+        const index = payload;
+        const selectFields = state.appLogFields.slice()[index];
         console.log('selected index', index);
         return {
           ...state,
           selectedIndex:index,
+          selectedFields:selectFields
         }
       }
       default: 
