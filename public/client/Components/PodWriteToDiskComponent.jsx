@@ -10,10 +10,9 @@ const mapStateToProps = state => {
 }
 
 const PodWriteToDiskComponent = (props) => {
-  // console.log('this is pod cpu component props', this.props)
-  // console.log('this is pod metric', metric);
 
   const valuesToGraph = [];
+
   const getValues = (pods) => {
     for (let pod in pods) {
       const podValues = [];
@@ -37,6 +36,7 @@ const PodWriteToDiskComponent = (props) => {
         }
       }    
     }
+
     getValues(props.pods);
     
     const podWriteToDiskGraphData = {
@@ -107,12 +107,6 @@ const PodWriteToDiskComponent = (props) => {
         </div>
     )
   }
-
-//   return (
-//       <div>
-//           Pod Component Rendered
-//       </div>
-//   )
 
 
 export default connect(mapStateToProps, null)(PodWriteToDiskComponent);

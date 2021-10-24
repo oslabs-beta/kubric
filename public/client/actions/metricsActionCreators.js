@@ -53,6 +53,16 @@ export const fetchPodMetrics = (nodeName) => {
   }
 }
 
+export const fetchMasterNodeMetrics = () => {
+  return (dispatch) => {
+    axios.get('/api/metrics/getMasterNode')
+      .then(response => {
+        dispatch(getMasterNode(response.data));
+      })
+      .catch(err => console.log('error from fetchMasterNodeMetrics'))
+  };
+};
+
 export const getDefaultMetrics = metrics => {
   // console.log(metrics)
   return {
@@ -123,5 +133,12 @@ export const renderNodeMetrics = (nodeName, metrics) => {
   return {
     type: actionTypes.RENDER_NODE_METRICS,
     payload: {nodeName, metrics}
+  }
+}
+
+export const getMasterNode = (metrics) => {
+  return {
+    type: actionTypes.RECEIVE_MASTER_NODE,
+    payload: metrics,
   }
 }

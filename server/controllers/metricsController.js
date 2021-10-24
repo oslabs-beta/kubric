@@ -138,11 +138,11 @@ metricsController.getLogsByPods = (req, res, next) => {
 //use promise all to resolve multiple axios requests to pull relevant control plane/master node components
 metricsController.getMasterNodeMetrics = (req, res, next) => {
   const urls = {
-    serverAPILatency: `http://localhost:9090/api/v1/query_range?query=sum(cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{quantile="0.9"}) by (resource)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    serverAPILatency: `http://localhost:9090/api/v1/query_range?query=sum(cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{resource!="",quantile="0.9"}) by (resource)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
     serverAPIsuccessReq: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job="apiserver",code=~"2..",group!=""}[5m])) by (group)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
     // error: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job="apiserver",code=~"[45]..",group!=""}[5m])) by (group)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
     controllerAddCounter: `http://localhost:9090/api/v1/query_range?query=rate(workqueue_adds_total[60m])&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
-    etcdRequestRate: `http://localhost:9090/api/v1/query_range?query=rate(etcd_request_duration_seconds_sum[5m])&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    etcdRequestRate: `http://localhost:9090/api/v1/query_range?query=sum(rate(etcd_request_duration_seconds_sum[5m]))by(operation)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
   }
 
   const promises = [];

@@ -5,6 +5,7 @@ import NodeXContainer from './NodeXContainer.jsx';
 import NodeChartContainer from './NodeChartContainer.jsx';
 import PodChartContainer from './PodChartContainer.jsx';
 import PodsContainer from './PodsContainer.jsx';
+import MasterNodeContainer from './MasterNodeContainer.jsx';
 import { Container } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Tabs from '@mui/material/Tabs';
@@ -84,6 +85,7 @@ function MetricsContainer(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   useEffect(() => {
     // props.fetchDefaultMetrics();
     props.fetchNodeMetrics();
@@ -131,7 +133,7 @@ function MetricsContainer(props) {
           </TabPanel>
           
           <TabPanel value={value} index={1}> 
-            Master Node
+            <MasterNodeContainer/>
           </TabPanel>
 
           {/* Tab Panel for each node */}
