@@ -9,17 +9,19 @@ import Grid from '@mui/material/Grid';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-//import action file
-
+import * as actions from '../actions/clusterActionCreators.js';
+import {connect} from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
-  //what action to dispatch
+  console.log('in map dispatch to props')
+  console.log('this is dispatch', dispatch)
+  console.log('this actions render cluster', actions.renderCluster)
   return {
     renderCluster: (boolean) => {dispatch(actions.renderCluster(boolean))}
-  }
-}
+  };
+};
 
-export default function LoginComponent(props) {
+function LoginComponent(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   // console.log('function user and pass', username, password)
@@ -33,14 +35,8 @@ export default function LoginComponent(props) {
     })
       .then((res) => res.json())
       .then((res) => {
-        props.renderCluster()
-
-          //dispatch action payload 
-          //login reducer with logged in state
-            //one dispatch function specified in action creators file
-              //dispatched based on boolean to change state
-            //in app.jsx map state to props to check boolean value of state to then render either cluster page 
-            //or make cluster page
+        console.log('in res this is valid user value', res)
+        props.renderCluster(res)
         
       })
   }
@@ -77,4 +73,4 @@ export default function LoginComponent(props) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(LoginContainer);
+export default connect(null, mapDispatchToProps)(LoginComponent);
