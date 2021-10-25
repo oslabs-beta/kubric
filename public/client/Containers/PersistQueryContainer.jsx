@@ -30,18 +30,15 @@ const PersistQueryContainer = (props) => {
     props.getAppLogFields()
   }, []);
   const [query, setQuery] = useState({'name':'','field':'','value':'', 'all':true})
-  const [queryBool,setQueryBool] = useState({'boolean':false});
+  let queryBoolean = false;
   const checkQuery = () =>{
-    if(query.name && query.field) setQueryBool({'boolean':true});
-    console.log(Object.values(query))
+    if(query.name && query.field) queryBoolean = true;
   }
   const handleIndex = (event,value)=>{
-  console.log(value)
   props.selectIndex([...props.appLogIndices].indexOf(value))
   };
   const search = () =>{
-    console.log("search",queryBool.boolean)
-    if(queryBool.boolean) props.getAppLogs(query)
+    if(queryBoolean) props.getAppLogs(query)
   }
 
   return (
@@ -53,7 +50,7 @@ const PersistQueryContainer = (props) => {
         sx={{width: 300, flexGrow: 1}}
         renderInput={(params) => <TextField {...params} label="Index Name"/>}
         onChange={(event,value)=>{
-        setQuery({...query,name:value})
+        setQuery({...query,name:value,all:true})
         handleIndex(event,value)
         checkQuery();
         }}
@@ -64,7 +61,7 @@ const PersistQueryContainer = (props) => {
         options={props.selectedFields}
         sx={{width: 300, flexGrow: 1}}
         onChange={(event,value)=>{
-          setQuery({...query,field:value})
+          setQuery({...query,field:value,all:true})
           checkQuery();
           }}
         renderInput={(params) => <TextField {...params} label="Field"/>}
@@ -86,7 +83,9 @@ const PersistQueryContainer = (props) => {
         sx={{width:100, height:45, flexGrow: 1}} 
         size="small" 
         variant="outlined" 
-        onClick={()=> {search()}}>
+        onClick={()=> {
+          checkQuery();
+          search()}}>
           Search
       </Button>
     </div>

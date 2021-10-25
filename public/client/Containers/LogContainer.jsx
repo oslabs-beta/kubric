@@ -86,7 +86,7 @@ const LogContainer = (props) => {
             value={value} onChange={handleChange} 
             aria-label="cluster log tabs">
             <Tab label="Persistent" {...addProps(0)} />
-            <Tab label="Live" {...addProps(1)} />
+            {/* <Tab label="Live" {...addProps(1)} /> */}
           </Tabs>
         </Box>
 
@@ -94,11 +94,12 @@ const LogContainer = (props) => {
           flexDirection:"row",
           justifyContent:'space-evenly'} }>
           <TabPanel value={value} index={0}> 
-          <PersistQueryContainer />
+          <PersistQueryContainer/>
+          <LogRowComponent/>
           </TabPanel>
-          <TabPanel value={value} index={1}> 
+          {/* <TabPanel value={value} index={1}> 
           <LiveQueryContainer />
-          </TabPanel>
+          </TabPanel> */}
         </Box>
       
     
