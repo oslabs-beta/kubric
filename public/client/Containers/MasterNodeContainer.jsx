@@ -50,19 +50,14 @@ function MasterNodeContainer(props) {
 
     return (
       <div>
-        <Stack direction="row"
+        <Stack 
           spacing={2}
-          sx={{display:"flex", 
-          flexDirection:"row",
-          justifyContent:'space-evenly'}}>
+          sx={{
+            display:"flex", 
+            justifyContent:'space-evenly',
+          }}>
           <MasterNodeGraph name={'Kubernetes Server API Latency [90th percentile]'} data={props.masterNode.serverAPILatency}/>
           <MasterNodeGraph name={'Kubernetes Server API Success Request Rate [5m]'} data={props.masterNode.serverAPISuccessReq}/>
-        </Stack>
-        <Stack direction="row"
-          spacing={2}
-          sx={{display:"flex", 
-          flexDirection:"row",
-          justifyContent:'space-evenly'}}>
           <MasterNodeGraph name={'Controller Workqueue Add Rate [5m]'} data={props.masterNode.controllerAddCounter}/>
           <MasterNodeGraph name={'etcd Request Rate [5m]'} data={props.masterNode.etcdRequestRate}/>
         </Stack>

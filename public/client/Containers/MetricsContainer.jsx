@@ -103,8 +103,11 @@ function MetricsContainer(props) {
     tabs.push(<Tab label={`Worker Node ${tabNum-1}`} {...addProps(tabNum)}/>);
     // add a TabPanel to tabPanels
     tabPanels.push(
-      <TabPanel value={value} index={tabNum}>
-          <PodsContainer nodeName={node}/>
+      <TabPanel 
+        value={value} 
+        index={tabNum}
+      >
+          <PodsContainer nodeName={node} />
           <PodChartContainer />
       </TabPanel>);
     tabNum += 1;
@@ -128,7 +131,10 @@ function MetricsContainer(props) {
         </Box>
         <Box sx={{ display:"flex", 
           flexDirection:"row",
-          justifyContent:'space-evenly'} }>
+          justifyContent:'space-evenly',
+          marginLeft: "8vh",
+          marginRight: "8vh"
+          }}>
           <TabPanel value={value} index={0}> 
             <NodeXContainer/>
             <NodeChartContainer/>
