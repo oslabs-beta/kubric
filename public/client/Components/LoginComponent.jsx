@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 function LoginComponent(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
   const submitFormLogin = (e) => {
     fetch('/api/login', {
       method: 'POST',
@@ -31,12 +32,12 @@ function LoginComponent(props) {
     })
       .then((res) => res.json())
       .then((res) => {
-        props.renderCluster(res)
+        props.renderCluster(res);
         if (res === false) {
           alert('Username or password not found');
         }
-      })
-  }
+      });
+  };
 
   const submitFormSignUp = (e) => {
     fetch('/api/signUp', {

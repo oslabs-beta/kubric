@@ -6,7 +6,6 @@ const clusterRouter = require('./routes/clusterRouter');
 const loginRouter = require('./routes/loginRouter');
 const logsRouter = require('./routes/logsRouter');
 const signUpRouter = require('./routes/signUpRouter');
-
 const metricsRouter = require('./routes/metricsRouter');
 const cors = require('cors');
 
