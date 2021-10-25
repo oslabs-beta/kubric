@@ -68,13 +68,13 @@ function PodComponent (props) {
       <ListItem
       key={props.name}
       count={props.keyCount}
-      disablePadding
+      disablePadding={true}
     >
-      <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense>
+      <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense={true}>
         <ListItemIcon>
           <Checkbox
             edge="start"
-            checked={checked.indexOf(props.name) !== -1}
+            checked={checked.indexOf(props.name) === -1}
             tabIndex={-1}
             disableRipple
             inputProps={{ 'aria-labelledby': props.name }}

@@ -50,7 +50,7 @@ function NodeComponent (props) {
         <ListItemIcon>
           <Checkbox
             edge="start"
-            checked={checked.indexOf(props.name) !== -1}
+            checked={checked.indexOf(props.name) === -1}
             tabIndex={-1}
             disableRipple
             inputProps={{ 'aria-labelledby': props.name }}

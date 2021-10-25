@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 // if a pod has been evicted, the alive property changes to false
 
 const mapStateToProps = state => {
-  console.log('state from nodexcontainer: ',state);
+  // console.log('state from nodexcontainer: ',state);
   return {
     nodes: state.nodesReducer.nodes,
   }
@@ -70,9 +70,9 @@ class NodesContainer extends React.Component {
     return (
       <div>
         <Paper style={{maxHeight: 200, overflow: 'auto'}}>
-        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {nodesElement}
-        </List>
+          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            {nodesElement}
+          </List>
         </Paper>
       </div>
     );

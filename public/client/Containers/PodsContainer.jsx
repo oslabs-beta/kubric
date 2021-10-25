@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/metricsActionCreators.js'
 import PodCpuComponent from '../Components/PodCpuComponent.jsx';
 import List from '@mui/material/List';
+import Paper from '@mui/material/Paper';
 
 // TODOS: 
 // get pods from Kubernetes and update metric names based on user selections
@@ -78,9 +79,11 @@ function PodsContainer(props) {
 
     return (
       <div id="pods-container">
-        <List>
-          {podsElement}
-        </List>
+        <Paper style={{maxHeight: 200, overflow: 'auto'}}>
+          <List dense={true} sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            {podsElement}
+          </List>
+        </Paper>
       </div>
     );
   // }

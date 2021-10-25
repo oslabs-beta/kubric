@@ -21,7 +21,7 @@ function podsReducer(state = initialState, action) {
           pods[metric.metric.pod] = {
             name: metric.metric.pod,
             cpuValues: metric.values,
-            displayMetrics: false,
+            displayMetrics: true,
             healthy: true,
             alive: true,
           }

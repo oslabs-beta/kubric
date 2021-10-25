@@ -19,7 +19,7 @@ function nodesReducer (state = initialState, action) {
           nodes[metric.metric.instance] = {
             name: metric.metric.instance,
             cpuValues: metric.values,
-            displayMetrics: false,
+            displayMetrics: true,
             healthy: true,
             alive: true,
           }
