@@ -15,10 +15,10 @@ export default function PodChartContainer() {
   }
   return (
     <Stack
-      direction="row"
+      // direction="row"
       spacing={2}
       sx={{display:"flex", 
-      flexDirection:"row",
+      // flexDirection:"row",
       justifyContent:'space-evenly'}}
     >
       <PodCpuComponent />

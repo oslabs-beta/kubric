@@ -69,18 +69,20 @@ function PodComponent (props) {
       key={props.name}
       count={props.keyCount}
       disablePadding={true}
+      dense = {true}
     >
       <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense={true}>
-        <ListItemIcon>
+        <ListItemIcon dense = {true}>
           <Checkbox
             edge="start"
             checked={checked.indexOf(props.name) === -1}
             tabIndex={-1}
             disableRipple
             inputProps={{ 'aria-labelledby': props.name }}
+            dense = {true}
           />
         </ListItemIcon>
-        <ListItemText style={{color:'black'}} id={props.name} primary={`Pod ${props.keyCount}`} secondary={props.name} />
+        <ListItemText style={{color:'black'}} id={props.name} primary={`Pod ${props.keyCount}:   ${props.name}`} />
       </ListItemButton>
     </ListItem>
       </div>
