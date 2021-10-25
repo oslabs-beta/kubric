@@ -38,7 +38,7 @@ class NodeCpuSaturationComponent extends React.Component {
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             // const yDataVal = parseFloat(dataPoint[1]).toFixed(4)
             // console.log(yDataVal)
-            nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
+            nodeValues.push([time, parseFloat(dataPoint[1])]);
             
           });
           valuesToGraph.push(

@@ -38,7 +38,7 @@ class NodeMemoryComponent extends React.Component {
             const milliseconds = date.getMilliseconds();
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             
-            nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
+            nodeValues.push([time, parseFloat(dataPoint[1])]);
           });
           valuesToGraph.push(
             {
