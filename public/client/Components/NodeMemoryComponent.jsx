@@ -111,7 +111,7 @@ class NodeMemoryComponent extends React.Component {
 
     return (
         <div className="chart"> 
-            <ZingChart width="85%" height="303" data = {nodeMemoryGraphData}>Pod Zing Chart</ZingChart>
+            <ZingChart height="303" data = {nodeMemoryGraphData}>Pod Zing Chart</ZingChart>
         </div>
     )
   }

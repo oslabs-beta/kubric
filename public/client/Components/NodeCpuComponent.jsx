@@ -113,7 +113,7 @@ class NodeCpuComponent extends React.Component {
     //when do i invoke get values???
     return (
         <div className="chart"> 
-            <ZingChart width="85%" height="303" data = {nodeCpuGraphData}/>
+            <ZingChart height="303" data = {nodeCpuGraphData}/>
         </div>
     )
   }

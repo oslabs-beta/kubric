@@ -18,18 +18,20 @@ export default function PodChartContainer() {
   return (
     <div>
       <Stack
-        direction="row"
+        // direction="row"
         spacing={2}
         sx={{display:"flex", 
-        flexDirection:"row",
+        // flexDirection:"row",
         justifyContent:'space-evenly'}}
       >
         <NodeCpuComponent />
         <NodeMemoryComponent />
+        <NodeCpuSaturationComponent />
+        <NodeWriteToDiskComponent />
         
       </Stack>
 
-      <Stack
+      {/* <Stack
         direction="row"
         spacing={2}
         sx={{display:"flex", 
@@ -39,7 +41,7 @@ export default function PodChartContainer() {
         <NodeCpuSaturationComponent />
         <NodeWriteToDiskComponent />
       
-      </Stack>
+      </Stack> */}
     </div>
   );
 }

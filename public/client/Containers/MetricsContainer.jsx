@@ -130,8 +130,8 @@ function MetricsContainer(props) {
           flexDirection:"row",
           justifyContent:'space-evenly'} }>
           <TabPanel value={value} index={0}> 
-            <NodeChartContainer/>
             <NodeXContainer/>
+            <NodeChartContainer/>
           </TabPanel>
           
           <TabPanel value={value} index={1}> 

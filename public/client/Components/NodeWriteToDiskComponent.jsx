@@ -112,7 +112,7 @@ class NodeWriteToDiskComponent extends React.Component {
 
     return (
         <div className="chart"> 
-            <ZingChart width="85%" height="303" data = {nodeWriteToDiskData}/>
+            <ZingChart height="303" data = {nodeWriteToDiskData}/>
         </div>
     )
   }
