@@ -97,7 +97,7 @@ const MasterNodeGraph = ({name, data}) => {
   }
 
   return (
-    <ZingChart height="303" width="85%" data = {graphConfig}/>
+    <ZingChart height="303" data = {graphConfig}/>
   )
 }
 

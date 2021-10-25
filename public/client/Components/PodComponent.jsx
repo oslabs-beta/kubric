@@ -82,7 +82,7 @@ function PodComponent (props) {
             dense = {true}
           />
         </ListItemIcon>
-        <ListItemText style={{color:'black'}} id={props.name} primary={`Pod ${props.keyCount}:   ${props.name}`} />
+        <ListItemText style={{color:'black'}} id={props.name} primary={`Pod ${props.keyCount}`} secondary={props.name} />
       </ListItemButton>
     </ListItem>
       </div>
