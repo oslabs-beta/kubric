@@ -12,6 +12,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Item from '@mui/material/Stack';
 
 const mapStateToProps = state => {
   return {
@@ -102,8 +104,8 @@ function MetricsContainer(props) {
     // add a TabPanel to tabPanels
     tabPanels.push(
       <TabPanel value={value} index={tabNum}>
-        <PodChartContainer />
-        <PodsContainer nodeName={node}/>
+          <PodsContainer nodeName={node}/>
+          <PodChartContainer />
       </TabPanel>);
     tabNum += 1;
   }
