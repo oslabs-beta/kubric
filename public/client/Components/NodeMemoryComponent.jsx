@@ -31,14 +31,14 @@ class NodeMemoryComponent extends React.Component {
         if (nodes[node].displayMetrics) {
           // console.log('do we get here?');
           nodes[node].memoryValues.forEach(dataPoint => {
-            const date = new Date(dataPoint[0]);
+            const date = new Date(dataPoint[0]*1000);
             const hours = date.getHours();
             const minutes = date.getMinutes();
             const seconds = date.getSeconds();
             const milliseconds = date.getMilliseconds();
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             
-            nodeValues.push([time, parseFloat(dataPoint[1])]);
+            nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
           });
           valuesToGraph.push(
             {

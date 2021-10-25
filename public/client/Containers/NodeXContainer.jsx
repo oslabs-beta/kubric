@@ -51,6 +51,7 @@ class NodesContainer extends React.Component {
       nodesElement.push(
         <NodeComponent 
           // onClick={displayPodMetrics}
+          key={keyCount}
           keyCount={keyCount} 
           name={name} 
           cpuValues={cpuValues} 

@@ -9,8 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 
 const mapStateToProps = state => {
-  // console.log(this);
-  // console.log('from pods comp: ', state.podsReducer.pods[this.props.name] ? state.podsReducer.pods[this.props.name] : {})
+  
   return {
     node: state.podsReducer.nodes
   }
@@ -40,25 +39,25 @@ function NodeComponent (props) {
   }
     return (
       <div>
-      <ListItem
-      key={props.name}
-      count={props.keyCount}
-      disablePadding
-      sx={{height: 50}}
-    >
-      <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense>
-        <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={checked.indexOf(props.name) === -1}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ 'aria-labelledby': props.name }}
-          />
-        </ListItemIcon>
-        <ListItemText style={{color:'black'}} id={props.name} primary={`Node ${props.keyCount}`} secondary={props.name} />
-      </ListItemButton>
-    </ListItem>
+        <ListItem
+          key={props.name}
+          count={props.keyCount}
+          disablePadding
+          sx={{height: 50}}
+        >
+          <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={checked.indexOf(props.name) === -1}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ 'aria-labelledby': props.name }}
+              />
+            </ListItemIcon>
+            <ListItemText style={{color:'black'}} id={props.name} primary={`Node ${props.keyCount}`} secondary={props.name} />
+          </ListItemButton>
+        </ListItem>
       </div>
     );
   

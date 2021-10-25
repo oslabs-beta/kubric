@@ -30,7 +30,7 @@ class NodeCpuSaturationComponent extends React.Component {
         console.log("nameShortened",nameShortened)
         if (nodes[node].displayMetrics) {
           nodes[node].CPUSatValsNodes.forEach(dataPoint => {
-            const date = new Date(dataPoint[0]);
+            const date = new Date(dataPoint[0]*1000);
             const hours = date.getHours();
             const minutes = date.getMinutes();
             const seconds = date.getSeconds();
@@ -38,7 +38,7 @@ class NodeCpuSaturationComponent extends React.Component {
             const time = `${hours}:${minutes}:${seconds}:${milliseconds}`;
             // const yDataVal = parseFloat(dataPoint[1]).toFixed(4)
             // console.log(yDataVal)
-            nodeValues.push([time, parseFloat(dataPoint[1])]);
+            nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
             
           });
           valuesToGraph.push(

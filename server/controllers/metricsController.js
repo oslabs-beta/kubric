@@ -12,7 +12,7 @@ let startSet = 1;
 //an hour before current
 const startDate = new Date(endDate.getTime()-startSet*3600000);
 //step initial
-let step = '2m';
+let step = '1m';
 
 // metricsController.getDefaultMetrics = (req, res, next) => {
 //   client.register.getMetricsAsJSON()

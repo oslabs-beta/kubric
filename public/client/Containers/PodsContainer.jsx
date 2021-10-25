@@ -80,7 +80,7 @@ function PodsContainer(props) {
     return (
       <div id="pods-container">
         <Paper style={{maxHeight: 200, overflow: 'auto'}}>
-          <List dense={true} sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
             {podsElement}
           </List>
         </Paper>
