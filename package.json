@@ -37,6 +37,7 @@
     "assert": "^2.0.0",
     "axios": "^0.23.0",
     "babel-jest": "^27.3.0",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.1.3",
     "browserfy": "^1.0.0",

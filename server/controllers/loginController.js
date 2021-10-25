@@ -1,47 +1,45 @@
 const model = require('../model');
+const bcrypt = require('bcrypt');
 
 const loginController = {};
 
 loginController.getLogin = async (req, res, next) => {
-  console.log('login Controller')
-  res.locals.validUser = false  
-  console.log('req body', req.body)
+  res.locals.validUser = false;  
   const user = req.body.username;
   const pw = req.body.password;
-  console.log('user in controller', user);  
-  console.log('pw in controller', pw);
 
-  try  {
-    const userInDB = await model.find({username: `${req.body.username}`, password: `${req.body.password}`});
-    console.log('user in DB', userInDB);
-    if (userInDB === []) {
-      return next();
-    }
-    // console.log('in cotroller', req.body)
-    res.locals.validUser = true;
-    return next();
+  const userInDB = await model.find({username : user});
+
+  if (userInDB.length) {
+    bcrypt.compare(pw, userInDB[0].password, (err, data) => { 
+      try {
+        if (err) {
+          res.locals.validUser = false;
+        }
+        if (data) {
+          res.locals.validUser = true;
+        }
+        next();
+      }
+      catch(err) {return next(err)}
+    });
+  } else {
+    res.locals.validUser = false;
+    next();
   }
-  catch(err) {return next(err)}  
- 
-}
+};
 
 loginController.signUp = async (req, res, next) => {
   res.locals.validUser = false;
   const user = req.body.username;
   const pw = req.body.password;
-  console.log('in signup controller', user)
-  console.log('in signup controller', pw)
-  try {
-    const userCreated = await model.create({username: user, password : pw})
-    console.log(userCreated)
-    if (userCreated) {
-      res.locals.validUser = true;
-    }
-    console.log(res.locals.validUser)
-    next()
-  }
-  catch(err) {return next(err)}
 
-}
+  bcrypt.hash(pw, 10, async (err, hash) => {
+    const userInDB = await model.create({username: user, password: hash});
+    res.locals.validUser = true;
+    next();
+  });
+};
 
 module.exports = loginController;
+

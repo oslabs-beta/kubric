@@ -10,7 +10,6 @@ export default function loginReducer (state = initialState, action) {
   switch (type) {
     case actionTypes.RECEIVE_LOGIN: {
       const validUser = payload;
-      console.log('In reducer valid login value', validUser);
       return {
         ...state,
         validUser,
