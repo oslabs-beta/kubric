@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  background: #1D3557;
+  background: rgba(69, 172, 120, 0.52);
 }
 
 div {
@@ -23,6 +23,35 @@ button {
   margin: .25em;
 }
 
+#loginButtons {
+  color: black
+}
+
+#loginPage {
+  display:flex;
+  flex-direction: column;
+}
+
+#loginPage h1 {
+  color: black;
+}
+
+#user-pw {
+  display: flex;
+  flex-direction: column;
+}
+
+.MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  align-content: center;
+  align-items: center
+}
+
+#username {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
 #login-container {
   // background-color: #F1FAEE;
   padding: .5em;
@@ -34,6 +63,26 @@ button {
   height: 100%;
 }
 
+#loginButtons {
+  color: rgb(66, 65, 65);
+}
+
+#loginButtonIn {
+  // background-color: rgb(180, 98, 114);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: rgb(241, 181, 226);
+  font-size: 20px;
+}
+
+#loginButtonUp {
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: rgb(181, 205, 241);
+  font-size: 20px;
+}
 
 #appBarBox{
   // background-color: #F1FAEE;
