@@ -5,6 +5,7 @@ const port = 3000; //can change
 const clusterRouter = require('./routes/clusterRouter');
 const loginRouter = require('./routes/loginRouter');
 const logsRouter = require('./routes/logsRouter');
+const signUpRouter = require('./routes/signUpRouter');
 const metricsRouter = require('./routes/metricsRouter');
 const cors = require('cors');
 
@@ -13,6 +14,7 @@ app.use(cors());
 
 //to parse the incoming requests with JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //render html for home and react routes
 app.get(['/home','/metrics','/logs'], 
@@ -28,6 +30,7 @@ app.get('/',
 
 //api routers
 app.use('/api/cluster', clusterRouter);
+app.use('/api/signup', signUpRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/logs', logsRouter);
 app.use('/api/metrics', metricsRouter);
