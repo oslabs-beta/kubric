@@ -66,13 +66,13 @@ function LoginComponent(props) {
       >
       
         <Stack spacing={6}>
-          <form action="/Api/login" method="POST">
+          <form id="user-pw" action="/Api/login" method="POST">
             <TextField id="username" autoComplete="on" label="username" onChange={(e) => setUsername(e.target.value)} variant="outlined" required/>
             <TextField id="password" label="password" type="password" name="password" onChange={(e) => setPassword(e.target.value)} variant="outlined" required/>
           </form>
         </Stack>
         <Stack id="loginButtons" direction="row">
-          <Button id="loginButtonIn" type="submit" form="user" variant="outlined" onClick={submitFormLogin}>Sign In</Button>
+          <Button id="loginButtonIn" type="submit" form="user" variant="outlined" onClick={submitFormLogin}>Sign in</Button>
           <Button id="loginButtonUp" color="neutral" variant="outlined" type="submit" onClick={submitFormSignUp}>Sign up</Button>
         </Stack>
       </Box>
