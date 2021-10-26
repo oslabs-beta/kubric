@@ -33,21 +33,6 @@ function MasterNodeContainer(props) {
       props.fetchMasterNodeMetrics();
     },[])
 
-    //more automated approach, but requires less flexibility 
-    // const graphs = [];
-    // for(let graph in props.masterNode){
-    //   graphs.push(<MasterNodeGraph name={graph} data={props.masterNode[graph]}/>)
-    // }
-
-    // const stacks = [];
-    // for(let i = 0; i < graphs.length-1; i+=2){
-    //   stacks.push(<Stack direction="row"
-    //   spacing={2}
-    //   sx={{display:"flex", 
-    //   flexDirection:"row",
-    //   justifyContent:'space-evenly'}}>{graphs.slice(i,i+2)}</Stack>)    
-    // }
-
     return (
       <div>
         <Stack 
