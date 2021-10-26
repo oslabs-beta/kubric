@@ -1,76 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PodComponent from '../Components/PodComponent.jsx';
 import { connect } from 'react-redux';
 import * as actions from '../actions/metricsActionCreators.js'
-import PodCpuComponent from '../Components/PodCpuComponent.jsx';
+import { alpha } from '@mui/material';
+import List from '@mui/material/List';
 
-// TODOS: 
-// get pods from Kubernetes and update metric names based on user selections
-// if healthy property is set to true only if all metrics are below user-defined thresholds
-// if a pod has been evicted, the alive property changes to false
 
 const mapStateToProps = state => {
-  // console.log('state from podscontainer: ',state);
   return {
-    podCpuMetrics: state.metricsReducer.podCpuMetrics,
     pods: state.podsReducer.pods,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    renderPodMetrics: () => dispatch(actions.renderPodMetrics()),
+    fetchPodMetrics: (nodeName) => dispatch(actions.fetchPodMetrics(nodeName)),
   }
 }
 
+function PodsContainer(props) {
 
-class PodsContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  
-  // array to hold pod components to render
-  // podsElement = [];
+  useEffect(() => {
+    props.fetchPodMetrics(props.nodeName);
+  }, []);
 
-  
+  const podsElement = [];
+  let keyCount = 1;
 
-  // iterate through an array pods from the Kubernetes cluster and build an out an array of Pod Components to render:
-  render () {
-    // console.log('render of pods container', this.props);
-    // this.props.pods.forEach((pod => {
-    // // deconstruct necessary properties from each pod 
-    //   const { name, cpuValues, memoryValues } = pod;
-    // console.log('render of pods container, ', this.props.pods );
-    const podsElement = [];
-    for (let pod in this.props.pods) {
-      // console.log(pod);
-      const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.pods[pod];
-      // generate a pod component with properties specific to that pod
-      podsElement.push(
-        <PodComponent 
-          // onClick={displayPodMetrics}
-          // key={name} 
-          name={name} 
-          cpuValues={cpuValues} 
-          memoryValues={memoryValues} 
-          healthy={healthy} 
-          alive={alive}
-          displayMetrics={displayMetrics}
-        />
-      );
-    }
-    // console.log('podsElement after iteration', this.podsElement);
-      
-    // }))
+  for (let pod in props.pods) {
+    const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = props.pods[pod];
     
-
-    return (
-      <div id="pods-container">
-        {podsElement}
-      </div>
+    podsElement.push(
+      <PodComponent 
+        key={keyCount}
+        keyCount={keyCount}
+        name={name} 
+        cpuValues={cpuValues} 
+        memoryValues={memoryValues} 
+        healthy={healthy} 
+        alive={alive}
+        displayMetrics={displayMetrics}
+      />
     );
+    keyCount ++;
   }
-}
+  
+  return (
+    <div id="pods-container">
+        <List sx={{ maxHeight: 200, overflow: 'auto', width: '100%', bgcolor: alpha('#F5F5F5', .40)  }}>
+          {podsElement}
+        </List>
+    </div>
+  );
+};
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(PodsContainer);

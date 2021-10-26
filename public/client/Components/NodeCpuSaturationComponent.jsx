@@ -1,36 +1,41 @@
 import React from 'react';
+import 'zingchart/es6';
 import ZingChart from 'zingchart-react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    nodes: state.nodesReducer.nodes
+    nodes: state.nodesReducer.nodes,
   }
 }
 
-const NodeMemoryComponent = (props) => {
+const NodeCpuSaturationComponent = (props) => {
+
   const { nodes } = props;
   const valuesToGraph = [];
-
   const getValues = (nodes) => {
     for (let node in nodes) {
       const nodeValues = [];
+      let nameShortened = nodes[node].name;
+      nameShortened = nameShortened.slice(0,3) + "..." + nameShortened.slice(nameShortened.length-5,nameShortened.length) 
       
       if (nodes[node].displayMetrics) {
-        nodes[node].memoryValues.forEach(dataPoint => {
+        nodes[node].CPUSatValsNodes.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
           const hours = date.getHours();
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
           const time = `${hours}:${minutes}:${seconds}`;
-          
+        
           nodeValues.push([time, parseFloat(dataPoint[1])]);
+          
         });
         valuesToGraph.push(
           {
             type: "line",
-            text: nodes[node].name,
+            text:  nameShortened,
             values: nodeValues,
+            min: 0,
           }
         );
       }
@@ -39,7 +44,7 @@ const NodeMemoryComponent = (props) => {
 
   getValues(nodes);
   
-  const nodeMemoryGraphData = {
+  const nodeCpuSaturationGraphData = {
     theme: 'dark',
     type: 'line',
     "globals": {
@@ -48,7 +53,7 @@ const NodeMemoryComponent = (props) => {
     },
 
     title: {
-        text: 'Memory Usage in MB',
+        text: 'CPU Saturation',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -96,9 +101,9 @@ const NodeMemoryComponent = (props) => {
 
   return (
       <div className="chart"> 
-          <ZingChart height="303" data = {nodeMemoryGraphData}>Pod Zing Chart</ZingChart>
+          <ZingChart height="303" data = {nodeCpuSaturationGraphData}/>
       </div>
   )
 }
 
-export default connect(mapStateToProps, null)(NodeMemoryComponent);
+export default connect(mapStateToProps, null)(NodeCpuSaturationComponent);

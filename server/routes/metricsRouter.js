@@ -2,17 +2,29 @@ const { Router } = require('express');
 const metricsController = require('../controllers/metricsController');
 const metricsRouter = Router();
 
-//get all initial default metrics; add more controllers that will target one query at a time
 metricsRouter.get(
   '/',
-  metricsController.getDefaultMetrics,
-  metricsController.getCPUByPods,
+  metricsController.getCPUSatByNodes,
   metricsController.getCPUByNodes,
-  metricsController.getMemoryByPods,
   metricsController.getMemoryByNodes,
-  metricsController.getServerAPIMetrics,
-  //sending a compiled object with each middleware's data with an unique property name (middleware's name without 'get')
-  (req,res)=> res.status(200).json(res.locals.metrics)
+  metricsController.getWriteToDiskRateByNodes,
+  // metricsController.getMemoryBarData, <-- this could be developed
+  (req,res)=> res.status(200).json(res.locals.nodeMetrics)
+);
+
+metricsRouter.get(
+  '/getPodMetrics/:nodeName',
+  metricsController.getCPUByPods,
+  metricsController.getMemoryByPods,
+  metricsController.getWriteToDiskRateByPods,
+  metricsController.getLogsByPods,
+  (req,res)=> res.status(200).json(res.locals.podMetrics)
+);
+
+metricsRouter.get(
+  '/getMasterNode',
+  metricsController.getMasterNodeMetrics,
+  (req,res)=> res.status(200).json(res.locals.masterNode)
 );
 
 module.exports = metricsRouter;

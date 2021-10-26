@@ -1,7 +1,6 @@
 import * as actionTypes from '../actions/actionTypes.js'
 
 const initialState = {
-  // configure this
   nodes: {},
 };
 
@@ -10,7 +9,7 @@ function nodesReducer (state = initialState, action) {
 
   switch (type) {
     case actionTypes.RECEIVE_NODES: {
-      const { nodesCpu, nodesMemory } = payload;   
+      const { nodesCpu, nodesMemory, CPUSatValsNodes, writeToDiskNodes } = payload; 
       const nodes = {};
 
       nodesCpu.forEach ( metric => {
@@ -18,7 +17,7 @@ function nodesReducer (state = initialState, action) {
           nodes[metric.metric.instance] = {
             name: metric.metric.instance,
             cpuValues: metric.values,
-            displayMetrics: false,
+            displayMetrics: true,
             healthy: true,
             alive: true,
           }
@@ -28,25 +27,32 @@ function nodesReducer (state = initialState, action) {
         }
       })
       nodesMemory.forEach( metric => {
-          nodes[metric.metric.instance].values = metric.values;
+          nodes[metric.metric.instance].memoryValues = metric.values;
       })
+      CPUSatValsNodes.forEach( metric => {
+        nodes[metric.metric.instance].CPUSatValsNodes = metric.values;
+      });
+      writeToDiskNodes.forEach( metric => {
+        nodes[metric.metric.instance].writeToDiskNodes = metric.values;
+      });
 
       return {...state, nodes};
     }
 
     case actionTypes.DISPLAY_NODE_METRICS:
       const nodeName = payload;
-
       const nodesObj = JSON.parse(JSON.stringify(state.nodes));
       const node = nodesObj[nodeName];
 
       node.displayMetrics = node.displayMetrics ? false : true;
 
       nodesObj[nodeName] = node;
+
       return {
         ...state,
         nodes: nodesObj,
       }
+      
     default:
       return state;
   }

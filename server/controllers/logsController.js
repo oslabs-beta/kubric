@@ -6,21 +6,46 @@ const logsController = {};
 //TO ADD:add time window property
 logsController.getAppLogs = (req, res, next) => {
     const {name,field,value,all} = req.query;
-    const matchObj = {}
-    matchObj[field] = value;
-    const queryObj = {};
-    if(all) queryObj.match_all = {};
-    else queryObj.match = matchObj;
+    console.log("from log controller",req.query)
+    let matchObj = {}
+    let queryObj = {}
+    let termArray = [];
+    if(value){
+        const tokenize = (sentence) =>{
+            sentence.split(' ').forEach((word)=>{
+                let termObj = {"term":{}}
+                word=word.replace(/[\W_]+/g,' ').trim();
+                if(word.split(' ')[0]!==word) tokenize(word)
+                else {
+                    termObj.term[field] = word.toLowerCase()
+                    termArray.push(termObj)
+                }; 
+            })
+        }
+        tokenize(value);
+    }
+    matchObj.bool = {};
+    matchObj.bool.should = termArray;
+    matchObj.bool.minimum_should_match = termArray.length;
+    console.log("matchObj",JSON.stringify(matchObj));
+    
+    if(all==='true') queryObj.match_all = {};
+    else queryObj = matchObj;
+    console.log("queryObj in back",JSON.stringify(queryObj))
+    
     client.search({
         index: name,
         size: 50,
         body: { 
-            sort : [
-                { "time" : {"order" : "desc", "format": "strict_date_optional_time_nanos"}},
-              ],
+            // sort : [
+            //     { "time" : {"order" : "desc", "format": "strict_date_optional_time_nanos"}},
+            //   ],
             query: queryObj }
       },(err, result) => {
-        if (err) next({'error':err})
+        if (err) {
+            console.log("error",err)
+            next({'error':err})
+        }
         else {
             res.locals.appLogs = result.body.hits.hits;
             next();
@@ -79,5 +104,11 @@ const flattenLogFields = (fields) => {
     nested(fields);
 return fieldKeys.flat();
 }
+// curl -X GET "localhost:9200/loggen-logs/_analyze?pretty" -H 'Content-Type: application/json' -d'
+// {
+//   "field": "message",
+//   "text": "loaded module [ingest-common]"
+// }
+// '
 
 module.exports = logsController;

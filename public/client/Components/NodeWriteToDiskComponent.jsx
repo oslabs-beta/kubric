@@ -4,33 +4,36 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    nodes: state.nodesReducer.nodes
+    nodes: state.nodesReducer.nodes,
   }
 }
 
-const NodeMemoryComponent = (props) => {
+const NodeWriteToDiskComponent = (props) => {
   const { nodes } = props;
   const valuesToGraph = [];
 
   const getValues = (nodes) => {
     for (let node in nodes) {
       const nodeValues = [];
-      
+      let nameShortened = nodes[node].name;
+      nameShortened = nameShortened.slice(0,3) + "..." + nameShortened.slice(nameShortened.length-5,nameShortened.length) 
+    
       if (nodes[node].displayMetrics) {
-        nodes[node].memoryValues.forEach(dataPoint => {
+        nodes[node].writeToDiskNodes.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
           const hours = date.getHours();
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
           const time = `${hours}:${minutes}:${seconds}`;
           
-          nodeValues.push([time, parseFloat(dataPoint[1])]);
+          nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
         });
         valuesToGraph.push(
           {
             type: "line",
-            text: nodes[node].name,
+            text:  nameShortened,
             values: nodeValues,
+            min: 0,
           }
         );
       }
@@ -38,8 +41,8 @@ const NodeMemoryComponent = (props) => {
   }
 
   getValues(nodes);
-  
-  const nodeMemoryGraphData = {
+
+  const nodeWriteToDiskData = {
     theme: 'dark',
     type: 'line',
     "globals": {
@@ -48,7 +51,7 @@ const NodeMemoryComponent = (props) => {
     },
 
     title: {
-        text: 'Memory Usage in MB',
+        text: 'Write to Disk Rate [5m] in MB',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -96,9 +99,9 @@ const NodeMemoryComponent = (props) => {
 
   return (
       <div className="chart"> 
-          <ZingChart height="303" data = {nodeMemoryGraphData}>Pod Zing Chart</ZingChart>
+          <ZingChart height="303" data = {nodeWriteToDiskData}/>
       </div>
   )
 }
 
-export default connect(mapStateToProps, null)(NodeMemoryComponent);
+export default connect(mapStateToProps, null)(NodeWriteToDiskComponent);
