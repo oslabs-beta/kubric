@@ -12,8 +12,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Item from '@mui/material/Stack';
 
 const mapStateToProps = state => {
   return {
@@ -23,10 +21,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // fetchDefaultMetrics: () => dispatch(actions.fetchDefaultMetrics()),
     fetchNodeMetrics: () => dispatch(actions.fetchNodeMetrics()),
   }
 }
+
 const useStyles = makeStyles({
   root:{
     background: 'rgba(69,172,120,0.52)',
@@ -37,6 +35,7 @@ const useStyles = makeStyles({
     padding: '30px 30px 30px 30px',
   },
 })
+
 const tabStyles = makeStyles({
   flexContainer:{
     width:"100%",
@@ -71,13 +70,13 @@ function TabPanel(props) {
     </div>
   );
 }
+
 function addProps(index) {
   return {
     id: `cluster-tab-${index}`,
     'aria-controls': `cluster-tabpanel-${index}`,
   };
 }
-// TODO: what props are needed from state here?
 
 function MetricsContainer(props) {
   const containerClasses = useStyles();
@@ -89,19 +88,14 @@ function MetricsContainer(props) {
   };
 
   useEffect(() => {
-    // props.fetchDefaultMetrics();
     props.fetchNodeMetrics();
   }, []);
 
-  // console.log('nodes from props', props.nodes);
   const tabPanels = [];
   const tabs = [];
   let tabNum = 2;
   for (let node in props.nodes) {
-    console.log('inside loop', props.nodes[node]);
-    // add a Tab to tabs array
     tabs.push(<Tab label={`Worker Node ${tabNum-1}`} {...addProps(tabNum)}/>);
-    // add a TabPanel to tabPanels
     tabPanels.push(
       <TabPanel 
         value={value} 
@@ -113,45 +107,40 @@ function MetricsContainer(props) {
     tabNum += 1;
   }
 
-  
-    // return dev containing the metrics array to the screen
-    console.log('metrics container rendered')
-    return (
-      <div style={{display: 'flex'}}> 
-       <Container id="metricsContainer"
-       classes={{
-        root: containerClasses.root
-      }} >
-         <Box sx={{ borderBottom: 1, borderColor: 'divider'} }>
-          <Tabs classes={{scroller:tabClasses.scroller,flexContainer:tabClasses.flexContainer}} value={value} onChange={handleChange} aria-label="cluster node tabs">
-            <Tab label="Overview" {...addProps(0)} />
-            <Tab label="Master" {...addProps(1)} />
-            {tabs}
-          </Tabs>
-        </Box>
-        <Box sx={{ display:"flex", 
-          flexDirection:"row",
-          justifyContent:'space-evenly',
-          marginLeft: "8vh",
-          marginRight: "8vh"
-          }}>
-          <TabPanel value={value} index={0}> 
-            <NodeXContainer/>
-            <NodeChartContainer/>
-          </TabPanel>
-          
-          <TabPanel value={value} index={1}> 
-            <MasterNodeContainer/>
-          </TabPanel>
+  return (
+    <div style={{display: 'flex'}}> 
+      <Container id="metricsContainer"
+      classes={{
+      root: containerClasses.root
+    }} >
+        <Box sx={{ borderBottom: 1, borderColor: 'divider'} }>
+        <Tabs classes={{scroller:tabClasses.scroller,flexContainer:tabClasses.flexContainer}} value={value} onChange={handleChange} aria-label="cluster node tabs">
+          <Tab label="Overview" {...addProps(0)} />
+          <Tab label="Master" {...addProps(1)} />
+          {tabs}
+        </Tabs>
+      </Box>
+      <Box sx={{ display:"flex", 
+        flexDirection:"row",
+        justifyContent:'space-evenly',
+        marginLeft: "8vh",
+        marginRight: "8vh"
+        }}>
+        <TabPanel value={value} index={0}> 
+          <NodeXContainer/>
+          <NodeChartContainer/>
+        </TabPanel>
+        
+        <TabPanel value={value} index={1}> 
+          <MasterNodeContainer/>
+        </TabPanel>
 
-          {/* Tab Panel for each node */}
-          {tabPanels}
-        </Box>
-        </Container>
-      </div>
-    )
-  
+        {/* Tab Panel for each node */}
+        {tabPanels}
+      </Box>
+      </Container>
+    </div>
+  )
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(MetricsContainer);

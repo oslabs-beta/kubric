@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 const mapStateToProps = state => {
   return {
     pods: state.podsReducer.pods,
-    nodes: state.nodesReducer.nodes,
   }
 }
 
