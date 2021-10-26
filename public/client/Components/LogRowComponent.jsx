@@ -113,6 +113,6 @@ const LogRowComponent = (props) => {
       />
     </div>
   );
-};
+}
 
 export default connect(mapStateToProps, null)(LogRowComponent);

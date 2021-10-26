@@ -1,4 +1,7 @@
+//login
+export const RECEIVE_LOGIN = 'RECEIVE_LOGIN';
 
+//
 export const RECEIVE_PODS = 'RECEIVE_PODS';
 export const RECEIVE_SERVICES = 'RECEIVE_SERVICES';
 export const RECEIVE_DEPLOYMENTS = 'RECEIVE_DEPLOYMENTS';
@@ -21,3 +24,6 @@ export const SELECT_INDEX = 'SELECT_INDEX';
 export const RECEIVE_NODES = 'RECEIVE_NODES'; 
 export const DISPLAY_NODE_METRICS = 'DISPLAY_NODE_METRICS';
 export const RENDER_NODE_METRICS = 'RENDER_NODE_METRICS';
+
+// master node stuff
+export const RECEIVE_MASTER_NODE = 'RECEIVE_MASTER_NODE';

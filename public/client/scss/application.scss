@@ -11,8 +11,8 @@ body {
 }
 
 div {
-  margin: .5em;
-  padding: .25em;
+  margin: .1em;
+  padding: .1em;
 }
 
 input {
@@ -50,6 +50,7 @@ button {
   // background-color: #89B0AE;
   padding: .5em;
 }
+
 
 // #pods-container {
 //   // background-color: #457B9D;
@@ -94,6 +95,34 @@ button {
   padding: .5em;
   width: 85%;
   height: 100%;
+ 
+}
+
+#loginLogo h1 {
+  text-align: center;
+}
+
+#loginPage #loginButtons {
+  justify-content: center;
+}
+
+#loginPage #loginButtonIn {
+  cursor: pointer;
+  font-weight: 600;
+}
+#loginPage #loginButtonUp {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#loginPage {
+  // display: flex;
+  // direction: row;
+  border: 2px solid grey;
+  border-radius: 10px;
+  width: auto;
+  background-color:#fffafa;
+  align-items: center;
 }
 
 .logDate { 
@@ -102,11 +131,22 @@ button {
 .logType { 
   grid-area: type; 
 }
+
+#password {
+  -webkit-text-security: disc;
+  // text-security: disc;
+}
 .podName { 
   grid-area: pod; 
 }
 .logMessage { 
   grid-area: message; 
+}
+
+#loginLogo {
+  // background-color: red;
+  align-items: center;
+  // width: 100%;
 }
 
 .logRowComponent {

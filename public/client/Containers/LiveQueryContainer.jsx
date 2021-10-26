@@ -22,6 +22,24 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+//sample data;; store it with property named label;
+const testQueryIndex = [
+  {label: "loggen-app"},
+  {label: "fluent-d1231"}
+]
+
+const testQueryField = [
+  {label: "type"},
+  {label: "podName"}
+]
+
+
+const QueryContainer = ({isPersist}) => {
+  const display = [];
+  //depending on the current tab, rendered components will be different
+  // if(isPersist){
+    
+  // }
 
 const LiveQueryContainer = (props) => {
   
