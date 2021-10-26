@@ -93,7 +93,11 @@ const LogContainer = (props) => {
         <Box sx={{ display:"flex", 
           flexDirection:"row",
           justifyContent:'space-evenly'} }>
-          <TabPanel value={value} index={0}> 
+          <TabPanel sx={{
+           display:"flex", 
+           flexDirection:"row",
+           alignItems: 'center'
+          }} value={value} index={0}> 
           <PersistQueryContainer/>
           <LogRowComponent/>
           </TabPanel>

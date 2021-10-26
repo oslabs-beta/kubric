@@ -16,16 +16,21 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
- 
   return {
     getAppLogFields: () => dispatch(actions.getAppLogFields()),
     getAppLogs: (obj) => dispatch(actions.getAppLogs(obj)),
     selectIndex: (index) => dispatch(actions.selectIndex(index))
   }
 }
+const inputStyles = makeStyles({
+  input: {
+    height: 40
+}
+})
 
 const PersistQueryContainer = (props) => {
   //depending on the current tab, rendered components will be different
+  const classes = inputStyles();
   useEffect(() => {
     props.getAppLogFields()
   }, []);
@@ -42,13 +47,14 @@ const PersistQueryContainer = (props) => {
   }
 
   return (
-    <div style={{backgroundColor:"white", width:"100%", display: "flex", alignItems:"center"}}>
+    <div style={{background:'whitesmoke', width:"100%", height:50, display: "flex", alignItems:"center", borderRadius: 4,}}>
       <Autocomplete
         disablePortal
         id="Index Name"
         options={[...props.appLogIndices]}
-        sx={{width: 300, flexGrow: 1}}
-        renderInput={(params) => <TextField {...params} label="Index Name"/>}
+        sx={{flexGrow: 1}}
+        size="small"
+        renderInput={(params) => <TextField size="small" {...params} label="Index Name"/>}
         onChange={(event,value)=>{
         setQuery({...query,name:value,all:true})
         handleIndex(event,value)
@@ -58,20 +64,26 @@ const PersistQueryContainer = (props) => {
       <Autocomplete
         disablePortal
         id="Field"
+        size="small"
         options={props.selectedFields}
-        sx={{width: 300, flexGrow: 1}}
+        sx={{flexGrow: 1,}}
         onChange={(event,value)=>{
           setQuery({...query,field:value,all:true})
           checkQuery();
           }}
-        renderInput={(params) => <TextField {...params} label="Field"/>}
+        renderInput={(params) => <TextField size="small" {...params} label="Field"/>}
       />
       <TextField  
-        sx={{width:300, flexGrow: 1}}
+        sx={{flexGrow: 1,}}
         size="small"
         id="Value" 
         label="Value" 
+        margin='8px'
+        padding='4px'
         variant="outlined" 
+        InputProps={{
+          className: classes.input,
+        }}
         onChange={(event)=>{
           console.log("string input?",event.target.value);
           setQuery({...query,value:event.target.value,all:false})
@@ -80,8 +92,8 @@ const PersistQueryContainer = (props) => {
 
       />
       <Button
-        sx={{width:100, height:45, flexGrow: 1}} 
-        size="small" 
+        sx={{ flexGrow: 1, height:40,margin:'8px',padding:'4px'}} 
+        size="normal" 
         variant="outlined" 
         onClick={()=> {
           checkQuery();

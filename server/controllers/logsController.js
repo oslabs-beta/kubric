@@ -31,8 +31,8 @@ logsController.getAppLogs = (req, res, next) => {
     
     if(all==='true') queryObj.match_all = {};
     else queryObj = matchObj;
-   
     console.log("queryObj in back",JSON.stringify(queryObj))
+    
     client.search({
         index: name,
         size: 50,

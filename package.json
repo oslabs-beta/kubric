@@ -46,6 +46,7 @@
     "express": "^4.17.1",
     "jest": "^27.3.0",
     "jsonwebtoken": "^8.5.1",
+    "material-ui-image": "^3.3.2",
     "memory-cache": "^0.2.0",
     "prom-client": "^14.0.0",
     "prop-types": "^15.7.2",
