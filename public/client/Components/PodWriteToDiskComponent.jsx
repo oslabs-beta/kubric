@@ -4,42 +4,40 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    nodes: state.nodesReducer.nodes
+    pods: state.podsReducer.pods
   }
 }
 
-const NodeMemoryComponent = (props) => {
-  const { nodes } = props;
+const PodWriteToDiskComponent = (props) => {
+
   const valuesToGraph = [];
 
-  const getValues = (nodes) => {
-    for (let node in nodes) {
-      const nodeValues = [];
-      
-      if (nodes[node].displayMetrics) {
-        nodes[node].memoryValues.forEach(dataPoint => {
-          const date = new Date(dataPoint[0]*1000);
-          const hours = date.getHours();
-          const minutes = date.getMinutes();
-          const seconds = date.getSeconds();
-          const time = `${hours}:${minutes}:${seconds}`;
-          
-          nodeValues.push([time, parseFloat(dataPoint[1])]);
-        });
-        valuesToGraph.push(
-          {
-            type: "line",
-            text: nodes[node].name,
-            values: nodeValues,
-          }
-        );
+  const getValues = (pods) => {
+  for (let pod in pods) {
+    const podValues = [];
+    if (pods[pod].displayMetrics) {
+      pods[pod].writeToDiskValues.forEach(dataPoint => {
+        const date = new Date(dataPoint[0]*1000);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const time = `${hours}:${minutes}:${seconds}`;  
+
+        podValues.push([time, parseFloat(dataPoint[1])/1000]);
+      });
+
+      valuesToGraph.push({
+        type: "line",
+        text: pods[pod].name,
+        values: podValues,
+      });
       }
     }    
   }
 
-  getValues(nodes);
-  
-  const nodeMemoryGraphData = {
+  getValues(props.pods);
+    
+  const podWriteToDiskGraphData = {
     theme: 'dark',
     type: 'line',
     "globals": {
@@ -48,7 +46,7 @@ const NodeMemoryComponent = (props) => {
     },
 
     title: {
-        text: 'Memory Usage in MB',
+        text: 'Write to Disk Rate [5m] in KB',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -96,9 +94,10 @@ const NodeMemoryComponent = (props) => {
 
   return (
       <div className="chart"> 
-          <ZingChart height="303" data = {nodeMemoryGraphData}>Pod Zing Chart</ZingChart>
+          <ZingChart height="303" data = {podWriteToDiskGraphData}>Write to Disk rate</ZingChart>
       </div>
   )
-}
+  }
 
-export default connect(mapStateToProps, null)(NodeMemoryComponent);
+
+export default connect(mapStateToProps, null)(PodWriteToDiskComponent);

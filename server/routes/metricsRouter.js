@@ -2,14 +2,13 @@ const { Router } = require('express');
 const metricsController = require('../controllers/metricsController');
 const metricsRouter = Router();
 
-//get all initial default metrics; add more controllers that will target one query at a time
 metricsRouter.get(
   '/',
-  // metricsController.getDefaultMetrics,
   metricsController.getCPUSatByNodes,
   metricsController.getCPUByNodes,
   metricsController.getMemoryByNodes,
   metricsController.getWriteToDiskRateByNodes,
+  // metricsController.getMemoryBarData, <-- this could be developed
   (req,res)=> res.status(200).json(res.locals.nodeMetrics)
 );
 
@@ -24,7 +23,7 @@ metricsRouter.get(
 
 metricsRouter.get(
   '/getMasterNode',
-  metricsController.getServerAPIMetrics,
+  metricsController.getMasterNodeMetrics,
   (req,res)=> res.status(200).json(res.locals.masterNode)
 );
 
