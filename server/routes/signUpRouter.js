@@ -1,10 +1,9 @@
 const { Router } = require('express');
 const loginController = require('../controllers/loginController');
-const loginRouter = Router();
+const signUpRouter = Router();
 
-loginRouter.post('/', loginController.getLogin, (req, res, error ) => {
+signUpRouter.post('/', loginController.signUp, (req, res, error ) => {
   return res.status(200).send(res.locals.validUser);
 });
 
-
-module.exports = loginRouter;
+module.exports = signUpRouter;

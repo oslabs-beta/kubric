@@ -5,8 +5,10 @@ import servicesReducer from './reducers/servicesReducer';
 import logsReducer from './reducers/logsReducer';
 import nodesReducer from './reducers/nodesReducer';
 import masterNodeReducer from './reducers/masterNodeReducer';
+import loginReducer from './reducers/loginReducer';
 
 const rootReducer = combineReducers({
+  loginReducer,
   logsReducer,
   podsReducer,
   nodesReducer,
