@@ -34,8 +34,8 @@ const testQueryField = [
 ]
 
 
-const QueryContainer = ({isPersist}) => {
-  const display = [];
+// const QueryContainer = ({isPersist}) => {
+//   const display = [];
   //depending on the current tab, rendered components will be different
   // if(isPersist){
     
