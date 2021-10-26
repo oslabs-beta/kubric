@@ -9,6 +9,7 @@ const initialState = {
 
 export default function masterNodeReducer (state = initialState, action) {
   const {type, payload} = action;
+  
   switch(type){
     case actionTypes.RECEIVE_MASTER_NODE: {
       const {serverAPILatency, serverAPIsuccessReq, controllerAddCounter, etcdRequestRate} = payload;
@@ -20,6 +21,7 @@ export default function masterNodeReducer (state = initialState, action) {
         etcdRequestRate,
       };
     }
+
     default:
       return state;
   };

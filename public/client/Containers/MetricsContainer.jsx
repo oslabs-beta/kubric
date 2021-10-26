@@ -94,6 +94,7 @@ function MetricsContainer(props) {
   const tabPanels = [];
   const tabs = [];
   let tabNum = 2;
+
   for (let node in props.nodes) {
     tabs.push(<Tab label={`Worker Node ${tabNum-1}`} {...addProps(tabNum)}/>);
     tabPanels.push(
@@ -101,19 +102,21 @@ function MetricsContainer(props) {
         value={value} 
         index={tabNum}
       >
-          <PodsContainer nodeName={node} />
-          <PodChartContainer />
+        <PodsContainer nodeName={node} />
+        <PodChartContainer />
       </TabPanel>);
     tabNum += 1;
   }
 
   return (
     <div style={{display: 'flex'}}> 
-      <Container id="metricsContainer"
-      classes={{
-      root: containerClasses.root
-    }} >
-        <Box sx={{ borderBottom: 1, borderColor: 'divider'} }>
+      <Container 
+        id="metricsContainer"
+        classes={{
+          root: containerClasses.root
+        }} 
+      >
+        <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
         <Tabs classes={{scroller:tabClasses.scroller,flexContainer:tabClasses.flexContainer}} value={value} onChange={handleChange} aria-label="cluster node tabs">
           <Tab label="Overview" {...addProps(0)} />
           <Tab label="Master" {...addProps(1)} />
