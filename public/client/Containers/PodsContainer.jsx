@@ -61,6 +61,7 @@ function PodsContainer(props) {
         <PodComponent 
           // onClick={displayPodMetrics}
           // key={name} 
+          key={keyCount}
           keyCount={keyCount}
           name={name} 
           cpuValues={cpuValues} 
