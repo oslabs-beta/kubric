@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/metricsActionCreators.js'
 import NodeCpuComponent from '../Components/NodeCpuComponent.jsx';
 import List from '@mui/material/List';
+import Paper from '@mui/material/Paper';
 // TODOS: 
 // get pods from Kubernetes and update metric names based on user selections
 // if healthy property is set to true only if all metrics are below user-defined thresholds
@@ -41,14 +42,16 @@ class NodesContainer extends React.Component {
     //   const { name, cpuValues, memoryValues } = pod;
     // console.log('render of pods container, ', this.props.pods );
     const nodesElement = [];
+    let keyCount = 1;
     for (let node in this.props.nodes) {
       // console.log(pod);
       const { name, cpuValues, memoryValues, healthy, alive, displayMetrics } = this.props.nodes[node];
       // generate a pod component with properties specific to that pod
+      console.log('node name', name);
       nodesElement.push(
         <NodeComponent 
           // onClick={displayPodMetrics}
-          // key={name} 
+          keyCount={keyCount} 
           name={name} 
           cpuValues={cpuValues} 
           memoryValues={memoryValues} 
@@ -57,6 +60,7 @@ class NodesContainer extends React.Component {
           displayMetrics={displayMetrics}
         />
       );
+      keyCount ++;
     }
     // console.log('podsElement after iteration', this.podsElement);
       
@@ -65,9 +69,11 @@ class NodesContainer extends React.Component {
 
     return (
       <div>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <Paper style={{maxHeight: 200, overflow: 'auto'}}>
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {nodesElement}
         </List>
+        </Paper>
       </div>
     );
   }

@@ -10,7 +10,8 @@ function nodesReducer (state = initialState, action) {
 
   switch (type) {
     case actionTypes.RECEIVE_NODES: {
-      const { nodesCpu, nodesMemory } = payload;   
+      const { nodesCpu, nodesMemory, CPUSatValsNodes, writeToDiskNodes } = payload; 
+      console.log('nodes received', payload);  
       const nodes = {};
 
       nodesCpu.forEach ( metric => {
@@ -28,8 +29,16 @@ function nodesReducer (state = initialState, action) {
         }
       })
       nodesMemory.forEach( metric => {
-          nodes[metric.metric.instance].values = metric.values;
+          nodes[metric.metric.instance].memoryValues = metric.values;
       })
+      CPUSatValsNodes.forEach( metric => {
+        nodes[metric.metric.instance].CPUSatValsNodes = metric.values;
+      });
+      writeToDiskNodes.forEach( metric => {
+        nodes[metric.metric.instance].writeToDiskNodes = metric.values;
+      });
+
+
 
       return {...state, nodes};
     }

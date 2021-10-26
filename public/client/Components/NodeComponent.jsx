@@ -8,9 +8,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 
-// TODOS:
-// what does rendering of a Pod look like? 
-
 const mapStateToProps = state => {
   // console.log(this);
   // console.log('from pods comp: ', state.podsReducer.pods[this.props.name] ? state.podsReducer.pods[this.props.name] : {})
@@ -26,16 +23,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 function NodeComponent (props) {
- // constructor(props) {
-  //  super(props);
-    // this.displayPodMetrics = this.displayPodMetrics.bind(this);
-  //}
-  // displayPodMetrics() {
-  //   if (!this.displayMetrics) {
-  //     console.log('display the metrics!')
-  //   }
-  // }
-  // console.log('props of each podcomponent: ', props)
+  console.log
   const [checked, setChecked] = React.useState([0]);
 
   const handleToggle = (nodeName) => () => {
@@ -54,7 +42,9 @@ function NodeComponent (props) {
       <div>
       <ListItem
       key={props.name}
+      count={props.keyCount}
       disablePadding
+      sx={{height: 50}}
     >
       <ListItemButton role={undefined} onClick={handleToggle(props.name)} dense>
         <ListItemIcon>
@@ -66,7 +56,7 @@ function NodeComponent (props) {
             inputProps={{ 'aria-labelledby': props.name }}
           />
         </ListItemIcon>
-        <ListItemText style={{color:'black'}} id={props.name} primary={`Node ${props.name}`} />
+        <ListItemText style={{color:'black'}} id={props.name} primary={`Node ${props.keyCount}`} secondary={props.name} />
       </ListItemButton>
     </ListItem>
       </div>

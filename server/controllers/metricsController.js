@@ -1,8 +1,8 @@
 const axios = require('axios');
-const client = require('prom-client');
+// const client = require('prom-client');
 const metricsController = {};
 
-client.collectDefaultMetrics();
+// client.collectDefaultMetrics();
 
 //to predefine and provide current, previous and step to get arrays of values to display data maybe make it customizable?
 //current date
@@ -14,57 +14,116 @@ const startDate = new Date(endDate.getTime()-startSet*3600000);
 //step initial
 let step = '5m';
 
-metricsController.getDefaultMetrics = (req, res, next) => {
-  client.register.getMetricsAsJSON()
+// metricsController.getDefaultMetrics = (req, res, next) => {
+//   client.register.getMetricsAsJSON()
+//     .then(data => {
+//       // console.log('data:', data);
+//       //going to be the first middleware in get method chains, so that it creates a blank object that will store each request with an unique property name
+//       res.locals.metrics = {};
+//       res.locals.metrics.defaultMetrics = data;
+//       next();
+//     })
+//     .catch(err=>next(err));
+// };
+
+//top 4 relevant metrics by each node in the cluster
+
+//CPU saturation % by the node
+metricsController.getCPUSatByNodes = (req, res, next) => {
+  res.locals.nodeMetrics = {};
+  axios.get(`http://localhost:9090/api/v1/query_range?query=(sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance))*100&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
-      // console.log('data:', data);
-      //going to be the first middleware in get method chains, so that it creates a blank object that will store each request with an unique property name
-      res.locals.metrics = {};
-      res.locals.metrics.defaultMetrics = data;
+      //array of object; each corresponding to each pod; each is the rate of cpu usage
+      res.locals.nodeMetrics.CPUSatValsNodes = data.data.data.result;
       next();
     })
     .catch(err=>next(err));
 };
 
-metricsController.getCPUByPods = (req, res, next) =>{
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+//CPU utilization % by the node
+metricsController.getCPUByNodes = (req, res, next) => {
+  axios.get(`http://localhost:9090/api/v1/query_range?query=100%20-%20(avg%20by%20(instance)%20(irate(node_cpu_seconds_total{mode=%22idle%22}[60m]))%20*%20100)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; each is the rate of cpu usage
-      res.locals.metrics.CPUPods = data.data.data.result;
+      res.locals.nodeMetrics.CPUNodes = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+};
+
+//Memory utilization % by the node
+metricsController.getMemoryByNodes = (req, res, next) => { 
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum((1-(node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes))*100)%20by%20(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+    .then(data => {
+      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      res.locals.nodeMetrics.MemoryNodes = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+};
+
+//WriteToDisk rate by the node
+metricsController.getWriteToDiskRateByNodes = (req, res, next) => {
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_disk_written_bytes_total[60m]))by(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+    .then(data => {
+      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      res.locals.nodeMetrics.WriteToDiskNodes = data.data.data.result;
+      next();  
+    })
+    .catch(err=>next(err));
+}
+
+//pod metrics: node's name will be added as reqeust parameter, it will pull relevent pod metrics inside the node
+
+//cpu usage rate by pod inside one node
+metricsController.getCPUByPods = (req, res, next) => {
+  res.locals.podMetrics = {};
+  const node = req.params.nodeName;
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+    .then(data => {
+      //array of object; each corresponding to each pod; each is the rate of cpu usage
+      res.locals.podMetrics.CPUPods = data.data.data.result;
       next();
     })
     .catch(err=>next(err));
 };
 
-metricsController.getCPUByNodes = (req, res, next) =>{
-  axios.get(`http://localhost:9090/api/v1/query_range?query=100%20-%20(avg%20by%20(instance)%20(irate(node_cpu_seconds_total{mode=%22idle%22}[5m]))%20*%20100)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+//memory usuage by pod inside one node
+metricsController.getMemoryByPods = (req, res, next) => {
+  const node = req.params.nodeName; 
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_working_set_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
-      //array of object; each corresponding to each pod; each is the rate of cpu usage
-      res.locals.metrics.CPUNodes = data.data.data.result;
+      //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
+      res.locals.podMetrics.MemoryPods = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
 };
 
-metricsController.getMemoryByPods = (req, res, next) =>{ 
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(container_memory_usage_bytes{pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+//disk write rate by pod inside one node
+metricsController.getWriteToDiskRateByPods = (req, res, next) => {
+  const node = req.params.nodeName;
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_fs_writes_bytes_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
-      res.locals.metrics.MemoryPods = data.data.data.result;
+      res.locals.podMetrics.WriteToDiskPods = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
-};
+}
 
-metricsController.getMemoryByNodes = (req, res, next) =>{ 
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum((1-(node_memory_MemFree_bytes/node_memory_MemTotal_bytes))*100)%20by%20(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+//kubelet logs by pod inside one node
+metricsController.getLogsByPods = (req, res, next) => {
+  const node = req.params.nodeName; 
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(kubelet_container_log_filesystem_used_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       //array of object; each corresponding to each pod; sending memeory in bytes, might have to change the formatting
-      res.locals.metrics.MemoryNodes = data.data.data.result;
+      res.locals.podMetrics.LogsByPods = data.data.data.result;
       next();  
     })
     .catch(err=>next(err));
-};
+}
+
 
 metricsController.getServerAPIMetrics = (req, res, next) => {
   const urls = {
@@ -77,7 +136,7 @@ metricsController.getServerAPIMetrics = (req, res, next) => {
 
   for(let url in urls){
     promises.push(axios.get(urls[url]));
-  }
+  };
   
   Promise.all(promises)
     .then(results => {
@@ -114,6 +173,18 @@ clicking the metrics tab will grab node metrics initially
       include some metrics per each pod
 
 */
+
+//new notes 10/21:
+  //node's cpu and memory capacity: kube_node_status_allocatable or _capacity
+  //requested limit resource by a container: kube_pod_container_resource_limits
+  //kube_pod_container_resource_limits vs container_cpu_usage_time sort by pod give me different number.... oops?
+  //to get number of volumes inside each node => sum(volume_manager_total_volumes{state="actual_state_of_world"}) by (node)
+  //to get number of pods inside each node => kubelet_running_pods
+  //to get number of pods inside each node => kubelet_running_containers{container_state="running"}
+  //node new metric: disk utilization %:
+    //query: 100-(node_filesystem_avail_bytes{mountpoint="/", fstype!="rootfs"}/node_filesystem_size_bytes{mountpoint="/", fstype!="rootfs"})*100
+
+
 
 //By namespace?
 //By Node?

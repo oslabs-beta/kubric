@@ -5,14 +5,27 @@ const metricsRouter = Router();
 //get all initial default metrics; add more controllers that will target one query at a time
 metricsRouter.get(
   '/',
-  metricsController.getDefaultMetrics,
-  metricsController.getCPUByPods,
+  // metricsController.getDefaultMetrics,
+  metricsController.getCPUSatByNodes,
   metricsController.getCPUByNodes,
-  metricsController.getMemoryByPods,
   metricsController.getMemoryByNodes,
+  metricsController.getWriteToDiskRateByNodes,
+  (req,res)=> res.status(200).json(res.locals.nodeMetrics)
+);
+
+metricsRouter.get(
+  '/getPodMetrics/:nodeName',
+  metricsController.getCPUByPods,
+  metricsController.getMemoryByPods,
+  metricsController.getWriteToDiskRateByPods,
+  metricsController.getLogsByPods,
+  (req,res)=> res.status(200).json(res.locals.podMetrics)
+);
+
+metricsRouter.get(
+  '/getMasterNode',
   metricsController.getServerAPIMetrics,
-  //sending a compiled object with each middleware's data with an unique property name (middleware's name without 'get')
-  (req,res)=> res.status(200).json(res.locals.metrics)
+  (req,res)=> res.status(200).json(res.locals.masterNode)
 );
 
 module.exports = metricsRouter;
