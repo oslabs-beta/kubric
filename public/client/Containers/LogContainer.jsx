@@ -93,7 +93,7 @@ const LogContainer = (props) => {
         <Box sx={{ display:"flex", 
           flexDirection:"row",
           justifyContent:'space-evenly'} }>
-          <TabPanel sx={{
+          <TabPanel style={{
            display:"flex", 
            flexDirection:"row",
            alignItems: 'center'

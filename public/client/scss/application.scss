@@ -4,13 +4,20 @@
 html {
   font-family: 'Roboto', sans-serif;
   color: whitesmoke;
+  // background-color: #fff;
+  // background-image:
+  // linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+  // linear-gradient(#eee .1em, transparent .1em);
+  // background-size: 100% 1.2em;
 }
 
 body {
   background: rgba(69, 172, 120, 0.52);
+  
 }
 
 div {
+  
   margin: .1em;
   padding: .1em;
 }
@@ -25,6 +32,9 @@ button {
 
 #loginButtons {
   color: black
+}
+#backgroundContainer {
+  
 }
 
 #loginPage {
@@ -94,7 +104,16 @@ button {
   height: 100%;
   border-radius: 10,
 }
-
+#backgroundBox{
+  // background-color: #F1FAEE;
+  margin:auto;
+  align-items:center;
+  justify-content: center;
+  padding: .5em;
+  width: 85%;
+  height: 100%;
+  border-radius: 10;
+}
 #config-container {
   // background-color: #89B0AE;
   padding: .5em;

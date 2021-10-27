@@ -18,7 +18,7 @@ import { makeStyles } from '@mui/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import Paper from '@mui/material/Paper';
+
 import Image from 'material-ui-image'
 //import img from '../assets/cat.jpeg'
 
