@@ -1,45 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginContainer from './Containers/LoginContainer.jsx';
-import QueryContainer from './Containers/QueryContainer.jsx';
 import LogContainer from './Containers/LogContainer.jsx';
-import ConfigContainer from './Containers/ConfigContainer.jsx';
-import PodsContainer from './Containers/PodsContainer.jsx';
+import MetricsContainer from './Containers/MetricsContainer.jsx';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme,ThemeProvider } from '@mui/material/styles';
+import Navigation from './Navigation/Navigation.jsx';
+import Home from './Components/Home.jsx';
+import {connect} from 'react-redux';
 
-
-// TODO: Routing or logic to determine which containers to render at what points
-
-function App () {
-  //const [user, setUser] = useState('')
-  
-  return (
-    <div>
-      Kubric
-      <div>
-        Login Container:
-        <LoginContainer/>
-      </div>
-      <div>
-        Configuration Container:
-        <ConfigContainer/>
-      </div>
-      <div>
-        Pods Conatiner:
-        <PodsContainer/>
-      </div>
-      <div>
-        Query Container:
-        <QueryContainer/>
-      </div>
-      <div>
-        Log Container:
-        <LogContainer/>
-      </div>
-    </div>
-  )
+const mapStateToProps = (state) => {
+  return {
+    appLogs: state.logsReducer.appLogs,
+    validUser: state.loginReducer.validUser,
+  };
 };
 
-// "start": "nodemon server/server.js",
-// "build": "NODE_ENV=production webpack & NODE_ENV=production npm run start",
-// "dev": "NODE_ENV=development webpack serve --open & NODE_ENV=development npm run start",
+export class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default App;
+  render() {
+    if (this.props.validUser === false) {
+      return (
+        <div>
+          <LoginContainer/>
+        </div>
+      );
+    }
+    if (this.props.validUser === true) {
+      return (
+        <div id="backgroundContainer">
+          <CssBaseline />
+          <Router>
+            <Navigation/>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/metrics" component={MetricsContainer} />
+              <Route exact path="/logs" component={LogContainer} />
+            </Switch>
+          </Router>
+        </div>
+      )
+    }
+  }
+}
+
+export default connect(mapStateToProps, null)(App);
+
+
+

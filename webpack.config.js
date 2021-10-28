@@ -21,7 +21,7 @@ module.exports = {
     compress: true,
     port: 8080,
     proxy: {
-      '*': {
+      '/': {
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
@@ -63,8 +63,25 @@ module.exports = {
           { loader: 'sass-loader', options: { sourceMap: true } },
         ],
       },
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
     ],
 
   },
-
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+}
 };

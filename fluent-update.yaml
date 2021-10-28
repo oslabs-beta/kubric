@@ -1,0 +1,90 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: fluentd-forwarder-cm
+  namespace: default
+  labels:
+    app.kubernetes.io/component: forwarder
+    app.kubernetes.io/instance: fluentd
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: fluentd
+    helm.sh/chart: fluentd-1.3.0
+  annotations:
+    meta.helm.sh/release-name: fluentd
+    meta.helm.sh/release-namespace: default
+data:
+  fluentd.conf: |
+
+    # Ignore fluentd own events
+    <match fluent.**>
+        @type null
+    </match>
+
+    # HTTP input for the liveness and readiness probes
+    <source>
+        @type http
+        port 9880
+    </source>
+
+    # Throw the healthcheck to the standard output instead of forwarding it
+    <match fluentd.healthcheck>
+        @type null
+    </match>
+
+    # Get the logs from the containers running in the node
+    <source>
+      @type tail
+      path /var/log/containers/*.log
+      pos_file /opt/bitnami/fluentd/logs/buffers/fluentd-docker.pos
+      tag kubernetes.*
+      read_from_head true
+      format json
+      time_format %Y-%m-%dT%H:%M:%S.%NZ
+    </source>
+
+    <filter **>
+      @type parser
+      key_name log
+      <parse>
+        @type multi_format
+        <pattern>
+          format json
+          time_key time
+          keep_time_key true
+        </pattern>
+      </parse>
+    </filter>
+
+    # enrich with kubernetes metadata
+    <filter kubernetes.**>
+        @type kubernetes_metadata
+    </filter>
+
+
+    <match kubernetes.var.log.containers.*loggen*.log>
+      @type elasticsearch
+      include_tag_key true
+      host "elasticsearch-master.default.svc.cluster.local"
+      port "9200"
+      index_name "loggen-app-logs"
+      <buffer>
+        @type file
+        path /opt/bitnami/fluentd/logs/buffers/loggen-app-logs.buffer
+        flush_thread_count 2
+        flush_interval 5s
+      </buffer>
+    </match>
+    <match kubernetes.var.log.containers.*elasticsearch*.log>
+      @type elasticsearch
+      include_tag_key true
+      host "elasticsearch-master.default.svc.cluster.local"
+      port "9200"
+      index_name "elasticsearch-logs"
+      <buffer>
+        @type file
+        path /opt/bitnami/fluentd/logs/buffers/elasticsearch-logs.buffer
+        flush_thread_count 2
+        flush_interval 5s
+      </buffer>
+    </match>
+    

@@ -1,48 +1,116 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { connect } from 'react-redux';
 import LogRowComponent from '../Components/LogRowComponent.jsx'
+import * as actions from '../actions/logsActionCreator.js';
+import PersistQueryContainer from './PersistQueryContainer.jsx';
+import LiveQueryContainer from './LiveQueryContainer.jsx';
+import Button from '@mui/material/Button'
+import { Container } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 // TODO: edit the buildLogRows helper function to pass in appropriate properties
 
-function LogContainer(props){
-  // array to hold log rows components to render
-  const logsElement = [];
-
-  // ASSUMPTION: logs will be an array of objects and be accessed through props???
-  const logs = [
-    {
-      logDate: 1234,
-      logType: 'ERROR',
-      podName: 'somePodName',
-      logMessage: `here\'s a(n) ERROR message from somePodName`
-    },
-    {
-      logDate: 1235,
-      logType: 'APPLICATION',
-      podName: 'somePodName',
-      logMessage: `here\'s a(n) APPLICATION message from somePodName`
-    },
-    {
-      logDate: 1236,
-      logType: 'ERROR',
-      podName: 'someOtherPodName',
-      logMessage: `here\'s a(n) ERROR message from someOtherPodName}`
-    },
-  ]
-  
-  // iterate through an array logs from DB and build an out an array of LogRowComponents to render them:
-  logs.forEach((log => {
-    // deconstruct necessary properties from each log 
-    const { logDate, logType, podName, logMessage } = log;
-
-    // generate a logRow component with properties specific to that log
-    logsElement.push(<LogRowComponent key={logDate} logDate={logDate} logType={logType} podName={podName} logMessage={logMessage}/>)
-  }))
-    
+const tabStyles = makeStyles({
+  flexContainer:{
+    width:"100%",
+    display:"flex", 
+    flexDirection:"row",
+    justifyContent:'space-evenly'
+  },
+  scroller:{
+    width:"100%",
+    display:"flex", 
+    flexDirection:"row",
+    justifyContent:'space-evenly'
+  }
+})
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
   return (
-    <div id="log-container">
-      {logsElement}
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`log-tabpanel-${index}`}
+      aria-labelledby={`log-tab-${index}`}
+      {...other}
+      style={{width:'100%',height:'100%',margin:'0',padding:'0'}}
+    >
+      {value === index && (
+        <Box >
+          <Typography>{children}</Typography>
+        </Box>
+      )}
     </div>
   );
+}
+function addProps(index) {
+  return {
+    id: `log-tab-${index}`,
+    'aria-controls': `log-tabpanel-${index}`,
+  };
+}
+const useStyles = makeStyles({
+  root:{
+    background: 'rgba(69,172,120,0.52)',
+    border: 0,
+    borderRadius: 4,
+    boxShadow: '6px 2px 3px -1px rgba(0,0,0,0.75)',
+    color: 'white', 
+    padding: '30px 30px 30px 30px',
+  },
+})
+
+const LogContainer = (props) => {
+  const containerClasses = useStyles();
+  const tabClasses = tabStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+   
+  
+  return(
+    <div style={{display: 'flex'}}> 
+    <Container id="logContainer"
+       classes={{
+        root: containerClasses.root
+      }} >
+         <Box sx={{ borderBottom: 1, borderColor: 'divider'} }>
+          <Tabs classes={{scroller:tabClasses.scroller,
+            flexContainer:tabClasses.flexContainer}} 
+            value={value} onChange={handleChange} 
+            aria-label="cluster log tabs">
+            <Tab label="Persistent" {...addProps(0)} />
+            {/* <Tab label="Live" {...addProps(1)} /> */}
+          </Tabs>
+        </Box>
+
+        <Box sx={{ display:"flex", 
+          flexDirection:"row",
+          justifyContent:'space-evenly'} }>
+          <TabPanel style={{
+           display:"flex", 
+           flexDirection:"row",
+           alignItems: 'center'
+          }} value={value} index={0}> 
+          <PersistQueryContainer/>
+          <LogRowComponent/>
+          </TabPanel>
+          {/* <TabPanel value={value} index={1}> 
+          <LiveQueryContainer />
+          </TabPanel> */}
+        </Box>
+      
+    
+    </Container>
+    </div>
+  )
+
 };
 
 export default LogContainer;
