@@ -6,17 +6,20 @@ const metricsController = {};
 const endDate = new Date();
 //one hour as initial for start
 let startSet = 1;
+let dayStartSet = 24;
 //an hour before current
 const startDate = new Date(endDate.getTime()-startSet*3600000);
+const dayStartDate = new Date(endDate.getTime()-dayStartSet*3600000);
 //step initial
 let step = '1m';
+let dayStep = '24m';
 
 
 //top 4 relevant metrics by each node in the cluster
 //CPU saturation % by the node
 metricsController.getCPUSatByNodes = (req, res, next) => {
   res.locals.nodeMetrics = {};
-  axios.get(`http://localhost:9090/api/v1/query_range?query=(sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance))*100&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=(sum(node_load15)%20by%20(instance)%20/%20count(node_cpu_seconds_total%7Bmode="system"%7D)%20by%20(instance))*100&start=${dayStartDate.toISOString()}&end=${endDate.toISOString()}&step=${dayStep}`)
     .then(data => {
       res.locals.nodeMetrics.CPUSatValsNodes = data.data.data.result;
       next();
@@ -46,7 +49,7 @@ metricsController.getMemoryByNodes = (req, res, next) => {
 
 //WriteToDisk rate by the node
 metricsController.getWriteToDiskRateByNodes = (req, res, next) => {
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_disk_written_bytes_total[60m]))by(instance)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(node_disk_written_bytes_total[60m]))by(instance)&start=${dayStartDate.toISOString()}&end=${endDate.toISOString()}&step=${dayStep}`)
     .then(data => {
       res.locals.nodeMetrics.WriteToDiskNodes = data.data.data.result;
       next();  
@@ -92,7 +95,7 @@ metricsController.getMemoryByPods = (req, res, next) => {
 //disk write rate by pod inside one node
 metricsController.getWriteToDiskRateByPods = (req, res, next) => {
   const node = req.params.nodeName;
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_fs_writes_bytes_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[60m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_fs_writes_bytes_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[60m]))%20by%20(pod)&start=${dayStartDate.toISOString()}&end=${endDate.toISOString()}&step=${dayStep}`)
     .then(data => {
       res.locals.podMetrics.WriteToDiskPods = data.data.data.result;
       next();  
@@ -103,7 +106,7 @@ metricsController.getWriteToDiskRateByPods = (req, res, next) => {
 //kubelet logs by pod inside one node
 metricsController.getLogsByPods = (req, res, next) => {
   const node = req.params.nodeName; 
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(kubelet_container_log_filesystem_used_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(kubelet_container_log_filesystem_used_bytes{node="${node}",pod!=%22POD%22,%20pod!=%22%22})%20by%20(pod)&start=${dayStartDate.toISOString()}&end=${endDate.toISOString()}&step=${dayStep}`)
     .then(data => {
       res.locals.podMetrics.LogsByPods = data.data.data.result;
       next();  
@@ -140,3 +143,4 @@ metricsController.getMasterNodeMetrics = (req, res, next) => {
 };
 
 module.exports = metricsController;
+

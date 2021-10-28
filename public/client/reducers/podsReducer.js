@@ -9,7 +9,7 @@ function podsReducer(state = initialState, action) {
 
   switch (type) {
     case actionTypes.RECEIVE_PODS:
-      const { cpuMetrics, memoryMetrics, writeToDiskPods } = payload      
+      const { cpuMetrics, memoryMetrics, writeToDiskPods,logMetrics } = payload      
       let pods = {};
 
       cpuMetrics.forEach( metric => {
@@ -40,7 +40,15 @@ function podsReducer(state = initialState, action) {
         })
         if(!pods[pod].writeToDiskValues) pods[pod].writeToDiskValues = [];
       }
-      
+      for(let pod in pods){
+        logMetrics.forEach(metric => {
+          if(pod === metric.metric.pod){
+            pods[pod].logMetrics = metric.values;
+            return;
+          } 
+        })
+        if(!pods[pod].logMetrics) pods[pod].logMetrics = [];
+      }
       return {...state, pods};
 
     case actionTypes.DISPLAY_POD_METRICS:

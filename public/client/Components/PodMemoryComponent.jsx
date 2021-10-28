@@ -15,7 +15,6 @@ const PodMemoryComponent = (props) => {
   const getValues = (pods) => {
     for (let pod in pods) {
       const podValues = [];
-      
       if (pods[pod].displayMetrics) {
         pods[pod].memoryValues.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
@@ -23,7 +22,6 @@ const PodMemoryComponent = (props) => {
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
           const time = `${hours}:${minutes}:${seconds}`;  
-          
           podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
         });
         valuesToGraph.push(

@@ -87,7 +87,7 @@ const NodeCpuSaturationComponent = (props) => {
         fontWeight: 'normal',
       },
       label:{
-        text: "Time(60m)"
+        text: "Time(1d)"
       }
     },
     scaleY: {

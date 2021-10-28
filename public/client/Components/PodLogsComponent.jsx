@@ -4,45 +4,41 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
   return {
-    nodes: state.nodesReducer.nodes,
+    pods: state.podsReducer.pods
   }
 }
 
-const NodeWriteToDiskComponent = (props) => {
-  const { nodes } = props;
+const PodLogsComponent = (props) => {
+  const { pods } = props;
   const valuesToGraph = [];
-
-  const getValues = (nodes) => {
-    for (let node in nodes) {
-      const nodeValues = [];
-      let nameShortened = nodes[node].name;
-      nameShortened = nameShortened.slice(0,3) + "..." + nameShortened.slice(nameShortened.length-5,nameShortened.length) 
-    
-      if (nodes[node].displayMetrics) {
-        nodes[node].writeToDiskNodes.forEach(dataPoint => {
+  
+  const getValues = (pods) => {
+    for (let pod in pods) {
+      const podValues = [];
+      if (pods[pod].displayMetrics) {
+        pods[pod].logMetrics.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
           const hours = date.getHours();
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
-          const time = `${hours}:${minutes}:${seconds}`;
-          
-          nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
+          const time = `${hours}:${minutes}:${seconds}`;  
+          podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
         });
         valuesToGraph.push(
           {
             type: "line",
-            text:  nameShortened,
-            values: nodeValues,
-            min: 0,
+            decimals:3,
+            text: pods[pod].name,
+            values: podValues,
           }
         );
       }
     }    
   }
 
-  getValues(nodes);
-
-  const nodeWriteToDiskData = {
+  getValues(pods);
+  
+  const podLogsGraphData = {
     theme: 'dark',
     type: 'line',
     "globals": {
@@ -51,7 +47,7 @@ const NodeWriteToDiskComponent = (props) => {
     },
 
     title: {
-        text: 'Write to Disk Rate',
+        text: 'Log Memory',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -61,12 +57,13 @@ const NodeWriteToDiskComponent = (props) => {
       marker: {
         visible: false,
       },
-      decimals:3,
       animation: {
-        effect: "ANIMATION_FADE_IN"
+        effect: "ANIMATION_FADE_IN",
+        speed:"200"
       },
+      decimals:3,
       tooltip: {
-        text: "%vv at %kt time from %t",
+        text: "%vv at %kt from %t",
         decimals:3,
       }
     },
@@ -88,15 +85,15 @@ const NodeWriteToDiskComponent = (props) => {
       
     },
     scaleY: {
-      label:{
-        text: "Per Node (MBps)"
-      },
-      format: "%v",
       minValue:0,
       minorTicks: 9,
       item:{
         fontWeight: 'normal',
-      }
+      },
+      
+      label:{
+        text: props.yLabel
+      },
     },
 
     crosshairX: {
@@ -107,10 +104,10 @@ const NodeWriteToDiskComponent = (props) => {
   }
 
   return (
-      <div className="chart"> 
-          <ZingChart height="303" data = {nodeWriteToDiskData}/>
-      </div>
+    <div className="chart"> 
+        <ZingChart height="303" data = {podLogsGraphData}>Pod Zing Chart</ZingChart>
+    </div>
   )
 }
 
-export default connect(mapStateToProps, null)(NodeWriteToDiskComponent);
+export default connect(mapStateToProps, null)(PodLogsComponent);

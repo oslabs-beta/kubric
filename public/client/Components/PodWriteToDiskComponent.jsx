@@ -23,7 +23,7 @@ const PodWriteToDiskComponent = (props) => {
         const seconds = date.getSeconds();
         const time = `${hours}:${minutes}:${seconds}`;  
 
-        podValues.push([time, parseFloat(dataPoint[1])/1000]);
+        podValues.push([time, parseFloat(dataPoint[1])/10000]);
       });
 
       valuesToGraph.push({
@@ -79,7 +79,9 @@ const PodWriteToDiskComponent = (props) => {
       item: {
         fontWeight: 'normal',
       },
-      
+      label:{
+        text: 'Time(1d)'
+      },
     },
     scaleY: {
       minValue:0,
