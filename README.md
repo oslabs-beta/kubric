@@ -26,17 +26,95 @@ Additionally, Kubric persists logs and allows developers to query persisted logs
 
 **Warning : lots of YAML involved!!!**
 
-Before you can utilize our product for your designated Kubernetes cluster, you **must** have followings already deployed and set up inside your cluster before deploying our app.
+Here are links to the technology we used to implement our application. Be sure to have kubernetes installed before beginning setup.
+
+* **Kubernetes**
+ * To run commands against your cluster, make sure you have Kubectl installed for your operating system 
+ <a href="https://kubernetes.io/docs/tasks/tools/">Kubectl Installation Guide</a>
+
+* **Helm**
+ * Helm charts are a great resource to download interdependent YAML configuration files for complicated setup.
+ <a href="https://helm.sh/docs/intro/install/">Helm Installation</a>
+
+* **Fluentd**
+ * Fluentd is our log forwarding agent of choice
+ <a href="https://github.com/bitnami/charts/tree/master/bitnami/fluentd">Fluentd Chart Installation</a>
+
+* **Elasticsearch**
+ * Elasticsearch is what we use for provisioning remote storage
+ <a href="https://github.com/elastic/helm-charts/tree/master/elasticsearch">Elasticsearch Chart Installation</a>
 
 * **Prometheus**
+ * Prometheus is the standard for metrics pipeline monitoring
+<a href="https://prometheus-operator.dev/docs/prologue/quick-start/">Prometheus</a>
 
-  
+ * **Linode LKE** 
+ * Linode LKE is the remote storage provider we chose, future support for GKE and EKS is in the works.
+<a href="https://www.linode.com/">Linode LKE</a>
+## Set Up 
+Begin by cloning this repo.
 
-* **Fluentd & ElasticSearch**
-  
-  *
+Create an account and provision three worker nodes with at least 8GB of RAM and 160GB of storage.
+Upon successful provisioning, download your Kubeconfig yaml file.
 
-## Set Up Kubric
+From the command line run:
+MacOS/Linux:
+export KUBECONFIG=/path/to/config.yaml
+
+Windows:
+create folder C:\Users\username\.kube
+rename cluster-config.yaml to config
+put config file in .kube folder
+
+You should now be connected to your remote cluster and able to run kubectl commands against it.
+
+To deploy our sample log generator app to the cluster:
+kubectl apply -f logGen-app/logGen-app-depl.yaml
+
+If you have not installed Helm do so now.
+
+Install Elasticsearch:
+helm repo add elastic https://Helm.elastic.co
+helm install elasticsearch elastic/elasticsearch -f values.yaml
+
+Install Fluentd:
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install fluentd bitnami/fluentd
+
+Apply our log forwarding config file:
+kubectl apply -f fluent-update.yaml
+kubectl rollout restart daemonset/fluentd
+
+Prometheus:
+To deploy prometheus to this cluster, follow the above link's quick start guide sections.
+
+To open ports for app access:
+kubectl --n monitoring port-forward svc/prometheus-k8s 9090
+kubectl port-forward service/elasticsearch-master 9200
+
+That's it!
+Make sure to npm install and for now npm run dev, navigate to localhost:8080 to log in and view cluster info.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## What's Next?
