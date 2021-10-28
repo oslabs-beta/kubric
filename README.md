@@ -1,8 +1,8 @@
 # Kubric
 
-Kubric aims to provide a clean dashboard that displays important worker node and pod metrics. Kubric provides insight into the master node, the gatekeeper of communication to the cluster and responsible for orchestrating all the heavy lifting to corresponding worker nodes.
+Kubric aims to provide a clean dashboard that displays important worker node and pod metrics. Kubric provides insight into the master node, the gatekeeper of communication to the cluster and responsible for orchestrating all the heavy lifting to corresponding worker nodes
 
-Additionally, Kubric persists logs and allows developers to query persisted logs even if a pod has been evicted and replaced. Developers need not worry about logs dying with pods or about log rotation policies because logs are persistently stored and queryable through Kubric.
+Additionally, Kubric persists logs and allows developers to query persisted logs even if a pod has been evicted and replaced. Developers need not worry about logs dying with pods or about log rotation policies because logs are persistently stored and queryable through Kubric
 
 * **Query Persistent Log Storage by Index Name, Field, Value**
 
@@ -24,97 +24,97 @@ Additionally, Kubric persists logs and allows developers to query persisted logs
 
 ## Set Up Prerequisites
 
-**Warning : lots of YAML involved!!!**
-
-Here are links to the technology we used to implement our application. Be sure to have kubernetes installed before beginning setup.
+Here are links to the technology we used to implement our application. Be sure to have kubernetes installed before beginning setup
 
 * **Kubernetes**
- * To run commands against your cluster, make sure you have Kubectl installed for your operating system 
- <a href="https://kubernetes.io/docs/tasks/tools/">Kubectl Installation Guide</a>
+  * To run commands against your cluster, make sure you have [Kubectl](https://kubernetes.io/docs/tasks/tools/) installed for your operating system 
 
 * **Helm**
- * Helm charts are a great resource to download interdependent YAML configuration files for complicated setup.
- <a href="https://helm.sh/docs/intro/install/">Helm Installation</a>
+  * [Helm charts](https://helm.sh/docs/intro/install/) are a great resource to download interdependent YAML configuration files for complicated setup
 
 * **Fluentd**
- * Fluentd is our log forwarding agent of choice
- <a href="https://github.com/bitnami/charts/tree/master/bitnami/fluentd">Fluentd Chart Installation</a>
+  * [Fluentd](https://github.com/bitnami/charts/tree/master/bitnami/fluentd) is our log forwarding agent of choice
 
 * **Elasticsearch**
- * Elasticsearch is what we use for provisioning remote storage
- <a href="https://github.com/elastic/helm-charts/tree/master/elasticsearch">Elasticsearch Chart Installation</a>
+  * [Elasticsearch](https://github.com/elastic/helm-charts/tree/master/elasticsearch) is what we use for provisioning remote storage
 
 * **Prometheus**
- * Prometheus is the standard for metrics pipeline monitoring
-<a href="https://prometheus-operator.dev/docs/prologue/quick-start/">Prometheus</a>
+  * [Prometheus](https://prometheus-operator.dev/docs/prologue/quick-start/) is the standard for metrics pipeline monitoring
 
- * **Linode LKE** 
- * Linode LKE is the remote storage provider we chose, future support for GKE and EKS is in the works.
-<a href="https://www.linode.com/">Linode LKE</a>
+* **Linode LKE** 
+  * [Linode LKE](https://www.linode.com/) is the remote storage provider we chose, future support for GKE and EKS is in the works
+
 ## Set Up 
-Begin by cloning this repo.
 
-Create an account and provision three worker nodes with at least 8GB of RAM and 160GB of storage.
-Upon successful provisioning, download your Kubeconfig yaml file.
+1. Begin by cloning this repo
 
-From the command line run:
-MacOS/Linux:
-export KUBECONFIG=/path/to/config.yaml
+2. Create an account and provision three worker nodes with at least 8GB of RAM and 160GB of storage 
 
-Windows:
-create folder C:\Users\username\.kube
-rename cluster-config.yaml to config
-put config file in .kube folder
+3. Upon successful provisioning, download your Kubeconfig yaml file
 
-You should now be connected to your remote cluster and able to run kubectl commands against it.
+      From the command line run: <br/>
+      MacOS/Linux:<br/>
+      ```
+      export KUBECONFIG=/path/to/config.yaml
+      ```
 
-To deploy our sample log generator app to the cluster:
-kubectl apply -f logGen-app/logGen-app-depl.yaml
+      Windows:
+      ```
+      create folder C:\Users\username\.kube
 
-If you have not installed Helm do so now.
+      rename cluster-config.yaml to config
 
-Install Elasticsearch:
-helm repo add elastic https://Helm.elastic.co
-helm install elasticsearch elastic/elasticsearch -f values.yaml
+      put config file in .kube folder
+      ```
 
-Install Fluentd:
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install fluentd bitnami/fluentd
+      You should now be connected to your remote cluster and able to run kubectl commands against it
 
-Apply our log forwarding config file:
-kubectl apply -f fluent-update.yaml
-kubectl rollout restart daemonset/fluentd
+4. To deploy our sample log generator app to the cluster:
 
-Prometheus:
-To deploy prometheus to this cluster, follow the above link's quick start guide sections.
+      ```
+      kubectl apply -f logGen-app/logGen-app-depl.yaml
+      ```
 
-To open ports for app access:
-kubectl --n monitoring port-forward svc/prometheus-k8s 9090
-kubectl port-forward service/elasticsearch-master 9200
+      If you have not installed Helm do so now
+
+5. Install Elasticsearch:
+
+      ```
+      helm repo add elastic https://Helm.elastic.co
+      helm install elasticsearch elastic/elasticsearch -f values.yaml
+      ```
+
+6. Install Fluentd:
+    
+      ```
+      helm repo add bitnami https://charts.bitnami.com/bitnami
+      helm install fluentd bitnami/fluentd
+      ```
+
+7. Apply our log forwarding config file:
+  
+      ```
+      kubectl apply -f fluent-update.yaml
+      kubectl rollout restart daemonset/fluentd
+      ```
+  
+8. Install Prometheus:
+    
+      To deploy prometheus to this cluster, follow the above link's quick start guide sections
+
+8. To open ports for app access:
+  
+      ```
+      kubectl --n monitoring port-forward svc/prometheus-k8s 9090
+      kubectl port-forward service/elasticsearch-master 9200
+      ```
+    
+<hr/>
 
 That's it!
 Make sure to npm install and for now npm run dev, navigate to localhost:8080 to log in and view cluster info.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+To add new applications to filter logs from, simply add another match statement to the fluentd config file and follow the syntax provided. Then kubectl rollout the update
 
 
 ## What's Next?
