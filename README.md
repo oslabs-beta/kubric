@@ -1,72 +1,54 @@
-# kubric
+# Kubric
 
-## **GIT WORKFLOWS**  
-### To start working on a *new* feature:  
-1. create a new issue with an appropriate name,  add it to current project, and assign it to yourself (or appropriate person)  
-2. create a local feature branch with corresponding name, set its upstream to a branch with the same name in github  
+Kubric aims to provide a clean dashboard that displays important worker node and pod metrics. Kubric provides insight into the master node, the gatekeeper of communication to the cluster and responsible for orchestrating all the heavy lifting to corresponding worker nodes.
 
-### **To merge dev branch into your local branch**  
-*Do this whenever there has been an update to dev* **and BEFORE** *pushing your local changes on your feature branch to the remote branch...*:  
-1. make sure you're on your feature branch (confirm with `git branch`)
-2. `git commit` your recent changes (**but don't push yet!**)
-3. `git checkout dev` to switch to dev branch
-4. `git pull origin dev` to pull down most recent changes to your local dev branch
-5. `git checkout <featurebranchname>` to switch back to your local feature branch
-6. `git merge dev` to merge newest changes from dev into your local branch
-7. `git push origin <featurebranchname>` to update the remote feature branch to include your local changes and dev's changes
+Additionally, Kubric persists logs and allows developers to query persisted logs even if a pod has been evicted and replaced. Developers need not worry about logs dying with pods or about log rotation policies because logs are persistently stored and queryable through Kubric.
 
-### **To merge a feature branch into dev**  
-*Double check you have merged most current version of dev into your local feature branch *AND* you've pushed your local feature branch changes to the remote feature branch*
-1. Go to the GitHub repo
-2. If you recently `pushed` to your feature branch, there will be an alert at the top of the page that says: `"<featurebranchname> had recent pushes x minutes ago"` with a button that says `Compare & pull request`. Click the button.
-3. Make sure `base: dev` and `compare: featurebranchname`
-4. Add succinct commentary about what changes are included.
-5. Click `Create Pull Request`
-6. Let Scrum Master know that you submitted a PR that needs review.  
+* **Query Persistent Log Storage by Index Name, Field, Value**
 
-## File Trees:
+<p align="center">
+  <img width="600vw" height="450vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/38f04747aa894f4311c968370c40e999.gif" />
+</p>
 
-//BACK END
+* **Toggle Visualization to View Relative Performance**
 
---install prometheus and kubernetes node.js clients libraries
+<p align="center">
+  <img width="600vw" height="450vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/5ba72ffcc222b6f1b5a29aa6779880a5.gif" />
+</p>
 
-//ClusterRouter & Controller
---Handles proxy fetched to kubernetes api server
---returns podList, nodeList, serviceList, deploymentList, ingressList
+* **Tab between Overview, Master and Worker Nodes Views**
 
-//Metrics Router & Controller
---scrapes metrics from kubernetes client register 
+<p align="center">
+  <img width="600vw" height="450vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/68b4694938ee979031252398cbd96695.gif" />
+</p>
 
-//Logs Router & Controller
---TBD
+## Set Up Prerequisites
 
-//Server
-Handles above routes, and react router client side routing(ex:/structure renders the structure component)
--switch routes in app.jsx
+**Warning : lots of YAML involved!!!**
 
-//YAML Files
---our deployment
---rbac deployment
---possible log deployment?
+Before you can utilize our product for your designated Kubernetes cluster, you **must** have followings already deployed and set up inside your cluster before deploying our app.
 
-//FRONT END
---Make use of material/ui library for display(core,themes,icons, etc) rechart, zingchart
---Using REDUX && hooks
---actions
-    --actionTypes
-    --metricsActionCreator
-        - scrape metrics from port 9090 (prometheus server)
-    --clusterActionCreator
-        - K8s cluster configuration from API server
-    --logsActionCreator (TBD)
---reducers
-    --deploymentReducer
-    --ingressReducer
-    --metricsReducer
-    --nodesReducer
-    --podsReducer
-    --servicesReducer
-    ---logReducer (TBD)
---store
-    --combine our reducers
+* **Prometheus**
+
+  
+
+* **Fluentd & ElasticSearch**
+  
+  *
+
+## Set Up Kubric
+
+
+## What's Next?
+
+**Kubric is still under the development**, further features and optimizations to be implemented! Stay tuned for more updates! 
+Feel free to contact us for any comments, concerns, suggestions!
+
+## Contributers
+
+* Laura Botel : [Github](https://github.com/laurabotel) | [LinkedIn](https://www.linkedin.com/in/laurabotel/)
+* Luke Cho : [Github](https://github.com/luke-h-cho) | [LinkedIn](https://www.linkedin.com/in/luke-h-cho/)
+* James Cross : [Github](https://github.com/James-P-Cross) | [LinkedIn](https://www.linkedin.com/in/james-cross-9b164ba9/)
+* John Haberstroh : [Github](https://github.com/jlhline) | [LinkedIn](https://www.linkedin.com/in/john-haberstroh-9436ab117/)
+
 
