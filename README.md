@@ -1,25 +1,40 @@
 # Kubric
 
-Kubric aims to provide a clean dashboard that displays important worker node and pod metrics. Kubric provides insight into the master node, the gatekeeper of communication to the cluster and responsible for orchestrating all the heavy lifting to corresponding worker nodes
+Kubric a user-friendly web application built to make it easier to maintain and debug Kubernetes cluster by:
+- displaying important Kubernetes worker node and pod metrics
+- providing insight into the control plane (master node)
+- persisting logs beyond pod lifecycle and providing a GUI to query, filter, and sort persisted logs.  
 
-Additionally, Kubric persists logs and allows developers to query persisted logs even if a pod has been evicted and replaced. Developers need not worry about logs dying with pods or about log rotation policies because logs are persistently stored and queryable through Kubric
 
-* **Query Persistent Log Storage by Index Name, Field, Value**
+## Table of Contents  
+- Application demo
+- Pre-requisitis
+- Features
+- How it works
+- Set up
+- What's next
+- How to contribute
+- License
+
+## Demo  
+
+### *Logs*  
+Kubric allows users to query and filter persistent log storage by index name, field, and value:
 
 <p align="center">
-  <img width="600vw" height="450vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/38f04747aa894f4311c968370c40e999.gif" />
+  <img width="400vw" height="300vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/38f04747aa894f4311c968370c40e999.gif" />
 </p>
-
-* **Toggle Visualization to View Relative Performance**
-
+  
+### *Metrics*  
+Toggle visualization to view relative performance of particular nodes and pods:
 <p align="center">
-  <img width="600vw" height="450vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/5ba72ffcc222b6f1b5a29aa6779880a5.gif" />
-</p>
+  <img width="400vw" height="300vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/5ba72ffcc222b6f1b5a29aa6779880a5.gif" />
+</p>  
 
 * **Tab between Overview, Master and Worker Nodes Views**
-
+Tab between Overview, Master, and Worker Node Views:
 <p align="center">
-  <img width="600vw" height="450vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/68b4694938ee979031252398cbd96695.gif" />
+  <img width="400vw" height="300vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/68b4694938ee979031252398cbd96695.gif" />
 </p>
 
 ## Set Up Prerequisites
