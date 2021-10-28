@@ -21,19 +21,19 @@ Kubric a user-friendly web application built to make it easier to maintain and d
 ### *Metrics*  
 Toggle visualization to view relative performance of particular nodes and pods:
 <p align="center">
-  <img width="300vw" height="225vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/5ba72ffcc222b6f1b5a29aa6779880a5.gif" />
+  <img width="400vw" height="300vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/5ba72ffcc222b6f1b5a29aa6779880a5.gif" />
 </p>  
 
 Tab between Overview, Master, and Worker Node Views:
 <p align="center">
-  <img width="300vw" height="225vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/68b4694938ee979031252398cbd96695.gif" />
+  <img width="400vw" height="300vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/68b4694938ee979031252398cbd96695.gif" />
 </p>  
 
 ### *Logs*  
 Query and filter persistent log storage by index name, field, and value:
 
 <p align="center">
-  <img width="300vw" height="225vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/38f04747aa894f4311c968370c40e999.gif" />
+  <img width="400vw" height="300vw" src="https://github.com/luke-h-cho/kubricDemoSite/blob/7d96f54b68d8405b883a42cc419554df30f7bf53/dist/38f04747aa894f4311c968370c40e999.gif" />
 </p>  
 
 <hr/>  
