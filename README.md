@@ -126,7 +126,7 @@ Feel free to contact us for any comments, concerns, suggestions!
 
 * Laura Botel : [Github](https://github.com/laurabotel) | [LinkedIn](https://www.linkedin.com/in/laurabotel/)
 * Luke Cho : [Github](https://github.com/luke-h-cho) | [LinkedIn](https://www.linkedin.com/in/luke-h-cho/)
-* James Cross : [Github](https://github.com/James-P-Cross) | [LinkedIn](https://www.linkedin.com/in/james-cross-9b164ba9/)
+* James Cross : [Github](https://github.com/James-P-Cross) | [LinkedIn](www.linkedin.com/in/james-p-cross1)
 * John Haberstroh : [Github](https://github.com/jlhline) | [LinkedIn](https://www.linkedin.com/in/john-haberstroh-9436ab117/)
 
 
