@@ -29,6 +29,7 @@ const PodMemoryComponent = (props) => {
         valuesToGraph.push(
           {
             type: "line",
+            decimals:3,
             text: pods[pod].name,
             values: podValues,
           }
@@ -48,7 +49,7 @@ const PodMemoryComponent = (props) => {
     },
 
     title: {
-        text: 'Memory Usage in MB',
+        text: 'Memory Usage',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -59,16 +60,19 @@ const PodMemoryComponent = (props) => {
         visible: false,
       },
       animation: {
-        effect: "ANIMATION_FADE_IN"
+        effect: "ANIMATION_FADE_IN",
+        speed:"200"
       },
+      decimals:3,
       tooltip: {
-        text: "%vt at %kt time from %t"
+        text: "%vv at %kt from %t",
+        decimals:3,
       }
     },
 
     plotarea: {
       "margin": "dynamic",
-      "margin-right": "30",
+      "margin-right": "60",
       'width':'100%',
       'height': '100%',
     },
@@ -77,6 +81,9 @@ const PodMemoryComponent = (props) => {
       item: {
         fontWeight: 'normal',
       },
+      label:{
+        text: "Time(60m)"
+      }
       
     },
     scaleY: {
@@ -84,7 +91,11 @@ const PodMemoryComponent = (props) => {
       minorTicks: 9,
       item:{
         fontWeight: 'normal',
-      }
+      },
+      
+      label:{
+        text: props.yLabel
+      },
     },
 
     crosshairX: {

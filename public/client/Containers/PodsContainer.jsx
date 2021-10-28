@@ -47,7 +47,7 @@ function PodsContainer(props) {
   
   return (
     <div id="pods-container">
-        <List sx={{ maxHeight: 200, overflow: 'auto', width: '100%', bgcolor: alpha('#F5F5F5', .40)  }}>
+        <List sx={{ maxHeight: 200, overflow: 'auto', width: '100%', bgcolor: alpha('#F5F5F5', .40),borderRadius: 4 }}>
           {podsElement}
         </List>
     </div>

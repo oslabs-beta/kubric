@@ -12,9 +12,9 @@ export default function PodChartContainer() {
       sx={{display:"flex", 
       justifyContent:'space-evenly'}}
     >
-      <PodCpuComponent />
-      <PodMemoryComponent />
-      <PodWriteToDiskComponent/>
+      <PodCpuComponent yLabel={"Per Pod(Usage Second Rate)"}/>
+      <PodMemoryComponent yLabel={"Per Pod(MB)"}/>
+      <PodWriteToDiskComponent yLabel={"Per Pod(MBps)"}/>
       
     </Stack>
   );

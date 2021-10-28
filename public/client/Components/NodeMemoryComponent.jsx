@@ -15,7 +15,8 @@ const NodeMemoryComponent = (props) => {
   const getValues = (nodes) => {
     for (let node in nodes) {
       const nodeValues = [];
-      
+      let nameShortened = nodes[node].name;
+      nameShortened = nameShortened.slice(0,3) + "..." + nameShortened.slice(nameShortened.length-5,nameShortened.length) 
       if (nodes[node].displayMetrics) {
         nodes[node].memoryValues.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
@@ -29,7 +30,8 @@ const NodeMemoryComponent = (props) => {
         valuesToGraph.push(
           {
             type: "line",
-            text: nodes[node].name,
+            decimals:3,
+            text:  nameShortened,
             values: nodeValues,
           }
         );
@@ -48,7 +50,7 @@ const NodeMemoryComponent = (props) => {
     },
 
     title: {
-        text: 'Memory Usage in MB',
+        text: 'Memory Utilization',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -58,17 +60,20 @@ const NodeMemoryComponent = (props) => {
       marker: {
         visible: false,
       },
+      decimals:3,
       animation: {
-        effect: "ANIMATION_FADE_IN"
+        effect: "ANIMATION_FADE_IN",
+        speed: "200"
       },
       tooltip: {
-        text: "%vt at %kt time from %t"
+        text: "%vv at %kt from %t",
+        decimals:3,
       }
     },
 
     plotarea: {
       "margin": "dynamic",
-      "margin-right": "30",
+      "margin-right": "60",
       'width':'100%',
       'height': '100%',
     },
@@ -77,9 +82,16 @@ const NodeMemoryComponent = (props) => {
       item: {
         fontWeight: 'normal',
       },
+      label:{
+        text: "Time(60m)"
+      }
       
     },
     scaleY: {
+      label:{
+        text: "Per Node"
+      },
+      format: "%v%",
       minValue:0,
       minorTicks: 9,
       item:{

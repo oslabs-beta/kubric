@@ -12,11 +12,11 @@ export default function PodChartContainer() {
   }
 
   return (
-    <div>
+    <div style={{margin:0,padding:0}}>
       <Stack
         spacing={2}
         sx={{display:"flex", 
-        justifyContent:'space-evenly'}}
+        justifyContent:'space-evenly',padding:0}}
       >
         <NodeCpuComponent />
         <NodeMemoryComponent />

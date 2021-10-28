@@ -44,7 +44,7 @@ const NodesContainer = (props) => {
   return (
     <div>
       {/* <Paper style={{maxHeight: 200, overflow: 'auto'}}> */}
-        <List sx={{ maxHeight: 200, overflow: 'auto', width: '100%', bgcolor: alpha('#F5F5F5', .40) }}>
+        <List sx={{ maxHeight: 200, overflow: 'auto', width: '100%', bgcolor: alpha('#F5F5F5', .40),borderRadius: 4 }}>
           {nodesElement}
         </List>
       {/* </Paper> */}

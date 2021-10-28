@@ -12,11 +12,11 @@ const mapStateToProps = (state) => {
 }
 const columns = [
   {field: 'message', headerName: 'message',minWidth:150, headerAlign:'left', flex:1},
-  {field: 'timestamp', headerName: 'timestamp', minWidth:150,headerAlign:'left', flex:1},
+  {field: 'timestamp', headerName: 'timestamp', minWidth:100,headerAlign:'left', flex:1},
   {field: 'podName', headerName: 'pod name', minWidth:150,headerAlign:'left', flex:1},
-  {field: 'host', headerName: 'host',headerAlign:'left',minWidth:150,flex:.5},
-  {field: 'level', headerName: 'level',headerAlign:'left',minWidth:10,flex:.5 },
-  {field: 'id', headerName: 'id', headerAlign:'left',minWidth:10,flex:.5},
+  {field: 'host', headerName: 'host',headerAlign:'left',minWidth:150,flex:1},
+  {field: 'level', headerName: 'level',headerAlign:'left',minWidth:50,flex:.5},
+  {field: 'id', headerName: 'id', headerAlign:'left',minWidth:100,flex:1},
 ];
 
 const useStyles = makeStyles({
@@ -29,15 +29,18 @@ const useStyles = makeStyles({
   },
   '& .MuiDataGrid-cell': {
       lineHeight: 'unset !important',
+      overflowWrap: 'break-word !important',
+      wordWrap: 'break-word !important',
       maxHeight: 'none !important',
       whiteSpace: 'normal',
-      margin: '0px !important',
-      padding: '0px 10px 0px 16px !important'
+      margin: '0px 0px 0px 0px!important',
+      padding: '0px 8px 0px 8px !important'
   },
 
 '& .MuiDataGrid-columnsContainer': {
   backgroundColor: 'whitesmoke',
   borderRadius: 4,
+  margin: '0px 0px 20px 0px !important',
 },
   '& .MuiDataGrid-columnHeader': {
     
@@ -47,9 +50,10 @@ const useStyles = makeStyles({
  },
   '& .MuiDataGrid-columnHeaderTitleContainer': {
    alignItems: 'flex-start !important',
+   justifyContent: 'flex-start !important',
    color: 'grey !important',
    margin: '0px !important',
-   padding: '0px !important',
+   padding: '0px 0px 0px 10px !important',
 },
 '& .MuiDataGrid-columnHeaderDraggableContainer': {
   alignItems: 'flex-start !important',
@@ -61,12 +65,12 @@ const useStyles = makeStyles({
       maxHeight: 'none !important',
       margin: '0px !important',
       padding: '0px !important',
-      width:'50% !important',
+      width:'100% !important',
       
   },
   '& .MuiDataGrid-window': {
    borderRadius: 4,
-   margin: '0px !important',
+   margin: '1px 0px 0px 0px !important',
    overflowX: 'hidden !important',
 },
 '& .MuiDataGrid-viewport': {

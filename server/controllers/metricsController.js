@@ -70,7 +70,7 @@ metricsController.getMemoryBarData = (req, res, next) => {
 metricsController.getCPUByPods = (req, res, next) => {
   res.locals.podMetrics = {};
   const node = req.params.nodeName;
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_cpu_usage_seconds_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[60m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       res.locals.podMetrics.CPUPods = data.data.data.result;
       next();
@@ -92,7 +92,7 @@ metricsController.getMemoryByPods = (req, res, next) => {
 //disk write rate by pod inside one node
 metricsController.getWriteToDiskRateByPods = (req, res, next) => {
   const node = req.params.nodeName;
-  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_fs_writes_bytes_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[5m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
+  axios.get(`http://localhost:9090/api/v1/query_range?query=sum(rate(container_fs_writes_bytes_total{node="${node}",pod!=%22POD%22,%20pod!=%22%22}[60m]))%20by%20(pod)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`)
     .then(data => {
       res.locals.podMetrics.WriteToDiskPods = data.data.data.result;
       next();  
@@ -115,9 +115,9 @@ metricsController.getLogsByPods = (req, res, next) => {
 metricsController.getMasterNodeMetrics = (req, res, next) => {
   const urls = {
     serverAPILatency: `http://localhost:9090/api/v1/query_range?query=sum(cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{resource!="",quantile="0.9"}) by (resource)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
-    serverAPIsuccessReq: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job="apiserver",code=~"2..",group!=""}[5m])) by (group)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    serverAPIsuccessReq: `http://localhost:9090/api/v1/query_range?query=sum(rate(apiserver_request_total{job="apiserver",code=~"2..",group!=""}[60m])) by (group)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
     controllerAddCounter: `http://localhost:9090/api/v1/query_range?query=rate(workqueue_adds_total[60m])&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
-    etcdRequestRate: `http://localhost:9090/api/v1/query_range?query=sum(rate(etcd_request_duration_seconds_sum[5m]))by(operation)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
+    etcdRequestRate: `http://localhost:9090/api/v1/query_range?query=sum(rate(etcd_request_duration_seconds_sum[60m]))by(operation)&start=${startDate.toISOString()}&end=${endDate.toISOString()}&step=${step}`,
   }
 
   const promises = [];

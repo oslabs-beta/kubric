@@ -35,10 +35,10 @@ function MasterNodeContainer(props) {
           display:"flex", 
           justifyContent:'space-evenly',
         }}>
-        <MasterNodeGraph name={'Kubernetes Server API Latency [90th percentile]'} data={props.masterNode.serverAPILatency}/>
-        <MasterNodeGraph name={'Kubernetes Server API Success Request Rate [5m]'} data={props.masterNode.serverAPISuccessReq}/>
-        <MasterNodeGraph name={'Controller Workqueue Add Rate [5m]'} data={props.masterNode.controllerAddCounter}/>
-        <MasterNodeGraph name={'etcd Request Rate [5m]'} data={props.masterNode.etcdRequestRate}/>
+        <MasterNodeGraph yLabel={'Per Group(s)'} name={'API Server Request Latency[90th pctl]'} data={props.masterNode.serverAPILatency}/>
+        <MasterNodeGraph  yLabel={'Per Resource(s)'} name={'API Server Success Requests'} data={props.masterNode.serverAPISuccessReq}/>
+        <MasterNodeGraph  yLabel={'Per Group(add/s)'} name={'Controller Workqueue Adds'} data={props.masterNode.controllerAddCounter}/>
+        <MasterNodeGraph  yLabel={'Per Operation(s)'} name={'ETCD Request Duration'} data={props.masterNode.etcdRequestRate}/>
       </Stack>
     </div>
   );

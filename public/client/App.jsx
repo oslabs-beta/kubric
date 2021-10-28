@@ -31,7 +31,7 @@ export class App extends React.Component {
     }
     if (this.props.validUser === true) {
       return (
-        <div>
+        <div id="backgroundContainer">
           <CssBaseline />
           <Router>
             <Navigation/>

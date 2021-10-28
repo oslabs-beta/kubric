@@ -47,12 +47,14 @@ const PersistQueryContainer = (props) => {
   }
 
   return (
-    <div style={{background:'whitesmoke', width:"100%", height:50, display: "flex", alignItems:"center", borderRadius: 4,}}>
+    <div style={{background:'whitesmoke', 
+    width:"100%", height:60, display: "flex", 
+    alignItems:"center", borderRadius: 4,padding:'0px',margin:'0px'}}>
       <Autocomplete
         disablePortal
         id="Index Name"
         options={[...props.appLogIndices]}
-        sx={{flexGrow: 1}}
+        sx={{flexGrow: 1,margin:'4px',padding:'4px'}}
         size="small"
         renderInput={(params) => <TextField size="small" {...params} label="Index Name"/>}
         onChange={(event,value)=>{
@@ -65,8 +67,10 @@ const PersistQueryContainer = (props) => {
         disablePortal
         id="Field"
         size="small"
+        margin='8px'
+        padding='4px'
         options={props.selectedFields}
-        sx={{flexGrow: 1,}}
+        sx={{flexGrow: 1,margin:'4px',padding:'4px'}}
         onChange={(event,value)=>{
           setQuery({...query,field:value,all:true})
           checkQuery();
@@ -74,12 +78,10 @@ const PersistQueryContainer = (props) => {
         renderInput={(params) => <TextField size="small" {...params} label="Field"/>}
       />
       <TextField  
-        sx={{flexGrow: 1,}}
+        sx={{flexGrow: 1,margin:'4px',padding:'4px'}}
         size="small"
         id="Value" 
         label="Value" 
-        margin='8px'
-        padding='4px'
         variant="outlined" 
         InputProps={{
           className: classes.input,

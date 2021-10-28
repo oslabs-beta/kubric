@@ -33,6 +33,7 @@ const NodeCpuSaturationComponent = (props) => {
         valuesToGraph.push(
           {
             type: "line",
+            decimals:3,
             text:  nameShortened,
             values: nodeValues,
             min: 0,
@@ -63,17 +64,20 @@ const NodeCpuSaturationComponent = (props) => {
       marker: {
         visible: false,
       },
+      decimals:3,
       animation: {
-        effect: "ANIMATION_FADE_IN"
+        effect: "ANIMATION_FADE_IN",
+        speed: "200"
       },
       tooltip: {
-        text: "%vt at %kt time from %t"
+        text: "%vv at %kt from %t",
+        decimals:3,
       }
     },
 
     plotarea: {
       "margin": "dynamic",
-      "margin-right": "30",
+      "margin-right": "60",
       'width':'100%',
       'height': '100%',
     },
@@ -82,9 +86,15 @@ const NodeCpuSaturationComponent = (props) => {
       item: {
         fontWeight: 'normal',
       },
-      
+      label:{
+        text: "Time(60m)"
+      }
     },
     scaleY: {
+      label:{
+        text: "Per Node"
+      },
+      format: "%v%",
       minValue:0,
       minorTicks: 9,
       item:{

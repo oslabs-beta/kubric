@@ -1,13 +1,15 @@
+import { propsToClassKey } from '@mui/styles';
 import React, {useEffect, useState} from 'react';
 import ZingChart from 'zingchart-react';
 
-const MasterNodeGraph = ({name, data}) => {
+const MasterNodeGraph = ({name, data,yLabel}) => {
   const valuesToGraph = [];
   
   const getValues = (array) => {
     array.forEach(obj => {
       const graphValues =[];
       const graphName = obj.metric.resource || obj.metric.group || obj.metric.operation || obj.metric.name;
+    
       obj.values.forEach(dataPoint => {
         const date = new Date(dataPoint[0]*1000);
         const hours = date.getHours();
@@ -20,6 +22,7 @@ const MasterNodeGraph = ({name, data}) => {
       valuesToGraph.push(
         {
           type: "line",
+          decimals:3,
           text: graphName,
           values: graphValues,
         }
@@ -49,10 +52,13 @@ const MasterNodeGraph = ({name, data}) => {
         visible: false,
       },
       animation: {
-        effect: "ANIMATION_FADE_IN"
+        effect: "ANIMATION_FADE_IN",
+        speed:"50"
       },
+      decimals:3,
       tooltip: {
-        text: "%vt at %kt time from %t"
+        text: "%vv at %kt from %t",
+        decimals:3,
       }
     },
 
@@ -67,11 +73,17 @@ const MasterNodeGraph = ({name, data}) => {
       item: {
         fontWeight: 'normal',
       },
+      label:{
+        text: "Time(60m)"
+      }
       
     },
     scaleY: {
       minValue:0,
       minorTicks: 9,
+      label:{
+        text: yLabel
+      },
       item:{
         fontWeight: 'normal',
       }

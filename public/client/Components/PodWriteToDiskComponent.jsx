@@ -28,6 +28,7 @@ const PodWriteToDiskComponent = (props) => {
 
       valuesToGraph.push({
         type: "line",
+        decimals:6,
         text: pods[pod].name,
         values: podValues,
       });
@@ -46,7 +47,7 @@ const PodWriteToDiskComponent = (props) => {
     },
 
     title: {
-        text: 'Write to Disk Rate [5m] in KB',
+        text: 'Write to Disk Rate',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -57,16 +58,19 @@ const PodWriteToDiskComponent = (props) => {
         visible: false,
       },
       animation: {
-        effect: "ANIMATION_FADE_IN"
+        effect: "ANIMATION_FADE_IN",
+        speed:"200"
       },
+      decimals:6,
       tooltip: {
-        text: "%vt at %kt time from %t"
+        text: "%vv at %kt time from %t",
+        decimals:6,
       }
     },
 
     plotarea: {
       "margin": "dynamic",
-      "margin-right": "30",
+      "margin-right": "60",
       'width':'100%',
       'height': '100%',
     },
@@ -82,7 +86,10 @@ const PodWriteToDiskComponent = (props) => {
       minorTicks: 9,
       item:{
         fontWeight: 'normal',
-      }
+      },
+      label:{
+        text: props.yLabel
+      },
     },
 
     crosshairX: {

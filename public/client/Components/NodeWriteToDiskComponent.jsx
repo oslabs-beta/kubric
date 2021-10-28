@@ -51,7 +51,7 @@ const NodeWriteToDiskComponent = (props) => {
     },
 
     title: {
-        text: 'Write to Disk Rate [5m] in MB',
+        text: 'Write to Disk Rate',
         "font-size": "15em",
         "alpha": 1,
         "adjust-layout": true,
@@ -61,17 +61,19 @@ const NodeWriteToDiskComponent = (props) => {
       marker: {
         visible: false,
       },
+      decimals:3,
       animation: {
         effect: "ANIMATION_FADE_IN"
       },
       tooltip: {
-        text: "%vt at %kt time from %t"
+        text: "%vv at %kt time from %t",
+        decimals:3,
       }
     },
 
     plotarea: {
       "margin": "dynamic",
-      "margin-right": "30",
+      "margin-right": "60",
       'width':'100%',
       'height': '100%',
     },
@@ -80,9 +82,16 @@ const NodeWriteToDiskComponent = (props) => {
       item: {
         fontWeight: 'normal',
       },
+      label:{
+        text: "Time(60m)"
+      }
       
     },
     scaleY: {
+      label:{
+        text: "Per Node (MBps)"
+      },
+      format: "%v",
       minValue:0,
       minorTicks: 9,
       item:{
