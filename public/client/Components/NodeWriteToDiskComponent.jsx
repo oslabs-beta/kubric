@@ -17,14 +17,15 @@ const NodeWriteToDiskComponent = (props) => {
       const nodeValues = [];
       let nameShortened = nodes[node].name;
       nameShortened = nameShortened.slice(0,3) + "..." + nameShortened.slice(nameShortened.length-5,nameShortened.length) 
-    
+      
       if (nodes[node].displayMetrics) {
         nodes[node].writeToDiskNodes.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
+          const day = date.getDay();
           const hours = date.getHours();
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
-          const time = `${hours}:${minutes}:${seconds}`;
+          const time = `${day}:${hours}:${minutes}:${seconds}`;
           
           nodeValues.push([time, parseFloat(dataPoint[1])*0.000001]);
         });

@@ -18,10 +18,11 @@ const PodLogsComponent = (props) => {
       if (pods[pod].displayMetrics) {
         pods[pod].logMetrics.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
+          const day = date.getDay();
           const hours = date.getHours();
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
-          const time = `${hours}:${minutes}:${seconds}`;  
+          const time = `${day}:${hours}:${minutes}:${seconds}`;
           podValues.push([time, parseFloat(dataPoint[1])*0.000001]);
         });
         valuesToGraph.push(

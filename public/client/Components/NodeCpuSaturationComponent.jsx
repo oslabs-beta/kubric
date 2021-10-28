@@ -22,10 +22,11 @@ const NodeCpuSaturationComponent = (props) => {
       if (nodes[node].displayMetrics) {
         nodes[node].CPUSatValsNodes.forEach(dataPoint => {
           const date = new Date(dataPoint[0]*1000);
+          const day = date.getDay();
           const hours = date.getHours();
           const minutes = date.getMinutes();
           const seconds = date.getSeconds();
-          const time = `${hours}:${minutes}:${seconds}`;
+          const time = `${day}:${hours}:${minutes}:${seconds}`;
         
           nodeValues.push([time, parseFloat(dataPoint[1])]);
           
